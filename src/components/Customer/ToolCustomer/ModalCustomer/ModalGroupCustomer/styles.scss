@@ -1,0 +1,20 @@
+.fingerprint {
+    width: 58px;
+    height: 58px;
+    border: solid 3px #AAB8BE;
+  }
+  
+  .fingerprint.scanning::after {
+    content: '';
+    position: absolute;
+    width: 58px;
+    height: 8px;
+    background-image: linear-gradient(to bottom,
+      rgba(170, 184, 190, 0),
+      rgba(170, 184, 190, .8));
+    animation: scanning .8s linear infinite;
+  }
+  
+  @keyframes scanning {
+      100% { transform: translate(0, 52px); }
+  }

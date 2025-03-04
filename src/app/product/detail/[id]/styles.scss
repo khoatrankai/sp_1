@@ -1,0 +1,9 @@
+.custom-tabs .ant-tabs-nav {
+  width: 100%; /* Đảm bảo các tab header chiếm đủ 100% */
+  justify-content: space-between; /* Dàn đều các tab */
+}
+
+.custom-tabs .ant-tabs-tab {
+  flex: 1; /* Chia đều mỗi tab */
+  text-align: center; /* Căn giữa nội dung trong tab */
+}

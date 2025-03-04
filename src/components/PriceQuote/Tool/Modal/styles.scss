@@ -1,0 +1,8 @@
+.custom-table-wrapper .ant-table-body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE và Edge */
+  }
+  
+  .custom-table-wrapper .ant-table-body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, và Edge */
+  }

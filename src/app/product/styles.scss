@@ -1,0 +1,28 @@
+.header-menu {
+  .header-ttkbuy-top {
+    background-color: black !important;
+    color: white !important;
+  }
+  .header-ttkbuy {
+    .arrowup {
+      content: "";
+      // display: block;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid white !important;
+      position: absolute;
+      /* transform: translateX(50vw); */
+      bottom: 0px;
+      right: 50vw;
+      transform: translateX(50%);
+      cursor: pointer;
+    }
+  }
+
+  .header-ttkbuy-top-hover {
+    background-color: black !important;
+    color: white !important;
+  }
+}
