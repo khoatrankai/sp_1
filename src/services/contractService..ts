@@ -117,6 +117,15 @@ const contractService = {
       throw error;
     }
   },
+  getContractDashboardByProject: async (id:string) => {
+    try {
+      const response = await api.get(`/contract/dashboard-by-project/${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   getDebtSupplier: async () => {
     try {
       const response = await api.get(`/contract/debt-supplier`);
@@ -341,6 +350,28 @@ const contractService = {
   deleteDocumentContract: async (id: string) => {
     try {
       const response = await api.delete(`/contract/document/delete?id=${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  getContractsFilterbyProject: async (filters:{id:string}) => {
+   
+
+    try {
+      const queryParams = new URLSearchParams();
+
+      if (filters) {
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value !== undefined && value !== null) {
+            queryParams.append(key, value.toString());
+          }
+        });
+      }
+      const response = await api.get(
+        `/contract/get-contract-filter-by-project?${queryParams.toString()}`
+      );
       return response.data;
     } catch (error) {
       handleError(error);

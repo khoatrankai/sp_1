@@ -13,7 +13,7 @@ const initialState: DataStateRedux<IGetProject[]> = {
 // Async Thunk for Fetching Projects
 export const fetchProjects = createAsyncThunk(
   "projects/fetchProjects",
-  async (filters: { customer?: string } | undefined, thunkAPI) => {
+  async (filters: { customer?: string,type?:string } | undefined, thunkAPI) => {
     try {
       const response = await projectService.getProjects(filters); // Replace with actual API call
       return response; // Return data from API

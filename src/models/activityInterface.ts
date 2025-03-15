@@ -122,6 +122,15 @@ export interface IGetPictureWork {
   updated_at: Date;
 }
 
+export interface IGetPictureTask {
+  picture_id: string;
+  url: string;
+  task: IGetTask; // work_id
+  type: "start" | "end";
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface ICreatePictureWork {
   work: string;
   url: File;
@@ -204,10 +213,27 @@ export interface IGetWork2 {
   time_start: Date;
   time_end: Date;
   created_at: Date;
+  urgent?: boolean;
+  tasks?: IGetTask[];
   updated_at: Date;
   picture_urls?: IGetPictureWork[];
+  user_create?:InfoUser
   list_user?: InfoUser[];
   date?: string;
+}
+
+export interface IGetTask {
+  task_id: string;
+  status: 'waitting'| 'fail'| 'success'; // status_work_id
+  name: string;
+  description?: string;
+  work?: IGetWork2; // activity_id
+  time_start: Date;
+  time_end: Date;
+  created_at: Date;
+  urgent?: boolean;
+  updated_at: Date;
+  picture_urls?: IGetPictureTask[];
 }
 
 export interface ICreateWork {

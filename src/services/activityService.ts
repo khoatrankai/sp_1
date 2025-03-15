@@ -321,6 +321,16 @@ const activityService = {
       throw error;
     }
   },
+
+  getWorkByActivity: async (id: string) => {
+    try {
+      const response = await api.get(`/activity/work-by-activity/${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   createActivity: async (data: ICreateActivity) => {
     try {
       const response = await api.post("/activity/create", data);
@@ -855,6 +865,26 @@ const activityService = {
   deleteStatusActivity: async (id: string) => {
     try {
       const response = await api.delete(`/activity/status/${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+
+  dashboardContract: async (id: string) => {
+    try {
+      const response = await api.get(`/activity/dashboard-contract/${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+
+  dashboardActivity: async (id: string) => {
+    try {
+      const response = await api.get(`/activity/dashboard-activity/${id}`);
       return response.data;
     } catch (error) {
       handleError(error);

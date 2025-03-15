@@ -205,7 +205,7 @@ export default function ModalTabActivity() {
           {isAuthorized && (
             <>
               <Select
-                placeholder="Chọn phòng ban"
+                placeholder="Chọn "
                 showSearch
                 allowClear
                 onChange={(e) => {

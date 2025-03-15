@@ -11,7 +11,7 @@ const projectService = {
       throw error;
     }
   },
-  getProjects: async (filters?: { customer?: string }) => {
+  getProjects: async (filters?: { customer?: string,type?:string }) => {
     try {
       const queryParams = new URLSearchParams();
 
@@ -41,6 +41,15 @@ const projectService = {
   getProject: async (id: string) => {
     try {
       const response = await api.get(`/project/id/${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  getFullProject: async (id: string) => {
+    try {
+      const response = await api.get(`/project/get-full-project/${id}`);
       return response.data;
     } catch (error) {
       handleError(error);
@@ -96,6 +105,15 @@ const projectService = {
       throw new Error("Failed to update unit project: No response");
     }
     return res.data;
+  },
+  dashboardProject: async () => {
+    try {
+      const response = await api_formdata.get(`/project/dashboard-project`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
   },
 };
 
