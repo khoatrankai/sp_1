@@ -1,18 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Tabs, TabsProps } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { Ref, useEffect, useRef, useState } from 'react'
 import { IoReturnUpBack } from 'react-icons/io5'
 import { ChartPie } from '../Chart/PieChart'
 import { IoIosAdd } from 'react-icons/io'
 import TableContract from './Table/TableContract'
 import TabInfoProject from './Tabs/TabInfoProject/TabInfoProject'
 import './styles.scss'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { IGetProject } from '@/models/projectInterface'
 import projectService from '@/services/projectService'
 import contractService from '@/services/contractService.'
+import ModalAddContract from '@/components/Contract/Tool/Modal/ModalContract'
 
 export default function Project() {
+  const refBtn = useRef<HTMLButtonElement>()
+  const router = useRouter()
   const { id } = useParams();
   const [dataProject, setDataProject] = useState<IGetProject>();
   const [dataDashboard,setDataDashboard] = useState<any>()
@@ -53,7 +56,7 @@ export default function Project() {
           children: (
             <div className='flex flex-col'>
             <div className='py-4'>
-                <Button className='text-xs' icon={<IoIosAdd />}>Thêm hợp đồng</Button>
+                <Button className='text-xs' icon={<IoIosAdd />} onClick={()=>{refBtn.current?.click()}}>Thêm hợp đồng</Button>
             </div>
             <div>
                 <TableContract/>
@@ -67,7 +70,9 @@ export default function Project() {
     <div className='flex flex-col w-full'>
         <div className='p-1'>
 
-            <Button type='link' icon={<IoReturnUpBack />}>Quay lại</Button>
+            <Button type='link' icon={<IoReturnUpBack />}  onClick={()=>{
+router.back()
+            }}>Quay lại</Button>
         </div>
         <div className='text-xl border-y-[1px] p-6'>
             <p>Chi tiết dự án</p>
@@ -121,6 +126,7 @@ export default function Project() {
             </div>
            
         </div>
+        <ModalAddContract refBtnContract={refBtn as Ref<HTMLButtonElement>}/>
     </div>
   )
 }

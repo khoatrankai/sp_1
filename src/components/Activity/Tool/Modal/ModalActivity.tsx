@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import ModalAddContract from "@/components/Contract/Tool/Modal/ModalContract";
 import ModalTypeActivity from "./ModalTypeActivity/ModalTypeActivity";
 import ModalStatusActivity from "./ModalStatusActivity/ModalStatusActivity";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 type Props = {
   idType?: string;
@@ -31,6 +31,7 @@ export default function ModalAddActivity({
   refBtnActivity,
 }: Props) {
   const { projectID } = useParams();
+  const searchParams = useSearchParams();
   const refBtnType = useRef<HTMLButtonElement>();
   const refBtnContract = useRef<HTMLButtonElement>();
   const refBtnStatus = useRef<HTMLButtonElement>();
@@ -41,11 +42,22 @@ export default function ModalAddActivity({
   const { datas: dataContracts } = useSelector(
     (state: RootState) => state.get_contracts
   );
-  useEffect(() => {
-    if (projectID) {
-      form.setFieldValue("contract", projectID);
-    }
-  }, [projectID]);
+  // useEffect(() => {
+  //   if (projectID) {
+  //     form.setFieldValue("contract", projectID);
+  //   }
+  // }, [projectID]);
+   useEffect(()=>{
+      if(searchParams)
+      {
+        const contract = searchParams.get('contract')
+        if(contract){
+          form.setFieldValue('contract',contract)
+        }
+        
+  
+      }
+    },[searchParams])
   useEffect(() => {
     if (idStatus && idType) {
       form.setFieldsValue({ status: idStatus, type: idType });

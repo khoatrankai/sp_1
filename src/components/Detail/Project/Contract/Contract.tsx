@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Tabs, TabsProps } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { Ref, useEffect, useRef, useState } from 'react'
 import { IoReturnUpBack } from 'react-icons/io5'
 import { IoIosAdd } from 'react-icons/io'
 import TableContract from './Table/TableActivity'
 import TabInfoContract from './Tabs/TabInfoProject/TabInfoContract'
 import './styles.scss'
 import activityService from '@/services/activityService'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import contractService from '@/services/contractService.'
 import { ChartPieContract } from '../Chart/PieChartContract'
+import ModalAddActivity from '@/components/Activity/Tool/Modal/ModalActivity'
 
 export default function Contract() {
-
+    const router = useRouter()
+    const refBtn = useRef<HTMLButtonElement>()
     const [dataDashboard,setDataDashboard] = useState<any>()
     const [dataContract,setDataContract] = useState<any>()
     const {id} = useParams()
@@ -42,7 +44,9 @@ export default function Contract() {
           children: (
             <div className='flex flex-col'>
             <div className='py-4'>
-                <Button className='text-xs' icon={<IoIosAdd />}>Thêm hoạt động</Button>
+                <Button className='text-xs' icon={<IoIosAdd />} onClick={()=>{
+                    refBtn.current?.click()
+                }}>Thêm hoạt động</Button>
             </div>
             <div>
                 <TableContract/>
@@ -56,7 +60,9 @@ export default function Contract() {
     <div className='flex flex-col w-full'>
         <div className='p-1'>
 
-            <Button type='link' icon={<IoReturnUpBack />}>Quay lại</Button>
+            <Button type='link' icon={<IoReturnUpBack />}  onClick={()=>{
+router.back()
+            }}>Quay lại</Button>
         </div>
         <div className='text-xl border-y-[1px] p-6'>
             <p>hoạt động đang theo dõi</p>
@@ -111,6 +117,7 @@ export default function Contract() {
             </div>
            
         </div>
+        <ModalAddActivity refBtnActivity={refBtn as Ref<HTMLButtonElement>} />
     </div>
   )
 }

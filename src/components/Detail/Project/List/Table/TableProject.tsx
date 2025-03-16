@@ -35,13 +35,13 @@ export default function TableProject() {
   useEffect(()=>{
     if(dataSource){
       const dataToday = dataSource.filter((dt)=>{
-        const time =  (new Date((new Date(dt.created_at)).toLocaleDateString("vi-vn"))).getTime()
-        const timeToday = (new Date((new Date()).toLocaleDateString('vi-vn'))).getTime()
+        const time =  (new Date(dt.created_at)).toLocaleDateString('vi-vn')
+        const timeToday = (new Date()).toLocaleDateString('vi-vn')
         return time === timeToday
       })
       const dataOther = dataSource.filter((dt)=>{
-        const time =  (new Date( new Date(dt.created_at).toLocaleDateString("vi-vn"))).getTime()
-        const timeToday = (new Date((new Date()).toLocaleDateString('vi-vn'))).getTime()
+        const time =  (new Date(dt.created_at)).toLocaleDateString('vi-vn')
+        const timeToday = (new Date()).toLocaleDateString('vi-vn')
         return time !== timeToday
       })
        const data = dataOther.reduce((preValue:any,currValue)=>{
@@ -103,7 +103,7 @@ export default function TableProject() {
               text = "Không xác định";
           }
           return <div className='flex gap-2 items-center'>
-        <a className='capitalize' href={`/detail/project/${record.project_id}`}>
+        <a className='capitalize'  href={`/detail/project/${record.project_id}?project=${record.project_id}&&customer=${record.customer?.info_id}`}>
         {/* `${(value ?? "").slice(0, 40)}...` || "N/A"` */}
         {
           (value?.length ?? 0)>40? `${(value??"").slice(0, 40)}...`:(value ??"N/A")

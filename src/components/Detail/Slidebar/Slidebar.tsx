@@ -1,8 +1,7 @@
 import React from 'react'
 
-type Props = {}
 
-export default function Slidebar({}: Props) {
+export default function Slidebar() {
   return (
     <div>Slidebar</div>
   )

@@ -7,6 +7,7 @@ import {
   ICreateListUser,
   ICreateStatusActivity,
   ICreateStatusWork,
+  ICreateTask,
   ICreateTypeActivity,
   ICreateTypeWork,
   ICreateWork,
@@ -17,6 +18,7 @@ import {
   IUpdatePictureWork,
   IUpdateStatusActivity,
   IUpdateStatusWork,
+  IUpdateTask,
   IUpdateTypeActivity,
   IUpdateTypeWork,
   IUpdateWork,
@@ -557,6 +559,18 @@ const activityService = {
       throw error;
     }
   },
+  createPictureTask: async (data: FormData) => {
+    try {
+      const response = await api_formdata.post(
+        "/activity/pictures-task/create",
+        data
+      );
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   updatePictureWork: async (id: string, data: IUpdatePictureWork) => {
     try {
       const response = await api.put(`/activity/pictures-work/${id}`, data);
@@ -577,7 +591,17 @@ const activityService = {
       throw error;
     }
   },
-
+  deletePictureTask: async (id: string) => {
+    try {
+      const response = await api.delete(
+        `/activity/pictures-task/delete?id=${id}`
+      );
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   // TypeWork Methods
   getAllTypeWorks: async () => {
     try {
@@ -723,6 +747,15 @@ const activityService = {
       throw error;
     }
   },
+  getTaskkById: async (id: string) => {
+    try {
+      const response = await api.get(`/activity/task/id/${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   createWork: async (data: ICreateWork) => {
     try {
       const response = await api.post("/activity/work/create", data);
@@ -732,9 +765,27 @@ const activityService = {
       throw error;
     }
   },
+  createTask: async (data: ICreateTask) => {
+    try {
+      const response = await api.post("/activity/task/create", data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   updateWork: async (id: string, data: IUpdateWork) => {
     try {
       const response = await api.put(`/activity/work/update/${id}`, data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  updateTask: async (id: string, data: IUpdateTask) => {
+    try {
+      const response = await api.put(`/activity/task/update/${id}`, data);
       return response.data;
     } catch (error) {
       handleError(error);

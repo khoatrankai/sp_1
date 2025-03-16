@@ -250,6 +250,18 @@ export interface ICreateWork {
   list_users?: string[];
 }
 
+export interface ICreateTask {
+  status: 'waitting'|'fail'|'success'; // status_work_id
+  name: string;
+  description?: string;
+  work: string; 
+  time_start: Date;
+  urgent?: boolean;
+  time_end: Date;
+  picture_urls?: File[];
+  picture_url_type?: string[];
+}
+
 export interface IUpdateWork {
   work_id?: string;
   type?: string;
@@ -262,6 +274,18 @@ export interface IUpdateWork {
   time_end?: Date;
   list_users?: string[];
 }
+
+export interface IUpdateTask {
+  task_id?: string;
+  status?: 'waitting'|'fail'|'success';
+  name?: string;
+  urgent?: boolean;
+  description?: string;
+  work?: string;
+  time_start?: Date;
+  time_end?: Date;
+}
+
 
 export interface IGetStatusActivity {
   status_activity_id: string;

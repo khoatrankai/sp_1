@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { IGetActivity } from '@/models/activityInterface';
 import { RootState } from '@/redux/store/store';
 // import { RootState } from '@/redux/store/store';
 import moment from 'moment'

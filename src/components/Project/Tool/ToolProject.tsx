@@ -7,6 +7,7 @@ import ModalTypeProject from "./Modal/ModalTypeProject/ModalTypeProject";
 import Link from "next/link";
 import { FaChartGantt } from "react-icons/fa6";
 import { useParams } from "next/navigation";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 export default function ToolProduct() {
   const { customerID } = useParams();
@@ -20,6 +21,9 @@ export default function ToolProduct() {
         <ModalTypeProject />
         <Link href={`/admin/project/gantt`}>
           <Button icon={<FaChartGantt />} />
+        </Link>
+        <Link href={`/detail/project`}>
+          <Button icon={<MdOutlineSpaceDashboard />} />
         </Link>
       </div>
       {!customerID && (

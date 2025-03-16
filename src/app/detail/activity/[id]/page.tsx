@@ -2,7 +2,8 @@
 "use client";
 
 import Activity from "@/components/Detail/Project/Activity/Activity";
-import { fetchContracts } from "@/redux/store/slices/contractSlices/contract.slide";
+import { fetchActivities } from "@/redux/store/slices/activitySlices/activity.slice";
+import { fetchUserInfo } from "@/redux/store/slices/userSlices/get_users.slice";
 import { AppDispatch } from "@/redux/store/store";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -16,7 +17,8 @@ export default function page() {
   
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-   dispatch(fetchContracts({}))
+   dispatch(fetchActivities({}))
+   dispatch(fetchUserInfo())
   }, [dispatch]);
   return (
     <>

@@ -17,17 +17,18 @@ export default function TableActivity() {
       useEffect(()=>{
         if(dataSource){
           const dataToday = dataSource.filter((dt)=>{
-            const time =  (new Date((new Date(dt.created_at ?? "")).toLocaleDateString("vi-vn"))).getTime()
-            const timeToday = (new Date((new Date()).toLocaleDateString('vi-vn'))).getTime()
+            const time =  (new Date(dt.created_at)).toLocaleDateString('vi-vn')
+            
+            const timeToday = (new Date()).toLocaleDateString('vi-vn')
             return time === timeToday
           })
           const dataOther = dataSource.filter((dt)=>{
-            const time =  (new Date( new Date(dt.created_at ?? "").toLocaleDateString("vi-vn"))).getTime()
-            const timeToday = (new Date((new Date()).toLocaleDateString('vi-vn'))).getTime()
+            const time =  (new Date(dt.created_at)).toLocaleDateString('vi-vn')
+            const timeToday = (new Date()).toLocaleDateString('vi-vn')
             return time !== timeToday
           })
            const data = dataOther.reduce((preValue:any,currValue)=>{
-            const time = new Date(currValue.created_at ?? "").toLocaleDateString("vi-VN")
+            const time = (new Date(currValue.created_at ?? "")).toLocaleDateString("vi-VN")
             if(!preValue[time]){
               preValue[time] = []
             }

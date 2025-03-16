@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IGetWork2 } from '@/models/activityInterface';
+import ModalAddTask from '@/components/Task/Tool/Modal/ModalTask';
+import usePostData from '@/hooks/usePostData';
+import { IGetTask, IGetWork2 } from '@/models/activityInterface';
 import activityService from '@/services/activityService';
-import { Avatar, Button, Modal, Progress } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Avatar, Button, Modal, Popover, Progress } from 'antd'
+import React, { Ref, useEffect, useRef, useState } from 'react'
 import { CgDanger } from "react-icons/cg";
 import { FaCheckCircle, FaNetworkWired } from 'react-icons/fa';
 import { IoIosAddCircle, IoIosCloseCircle } from 'react-icons/io';
+import { MdDateRange } from 'react-icons/md';
 import { TbFileDescription } from 'react-icons/tb';
 
 type Props={
@@ -14,6 +17,8 @@ type Props={
 }
 
 export default function Work({id,setIdWork}:Props) {
+  const {postdata} = usePostData()
+  const refBtn = useRef<HTMLButtonElement>()
   const [dataWork,setDataWork] = useState<IGetWork2>()
   const fetchData = async ()=>{
     const res = await activityService.getWorkById(id)
@@ -24,6 +29,38 @@ export default function Work({id,setIdWork}:Props) {
   useEffect(()=>{
     if(id) fetchData()
   },[id])
+
+  const ContentTask = (data:IGetTask)=>{
+    return <>
+      <div className='p-2 flex flex-col w-full'>
+      <div className='flex gap-2 items-center'>
+      <MdDateRange />
+        <p className='break-words text-wrap'>{(new Date(data.time_start)).toLocaleString("vi-VN", { 
+    timeZone: "UTC", 
+    hour12: false 
+})} - {(new Date(data.time_end)).toLocaleString("vi-VN", { 
+  timeZone: "UTC", 
+  hour12: false 
+})}</p>
+      </div>
+      <div className='flex gap-2 items-center'>
+      <TbFileDescription />
+        <p className='break-words text-wrap'>{data.description}</p>
+      </div>
+      </div>
+
+    </>
+  }
+
+   const handleChange = async (idTask:string,status:'success'|'fail') => {
+      const res = await postdata(() =>
+        activityService.updateTask(idTask, {status})
+      );
+      if (res === 200 || res === 201) {
+       fetchData()
+      
+      }
+    };
   return (
     <>
       <Modal 
@@ -42,14 +79,14 @@ export default function Work({id,setIdWork}:Props) {
             <div className='bg-white rounded-sm flex-1 basis-1/5 min-h-screen p-2 flex flex-col gap-8'>
               <div className='flex flex-col gap-1'>
                 <p className='font-medium  text-xs'>Người thực hiện</p>
-                <div className='flex flex-col text-gray-500'>
+                <div className='flex flex-col text-gray-500 gap-1'>
                   
                   {
                     dataWork?.list_user?.map(dt => {
                       return <>
 <div className='flex gap-2 w-full items-center'>
-                    <div className='w-6 h-6'>
-                    <Avatar className='w-full h-full' style={{ backgroundColor: 'red', verticalAlign: 'middle' }} size="default" src={dataWork?.user_create?.picture_url}>
+                    <div className='min-w-6 min-h-6 max-w-6 max-h-6 w-6 h-6 '>
+                    <Avatar className='w-full h-full' style={{  verticalAlign: 'middle' }} size="default" src={dt?.picture_url}>
        {dt?.last_name}
       </Avatar>
                     </div>
@@ -131,15 +168,15 @@ export default function Work({id,setIdWork}:Props) {
               <div className='flex items-center gap-4'>
                 <div className='flex flex-col items-center text-sm'>
                   <p className='font-semibold'>THỜI GIAN</p>
-                  <p className='p-2 rounded-sm text-xs bg-green-500 text-white'>{((new Date(dataWork?.time_start ?? "")).getTime() - (new Date(dataWork?.time_end ?? "")).getTime()) / (1000 * 60 * 60)} giờ</p>
+                  <p className='p-2 rounded-sm text-xs bg-green-500 text-white'>{((new Date(dataWork?.time_end ?? "")).getTime() - (new Date(dataWork?.time_start ?? "")).getTime()) / (1000 * 60 * 60)} giờ</p>
                 </div>
                 <div className='flex flex-col items-center text-sm'>
                   <p className='font-semibold'>NGÀY BẮT ĐẦU</p>
-                  <p className='p-2 rounded-sm text-xs bg-green-500 text-white'>{dataWork?.time_start.toLocaleDateString('vi-vn')}</p>
+                  <p className='p-2 rounded-sm text-xs bg-green-500 text-white'>{ new Date(dataWork?.time_start ??"").toLocaleDateString('vi-vn')}</p>
                 </div>
                 <div className='flex flex-col items-center text-sm'>
                   <p className='font-semibold'>NGÀY HẾT HẠN</p>
-                  <p className='p-2 rounded-sm text-xs bg-green-500 text-white'>{dataWork?.time_end.toLocaleDateString('vi-vn')}</p>
+                  <p className='p-2 rounded-sm text-xs bg-green-500 text-white'>{new Date(dataWork?.time_end??"").toLocaleDateString('vi-vn')}</p>
                 </div>
                 <div className='flex flex-col items-center text-sm'>
                   <p className='font-semibold'>TRẠNG THÁI</p>
@@ -161,19 +198,32 @@ export default function Work({id,setIdWork}:Props) {
                 <div className='flex items-center gap-1'>
                 <FaNetworkWired />
                 <p>Task</p>
-                <Button className='text-2xl' icon={<IoIosAddCircle />} type='link'/>
+                <Button className='text-2xl' icon={<IoIosAddCircle />} type='link' onClick={()=>{
+                  refBtn.current?.click()
+
+                }}/>
                 </div>
-                <Progress percent={60} success={{ percent: 20 }} />
+                <Progress percent={(((dataWork?.tasks?.filter(dt => dt.status === 'waitting').length ?? 0) / (dataWork?.tasks?.length ?? 1)) * 100)} success={{ percent: ((((dataWork?.tasks?.filter(dt => dt.status === 'success').length ?? 0) / (dataWork?.tasks?.length ?? 1)) * 100)) }} />
                 <div className='flex flex-col gap-2 p-2'>
                   {
                     dataWork?.tasks?.map(dt => {
                       if(dt.status === "waitting"){
                         return <>
-                          <p className='py-2 border-b-[1px] flex justify-between items-center'>{dt.name}<span className='flex'><Button icon={<FaCheckCircle className='text-green-400 text-2xl' />} type='link'/> <Button icon={<IoIosCloseCircle className='text-red-400  text-3xl' />} type='link'/> </span></p>
+                          <Popover title={dt.name.toUpperCase()} content={ContentTask(dt)}  trigger="hover">
+                          <p className='py-2 border-b-[1px] flex justify-between items-center'>{dt.name}<span className='flex'><Button icon={<FaCheckCircle className='text-green-400 text-2xl' />} type='link'  onClick={()=>{
+                            handleChange(dt.task_id,'success')                            
+                          }}/> <Button icon={<IoIosCloseCircle className='text-red-400  text-3xl' />} type='link' onClick={()=>{
+                            handleChange(dt.task_id,'fail')                            
+                          }}/> </span></p>
+                          </Popover>
+                          
                         </>
                       }
                       return <>
-                       <p className='py-2 border-b-[1px] text-green-400'>{dt.name}</p>
+                      <Popover title={dt.name} content={ContentTask(dt)}  trigger="hover">
+                      <p className='py-2 border-b-[1px] text-green-400'>{dt.name}</p>
+                      </Popover>
+                      
 
                       </>
                     
@@ -186,6 +236,7 @@ export default function Work({id,setIdWork}:Props) {
               </div>
             </div>
         </div>
+        <ModalAddTask refBtnTask={refBtn as Ref<HTMLButtonElement>} id={id as string} resetData={fetchData}/>
     </div>
       </Modal>
     </>

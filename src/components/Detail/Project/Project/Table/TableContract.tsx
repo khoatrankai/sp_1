@@ -54,7 +54,7 @@ export default function TableContract() {
                     text = "Không xác định";
                 }
           return <div className='flex gap-2 items-center'>
-        <a className='capitalize' href={`/detail/contract/${record.contract_id}`}>
+        <a className='capitalize' href={`/detail/contract/${record.contract_id}?contract=${record.contract_id}`}>
         {
           (value?.length ?? 0)>40? `${(value??"").slice(0, 40)}...`:(value ??"N/A")
         }

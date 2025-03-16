@@ -26,7 +26,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import ModalTypeContract from "./ModalTypeContract/ModalTypeContract";
 import dayjs from "dayjs";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 type Props = {
   refBtnContract?: Ref<HTMLButtonElement>;
@@ -34,6 +34,7 @@ type Props = {
 
 export default function ModalAddContract({ refBtnContract }: Props) {
   const { customerID } = useParams();
+  const searchParams = useSearchParams();
   const refBtnCustomer = useRef<HTMLButtonElement>();
   const refBtnProject = useRef<HTMLButtonElement>();
   const refBtnType = useRef<HTMLButtonElement>();
@@ -51,6 +52,20 @@ export default function ModalAddContract({ refBtnContract }: Props) {
       form.setFieldValue("customer", customerID);
     }
   }, [customerID]);
+  useEffect(()=>{
+    if(searchParams)
+    {
+      const customer = searchParams.get('customer')
+      const project = searchParams.get('project')
+      if(customer){
+        form.setFieldValue('customer',customer)
+      }
+      if(project){
+        form.setFieldValue('project',project)
+      }
+
+    }
+  },[searchParams])
   const [form] = useForm();
   const { postdata } = usePostData();
   const dispatch = useDispatch<AppDispatch>();

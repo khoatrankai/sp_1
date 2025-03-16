@@ -30,7 +30,7 @@ import ModalTypeWork from "./ModalTypeWork/ModalTypeWork";
 import ModalStatusWork from "./ModalStatusWork/ModalStatusWork";
 import ModalAddActivity from "@/components/Activity/Tool/Modal/ModalActivity";
 import { fetchTypeWorksID } from "@/redux/store/slices/activitySlices/type_id_work.slice";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 type Props = {
   idType?: string;
@@ -46,6 +46,18 @@ export default function ModalAddWork({
   type,
 }: Props) {
   const { projectID } = useParams();
+  const searchParams = useSearchParams();
+  useEffect(()=>{
+      if(searchParams)
+      {
+        const activity = searchParams.get('activity')
+        if(activity){
+          form.setFieldValue('activity',activity)
+        }
+      
+  
+      }
+    },[searchParams])
   const refBtnType = useRef<HTMLButtonElement>();
   const refBtnStatus = useRef<HTMLButtonElement>();
   const refBtnActivity = useRef<HTMLButtonElement>();
