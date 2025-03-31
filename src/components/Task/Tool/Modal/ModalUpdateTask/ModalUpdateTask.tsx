@@ -30,7 +30,7 @@ type Props = {
   ID:string
 };
 
-export default function ModalUpdatet
+export default function ModalUpdateTask
 ({
   refBtn,ID
 }: Props) {

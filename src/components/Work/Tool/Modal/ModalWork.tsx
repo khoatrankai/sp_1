@@ -7,6 +7,7 @@ import activityService from "@/services/activityService";
 import {
   Avatar,
   Button,
+  Collapse,
   DatePicker,
   Divider,
   Form,
@@ -45,6 +46,8 @@ export default function ModalAddWork({
   refBtnWork,
   type,
 }: Props) {
+  const { Panel } = Collapse;
+  // type TagRender = SelectProps['tagRender'];
   const { projectID } = useParams();
   const searchParams = useSearchParams();
   useEffect(()=>{
@@ -113,6 +116,15 @@ export default function ModalAddWork({
     form.submit();
   };
 
+  // const tagRender: TagRender = (props)=>{
+    
+  //   const { label, value, closable, onClose } = props;
+  //   console.log(value)
+  //   return <>
+  //     <p>{label}</p>
+  //   </>
+  // }
+
   useEffect(() => {
     if (idStatus && idType) {
       form.setFieldsValue({ status: idStatus, type: idType });
@@ -127,6 +139,7 @@ export default function ModalAddWork({
           return {
             label: dt.first_name + " " + dt.last_name,
             value: dt.user_id,
+            group:dt.group_user?.name_group
           };
         })
       );
@@ -158,7 +171,65 @@ export default function ModalAddWork({
       >
         <Tabs defaultActiveKey="1" style={{ width: "100%" }} type="line">
           <TabPane tab="Thông tin công việc" key={1}>
-            <div className="flex mb-2 items-center gap-1">
+           
+            <Form
+              layout="vertical"
+              form={form}
+              onFinish={handleSubmit}
+              style={{ display: "flex", flexWrap: "wrap", columnGap: "12px" }}
+            >
+              <Collapse defaultActiveKey={["1"]} className="w-full">
+              <Panel header="Thông tin chung" key="1" className="w-full">
+              <Form.Item
+                name="name"
+                label="Tên công việc"
+                rules={[
+                  {
+                    required: true,
+                    type: "string",
+                    message: "Vui lòng nhập tên công việc",
+                  },
+                ]}
+                style={{ minWidth: "100%", flex: "1 1 0%" }}
+              >
+                <Input />
+              </Form.Item>
+              <div className="flex flex-wrap gap-3">
+              <Form.Item
+                name="time_start"
+                label="Bắt đầu"
+                className=" mb-0"
+                // rules={[{ required: true }]}
+                style={{ minWidth: "250px", flex: "1 1 0%" }}
+                // getValueProps={(value) => ({
+                //   value: value ? moment(value) : null,
+                // })}
+              >
+                <DatePicker
+                  placeholder="Chọn ngày bắt đầu"
+                  style={{ width: "100%" }}
+                />
+              </Form.Item>
+              <Form.Item
+                className=" mb-0"
+                label="Kết thúc"
+                name="time_end"
+                rules={[{ required: true }]}
+                style={{ minWidth: "250px", flex: "1 1 0%" }}
+                // getValueProps={(value) => ({
+                //   value: value ? moment(value) : null,
+                // })}
+              >
+                <DatePicker
+                  placeholder="Chọn ngày kết thúc"
+                  style={{ width: "100%" }}
+                />
+              </Form.Item>
+              </div>
+            
+                <div className=" mt-8">
+                  <p>Người thực hiện</p>
+                  <div className="flex items-center gap-1">
               <Avatar.Group
                 max={{
                   count: 5,
@@ -210,7 +281,17 @@ export default function ModalAddWork({
                     onChange={(e) => {
                       setListUsers(e);
                     }}
-                    options={optionsListUser}
+                    options={optionsListUser?.map((user) => ({
+                      label: (
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <div>
+                            <strong>{user.label}</strong>
+                            <div style={{ fontSize: "12px", color: "gray" }}>{user.group}</div>
+                          </div>
+                        </div>
+                      ),
+                      value: user.value,
+                    }))}
                   />
                   <IoIosCloseCircle
                     className="w-8 h-8 text-red-500 cursor-pointer"
@@ -221,12 +302,10 @@ export default function ModalAddWork({
                 </>
               )}
             </div>
-            <Form
-              layout="vertical"
-              form={form}
-              onFinish={handleSubmit}
-              style={{ display: "flex", flexWrap: "wrap", columnGap: "12px" }}
-            >
+                </div>
+              
+              </Panel>
+              <Panel header="Thông tin nâng cao" key="2">
               <Form.Item
                 name="type"
                 label="Loại công việc"
@@ -272,20 +351,7 @@ export default function ModalAddWork({
                   ))}
                 </Select>
               </Form.Item>
-              <Form.Item
-                name="name"
-                label="Tên công việc"
-                rules={[
-                  {
-                    required: true,
-                    type: "string",
-                    message: "Vui lòng nhập tên công việc",
-                  },
-                ]}
-                style={{ minWidth: "100%", flex: "1 1 0%" }}
-              >
-                <Input />
-              </Form.Item>
+             
 
               <Form.Item
                 name="status"
@@ -372,35 +438,11 @@ export default function ModalAddWork({
                   placeholder="Description"
                   autoSize={{ minRows: 3 }}
                 />
-              </Form.Item>
-              <Form.Item
-                name="time_start"
-                className=" mb-0"
-                // rules={[{ required: true }]}
-                style={{ minWidth: "320px", flex: "1 1 0%" }}
-                // getValueProps={(value) => ({
-                //   value: value ? moment(value) : null,
-                // })}
-              >
-                <DatePicker
-                  placeholder="Chọn ngày bắt đầu"
-                  style={{ width: "100%" }}
-                />
-              </Form.Item>
-              <Form.Item
-                className=" mb-0"
-                name="time_end"
-                rules={[{ required: true }]}
-                style={{ minWidth: "320px", flex: "1 1 0%" }}
-                // getValueProps={(value) => ({
-                //   value: value ? moment(value) : null,
-                // })}
-              >
-                <DatePicker
-                  placeholder="Chọn ngày kết thúc"
-                  style={{ width: "100%" }}
-                />
-              </Form.Item>
+              </Form.Item>  
+              </Panel>
+              </Collapse>
+            
+             
             </Form>
           </TabPane>
         </Tabs>

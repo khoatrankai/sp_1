@@ -6,6 +6,7 @@ import ModalStatusWork from "./Modal/ModalStatusWork/ModalStatusWork";
 import Link from "next/link";
 import { FaTableCells } from "react-icons/fa6";
 import { useParams } from "next/navigation";
+import { IoIosList } from "react-icons/io";
 
 // type MenuItem = {
 //   value: string;
@@ -73,6 +74,9 @@ export default function ToolWork() {
 
         <Link href={"/admin/work/scheduler"} hidden={projectID ? true : false}>
           <Button icon={<FaTableCells />} />
+        </Link>
+        <Link href={`/management/all_work`}>
+          <Button icon={<IoIosList  />} />
         </Link>
       </div>
 

@@ -792,6 +792,15 @@ const activityService = {
       throw error;
     }
   },
+  updateTasks: async (tasks:IUpdateTask[]) => {
+    try {
+      const response = await api.put(`/activity/update-tasks`, tasks);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   deleteWork: async (id: string) => {
     try {
       const response = await api.delete(`/activity/works/${id}`);
@@ -936,6 +945,24 @@ const activityService = {
   dashboardActivity: async (id: string) => {
     try {
       const response = await api.get(`/activity/dashboard-activity/${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  getWorksFilter: async (filters?: {page?:number,limit?:number,status?:string,type?:string}) => {
+    try {
+      const queryParams = new URLSearchParams();
+
+      if (filters) {
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value !== undefined && value !== null) {
+            queryParams.append(key, value.toString());
+          }
+        });
+      }
+      const response = await api.get(`/activity/works-filter?${queryParams.toString()}`);
       return response.data;
     } catch (error) {
       handleError(error);

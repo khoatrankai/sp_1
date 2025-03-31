@@ -194,6 +194,7 @@ export interface IGetWork {
   updated_at: Date;
   urgent: boolean;
   picture_urls?: IGetPictureWork[];
+  user_create?:InfoUser
   list_user?: {
     list_id: string;
     user: string;
@@ -232,6 +233,7 @@ export interface IGetTask {
   time_end: Date;
   created_at: Date;
   urgent?: boolean;
+  position:number
   updated_at: Date;
   picture_urls?: IGetPictureTask[];
 }
@@ -280,6 +282,7 @@ export interface IUpdateTask {
   status?: 'waitting'|'fail'|'success';
   name?: string;
   urgent?: boolean;
+  position?:number
   description?: string;
   work?: string;
   time_start?: Date;
