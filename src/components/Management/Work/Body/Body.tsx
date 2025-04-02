@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { Button, Tabs, TabsProps } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -10,6 +11,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store/store'
 import Kanban from './Kanban/Kanban'
 import dynamic from 'next/dynamic'
+import activityService from '@/services/activityService'
 const ComponentGantt = dynamic(
   () => import("./Gantt/Gantt")
 );
@@ -20,6 +22,7 @@ const ComponentGantt = dynamic(
 
 export default function BodyWork() {
     const router = useRouter()
+    const [dashboardManagement,setDashboardManagement] = useState<any>()
     const searchParams = useSearchParams()
     const { datas: dataType } = useSelector(
       (state: RootState) => state.get_type_work
@@ -53,25 +56,25 @@ export default function BodyWork() {
     }
     const tabs: TabsProps["items"] = [
         {
-          label: <p className='text-xs font-medium'>Chờ <span>({1})</span></p>,
+          label: <p className='text-xs font-medium'>Chờ <span>({dashboardManagement?.waitting})</span></p>,
           key: "waitting",
           children: (
            <TableWork/>
           ),
         },
         {
-          label: <p className='text-xs font-medium'>Đang thực hiện <span>({1})</span></p>,
+          label: <p className='text-xs font-medium'>Đang thực hiện <span>({dashboardManagement?.process})</span></p>,
           key: "process",
           children: <TableWork/>,
         },
         {
-            label: <p className='text-xs font-medium'>Đang đánh giá <span>({1})</span></p>,
+            label: <p className='text-xs font-medium'>Đang đánh giá <span>({dashboardManagement?.review})</span></p>,
             key: "review",
           children: <TableWork/>,
         },
         
         { 
-            label: <p className='text-xs font-medium'>Chưa hoàn thành <span>({1})</span></p>,
+            label: <p className='text-xs font-medium'>Chưa hoàn thành <span>({dashboardManagement?.yet_completed})</span></p>,
             key: "yet_completed",
           children: <TableWork/>,
         },
@@ -106,7 +109,7 @@ export default function BodyWork() {
 
       const tabsGantt: TabsProps["items"] = [
         {
-          label: <p className='text-xs font-medium'>Tất cả <span>({3})</span></p>,
+          label: <p className='text-xs font-medium'>Tất cả <span>({dashboardManagement?.total})</span></p>,
           key: "all",
           children: (
             <>
@@ -123,7 +126,7 @@ export default function BodyWork() {
           ),
         },
         {
-          label: <p className='text-xs font-medium'>Chờ <span>({3})</span></p>,
+          label: <p className='text-xs font-medium'>Chờ <span>({dashboardManagement?.waitting})</span></p>,
           key: "waitting",
           children: (
             <>
@@ -140,7 +143,7 @@ export default function BodyWork() {
           ),
         },
         {
-          label: <p className='text-xs font-medium'>Đang thực hiện <span>({3})</span></p>,
+          label: <p className='text-xs font-medium'>Đang thực hiện <span>({dashboardManagement?.process})</span></p>,
           key: "process",
           children:  <>
           <div className="h-full translate-y-0 relative">
@@ -154,7 +157,7 @@ export default function BodyWork() {
           </>,
         },
         {
-            label: <p className='text-xs font-medium'>Đang đánh giá <span>({3})</span></p>,
+            label: <p className='text-xs font-medium'>Đang đánh giá <span>({dashboardManagement?.review})</span></p>,
             key: "review",
           children:  <>
           <div className="h-full translate-y-0 relative">
@@ -169,7 +172,7 @@ export default function BodyWork() {
         },
         
         {
-            label: <p className='text-xs font-medium'>Chưa hoàn thành <span>({3})</span></p>,
+            label: <p className='text-xs font-medium'>Chưa hoàn thành <span>({dashboardManagement?.yet_completed})</span></p>,
             key: "yet_completed",
           children:  <>
           <div className="h-full translate-y-0 relative">
@@ -195,6 +198,15 @@ export default function BodyWork() {
           }))
         }
       },[type,dataType])
+      const fetchData = async(typeDashboard?:string)=>{
+        const res = await activityService.getDashboardWorksManagement({type:typeDashboard})
+        if(res.statusCode === 200){
+          setDashboardManagement(res.data)
+        }
+      }
+      useEffect(()=>{
+          fetchData(searchParams.get('type') ?? undefined)
+      },[searchParams])
   return (
     <div>
         <div className='flex px-4'>

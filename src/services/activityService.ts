@@ -969,6 +969,24 @@ const activityService = {
       throw error;
     }
   },
+  getDashboardWorksManagement: async (filters?: {type?:string}) => {
+    try {
+      const queryParams = new URLSearchParams();
+
+      if (filters) {
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value !== undefined && value !== null) {
+            queryParams.append(key, value.toString());
+          }
+        });
+      }
+      const response = await api.get(`/activity/dashboard-management?${queryParams.toString()}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
 };
 
 export default activityService;
