@@ -3,8 +3,10 @@ import { handleError } from "@/utils/error";
 import api, { api_formdata } from "./api"; // Ensure `api` is your Axios instance configured with baseURL and interceptors
 import {
   ICreateActivity,
+  ICreateComment,
   ICreateListCodeProduct,
   ICreateListUser,
+  ICreateReview,
   ICreateStatusActivity,
   ICreateStatusWork,
   ICreateTask,
@@ -12,10 +14,12 @@ import {
   ICreateTypeWork,
   ICreateWork,
   IUpdateActivity,
+  IUpdateComment,
   IUpdateListCodeProduct,
   IUpdateListUser,
   IUpdatePictureActivity,
   IUpdatePictureWork,
+  IUpdateReview,
   IUpdateStatusActivity,
   IUpdateStatusWork,
   IUpdateTask,
@@ -981,6 +985,74 @@ const activityService = {
         });
       }
       const response = await api.get(`/activity/dashboard-management?${queryParams.toString()}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+
+  createReview: async (data:ICreateReview) => {
+    try {
+
+    
+      const response = await api.post(`/activity/create-review`,data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  updateReview: async (id:string,data:IUpdateReview) => {
+    try {
+
+    
+      const response = await api.put(`/activity/update-review/${id}`,data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  getReviews: async (id:string) => {
+    try {
+
+    
+      const response = await api.get(`/activity/get-reviews/${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+
+  createComment: async (data:ICreateComment) => {
+    try {
+
+    
+      const response = await api.post(`/activity/create-comment`,data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  updateComment: async (id:string,data:IUpdateComment) => {
+    try {
+
+    
+      const response = await api.put(`/activity/update-comment/${id}`,data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  getComments: async (id:string) => {
+    try {
+
+    
+      const response = await api.get(`/activity/get-comments/${id}`);
       return response.data;
     } catch (error) {
       handleError(error);

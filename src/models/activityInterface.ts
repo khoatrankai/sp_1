@@ -1,3 +1,4 @@
+
 import { IGetContract } from "./contractInterface";
 import { InfoUser } from "./userInterface";
 
@@ -238,6 +239,41 @@ export interface IGetTask {
   picture_urls?: IGetPictureTask[];
 }
 
+export interface IGetReview {
+  review_id: string;
+  status: 'waitting'| 'fail'| 'success'; // status_work_id
+  description?: string;
+  quality?: 'excellent'| 'good'| 'satisfactory'|'fail'|'needs_improvement';
+  work?: IGetWork2; // activity_id
+  user_create?:InfoUser
+  time_end?:Date
+  created_at: Date;
+  progress:number
+  updated_at: Date;
+}
+
+export interface IGetComment {
+  comment_id: string;
+  description?: string;
+  work?: IGetWork2; // activity_id
+  user_create?:InfoUser
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface ICreateComment {
+  description?: string;
+  work?: string; // activity_id
+  user_create?:InfoUser
+}
+
+export interface IUpdateComment {
+  comment_id?: string;
+  description?: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface ICreateWork {
   type: string; // type_work_id
   status: string; // status_work_id
@@ -264,6 +300,28 @@ export interface ICreateTask {
   picture_url_type?: string[];
 }
 
+export interface ICreateReview {
+  status: 'waitting'| 'fail'| 'success'; // status_work_id
+  description?: string;
+  quality?: 'excellent'| 'good'| 'satisfactory'|'fail'|'needs_improvement';
+  work?: string; // activity_id
+  time_end?:Date
+  user_create?:InfoUser
+  progress:number
+}
+
+export interface IUpdateReview {
+  review_id: string;
+  status: 'waitting'| 'fail'| 'success'; // status_work_id
+  description?: string;
+  quality?: 'excellent'| 'good'| 'satisfactory'|'fail'|'needs_improvement';
+  work?: IGetWork2; // activity_id
+  user_create?:InfoUser
+  time_end?:Date
+  created_at: Date;
+  progress:number
+  updated_at: Date;
+}
 export interface IUpdateWork {
   work_id?: string;
   type?: string;

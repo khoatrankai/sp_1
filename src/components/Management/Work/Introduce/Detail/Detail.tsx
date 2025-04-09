@@ -3,6 +3,7 @@ import activityService from '@/services/activityService';
 import { Avatar, Progress, Tooltip } from 'antd'
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import ModalComment from '../Comment/Comment';
 
 
 
@@ -104,7 +105,9 @@ export default function Detail() {
     </div>
     <div>
         <p className='p-4'>Thảo luận</p>
-       
+       <div>
+        <ModalComment/>
+       </div>
     </div>
       </div>
     </>

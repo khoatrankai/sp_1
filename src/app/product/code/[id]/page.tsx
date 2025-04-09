@@ -127,7 +127,7 @@ export default function page() {
                 <span className="font-bold">Ngày bắt đầu: </span>
                 {new Date(
                   dataProductCode?.warranty_start ?? ""
-                ).toLocaleDateString("vi-VN")}
+                ).toLocaleDateString()}
               </p>
               <p className="text-gray-500 break-words">
                 <span className="font-bold">Ngày kết thúc: </span>
