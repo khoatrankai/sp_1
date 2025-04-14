@@ -1059,6 +1059,16 @@ const activityService = {
       throw error;
     }
   },
+
+  getWorksFollowActivityByProject: async (id: string) => {
+    try {
+      const response = await api.get(`/activity/get-works_follow_activities_by_project?id=${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
 };
 
 export default activityService;

@@ -11,24 +11,20 @@ import { fetchTypeWorksID } from "@/redux/store/slices/activitySlices/type_id_wo
 import activityService from "@/services/activityService";
 import ModalAddWork from "@/components/Work/Tool/Modal/ModalWork";
 import { useSelector } from "react-redux";
-import { useSearchParams } from "next/navigation";
 
-// type Props= {
-//   // id:string,
-//   // idCurrent?:string
-// }
+type Props= {
+  id:string
+}
 
-const Kanban = () => {
+const Kanban = ({id}:Props) => {
   const [columns, setColumns] = useState<IGetStatusWork[]>([]);
   const { postdata } = usePostData();
-  const searchParams = useSearchParams()
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    const id = searchParams.get('id')
     if (id) {
       dispatch(fetchTypeWorksID(id.toString()));
     }
-  }, [searchParams]);
+  }, [id]);
   const { datas: dataType } = useSelector(
     (state: RootState) => state.get_type_id_works
   );
@@ -54,7 +50,7 @@ const Kanban = () => {
       activityService.updateStatusListActivity(dataReq)
     );
     if (statusCode === 200) {
-      dispatch(fetchTypeWorksID(searchParams.get('id') ?? ""));
+      dispatch(fetchTypeWorksID(id.toString()));
     }
   };
   const onDragEnd = (
@@ -196,7 +192,7 @@ const Kanban = () => {
                         </Button> */}
                         <ModalAddWork
                           idStatus={column.status_work_id}
-                          idType={searchParams.get('id') as string}
+                          idType={id as string}
                           type="schedule"
                         />
                       </div>

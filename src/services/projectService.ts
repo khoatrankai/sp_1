@@ -11,14 +11,14 @@ const projectService = {
       throw error;
     }
   },
-  getProjects: async (filters?: { customer?: string,type?:string }) => {
+  getProjects: async (filters?: { customer?: string,type?:string,status?:string,page?:number,limit?:number }) => {
     try {
       const queryParams = new URLSearchParams();
 
       if (filters) {
         Object.entries(filters).forEach(([key, value]) => {
           if (value !== undefined && value !== null) {
-            queryParams.append(key, value);
+            queryParams.append(key, value.toString());
           }
         });
       }

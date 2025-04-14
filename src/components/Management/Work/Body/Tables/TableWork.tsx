@@ -17,7 +17,7 @@ export default function TableWork() {
   const [currentPage,setCurrentPage ] = useState<number>()
   const [totalPage,setTotalPage ] = useState<number>(1)
   const fetchData = async (status?:string,type?:string)=>{
-    const res = await activityService.getWorksFilter({limit:10,page:currentPage,status,type})
+    const res = await activityService.getWorksFilter({page:currentPage,status,type})
     if(res.statusCode === 200){
       setDataSources(res.data.datas)
       setTotalPage(res.data.total_pages !== 0 ? res.data.total_pages:1)
@@ -27,7 +27,6 @@ export default function TableWork() {
   useEffect(()=>{
     const status = searchParams.get('status')
     const type = searchParams.get('type')
-    console.log(status,type,currentPage,totalPage)
     // if(status || type){
     //   fetchData(status ?? undefined,type ?? undefined )
     // }else{

@@ -1,42 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { Button, Tabs, TabsProps } from 'antd'
-import React, { Ref, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CiBoxList, CiExport, CiImport } from 'react-icons/ci'
 import { FaChartGantt } from 'react-icons/fa6'
 import { TbLayoutKanban } from 'react-icons/tb'
-import TableWork from './Tables/TableWork'
+import TableProject from './Tables/TableProject'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store/store'
 import Kanban from './Kanban/Kanban'
 import dynamic from 'next/dynamic'
 import activityService from '@/services/activityService'
-import { IoIosAdd } from 'react-icons/io'
-import ModalAddWork from '@/components/Work/Tool/Modal/ModalWork'
 const ComponentGantt = dynamic(
   () => import("./Gantt/Gantt")
 );
 
 
 
-export default function BodyWork() {
+
+
+export default function BodyProject() {
     const router = useRouter()
-    const refBtnWork = useRef<HTMLButtonElement>()
     const [dashboardManagement,setDashboardManagement] = useState<any>()
     const searchParams = useSearchParams()
     const { datas: dataType } = useSelector(
-      (state: RootState) => state.get_type_work
+      (state: RootState) => state.type_projects
     );
 
     const [type,setType] = useState<'basic'|'kanban'|'gantt'>('basic')
     const TabBarExtraContent= ()=>{
    
         return <div className='flex gap-1 items-center'>
-            <Button className='flex flex-col items-center justify-center h-16' type='text' onClick={()=>{
-              setType('kanban')
-              router.push(`/management/all_work?id=${dataType[0].type_work_id}`)
-              }}>
+            <Button className='flex flex-col items-center justify-center h-16' type='text' onClick={()=>{setType('kanban')}}>
             <TbLayoutKanban className='text-xl'/>
             <span className='text-xs font-medium'>Kanban</span>
             </Button>
@@ -47,10 +43,6 @@ export default function BodyWork() {
             <Button className='flex flex-col items-center justify-center h-16' type='text' onClick={()=>{setType('gantt')}}>
             <FaChartGantt className='text-xl'/>
             <span className='text-xs font-medium'>Gantt chart</span>
-            </Button>
-            <Button className='flex flex-col items-center justify-center h-16' type='text' onClick={()=>{refBtnWork.current?.click()}}>
-            <IoIosAdd className='text-xl'/>
-            <span className='text-xs font-medium'>Thêm việc</span>
             </Button>
             <Button className='flex flex-col items-center justify-center h-16' type='text'>
             <CiExport className='text-xl'/>
@@ -63,60 +55,58 @@ export default function BodyWork() {
         </div>
     }
     const tabs: TabsProps["items"] = [
-      {
-        label: <p className='text-xs font-medium'>Tất cả</p>,
-        key: "all",
-        children: (
-         <TableWork/>
-        ),
-      },
         {
-          label: <p className='text-xs font-medium'>Chờ <span>({dashboardManagement?.waitting})</span></p>,
-          key: "waitting",
+          label: <p className='text-xs font-medium'>Chờ <span>({dashboardManagement?.waiting})</span></p>,
+          key: "waiting",
           children: (
-           <TableWork/>
+           <TableProject/>
           ),
         },
         {
-          label: <p className='text-xs font-medium'>Đang thực hiện <span>({dashboardManagement?.process})</span></p>,
-          key: "process",
-          children: <TableWork/>,
+          label: <p className='text-xs font-medium'>Đang thực hiện <span>({dashboardManagement?.start})</span></p>,
+          key: "start",
+          children: <TableProject/>,
         },
         {
-            label: <p className='text-xs font-medium'>Đang đánh giá <span>({dashboardManagement?.review})</span></p>,
-            key: "review",
-          children: <TableWork/>,
+            label: <p className='text-xs font-medium'>Tạm dừng <span>({dashboardManagement?.pause})</span></p>,
+            key: "pause",
+          children: <TableProject/>,
         },
         
         { 
-            label: <p className='text-xs font-medium'>Chưa hoàn thành <span>({dashboardManagement?.yet_completed})</span></p>,
-            key: "yet_completed",
-          children: <TableWork/>,
+            label: <p className='text-xs font-medium'>Hoàn thành <span>({dashboardManagement?.completed})</span></p>,
+            key: "completed",
+          children: <TableProject/>,
         },
+        { 
+          label: <p className='text-xs font-medium'>Đã hủy<span>({dashboardManagement?.cancel})</span></p>,
+          key: "cancel",
+        children: <TableProject/>,
+      },
       ];
       // const tabsType: TabsProps["items"] = [
       //   {
       //     label: <p className='text-xs font-medium'>Chờ <span>({1})</span></p>,
       //     key: "waitting",
       //     children: (
-      //      <TableWork/>
+      //      <TableProject/>
       //     ),
       //   },
       //   {
       //     label: <p className='text-xs font-medium'>Đang thực hiện <span>({1})</span></p>,
       //     key: "process",
-      //     children: <TableWork/>,
+      //     children: <TableProject/>,
       //   },
       //   {
       //       label: <p className='text-xs font-medium'>Đang đánh giá <span>({1})</span></p>,
       //       key: "review",
-      //     children: <TableWork/>,
+      //     children: <TableProject/>,
       //   },
         
       //   {
       //       label: <p className='text-xs font-medium'>Chưa hoàn thành <span>({1})</span></p>,
       //       key: "yet_completed",
-      //     children: <TableWork/>,
+      //     children: <TableProject/>,
       //   },
       // ];
 
@@ -131,7 +121,7 @@ export default function BodyWork() {
             <div className="h-full translate-y-0 relative">
           <p className="px-4 pt-2 font-semibold text-base text-[#1AA59D] z-50 absolute top-0 left-0">
             {/* {dataContract.find((dt) => dt.contract_id === id)?.name_contract} */}
-            Công việc
+            Dự án
           </p>
           <ComponentGantt />
         </div>
@@ -141,14 +131,14 @@ export default function BodyWork() {
           ),
         },
         {
-          label: <p className='text-xs font-medium'>Chờ <span>({dashboardManagement?.waitting})</span></p>,
-          key: "waitting",
+          label: <p className='text-xs font-medium'>Chờ <span>({dashboardManagement?.waiting})</span></p>,
+          key: "waiting",
           children: (
             <>
             <div className="h-full translate-y-0 relative">
           <p className="px-4 pt-2 font-semibold text-base text-[#1AA59D] z-50 absolute top-0 left-0">
             {/* {dataContract.find((dt) => dt.contract_id === id)?.name_contract} */}
-            Công việc
+            Dự án
           </p>
           <ComponentGantt />
         </div>
@@ -158,13 +148,13 @@ export default function BodyWork() {
           ),
         },
         {
-          label: <p className='text-xs font-medium'>Đang thực hiện <span>({dashboardManagement?.process})</span></p>,
-          key: "process",
+          label: <p className='text-xs font-medium'>Đang thực hiện <span>({dashboardManagement?.start})</span></p>,
+          key: "start",
           children:  <>
           <div className="h-full translate-y-0 relative">
         <p className="px-4 pt-2 font-semibold text-base text-[#1AA59D] z-50 absolute top-0 left-0">
           {/* {dataContract.find((dt) => dt.contract_id === id)?.name_contract} */}
-          Công việc
+          Dự án
         </p>
         <ComponentGantt />
       </div>
@@ -172,13 +162,13 @@ export default function BodyWork() {
           </>,
         },
         {
-            label: <p className='text-xs font-medium'>Đang đánh giá <span>({dashboardManagement?.review})</span></p>,
+            label: <p className='text-xs font-medium'>Tạm dừng <span>({dashboardManagement?.pause})</span></p>,
             key: "review",
           children:  <>
           <div className="h-full translate-y-0 relative">
         <p className="px-4 pt-2 font-semibold text-base text-[#1AA59D] z-50 absolute top-0 left-0">
           {/* {dataContract.find((dt) => dt.contract_id === id)?.name_contract} */}
-          Công việc
+          Dự án
         </p>
         <ComponentGantt />
       </div>
@@ -187,8 +177,8 @@ export default function BodyWork() {
         },
         
         {
-            label: <p className='text-xs font-medium'>Chưa hoàn thành <span>({dashboardManagement?.yet_completed})</span></p>,
-            key: "yet_completed",
+            label: <p className='text-xs font-medium'>Hoàn thành <span>({dashboardManagement?.completed})</span></p>,
+            key: "completed",
           children:  <>
           <div className="h-full translate-y-0 relative">
         <p className="px-4 pt-2 font-semibold text-base text-[#1AA59D] z-50 absolute top-0 left-0">
@@ -199,15 +189,28 @@ export default function BodyWork() {
 
           </>,
         },
+        {
+          label: <p className='text-xs font-medium'>Đã hủy <span>({dashboardManagement?.cancel})</span></p>,
+          key: "cancel",
+        children:  <>
+        <div className="h-full translate-y-0 relative">
+      <p className="px-4 pt-2 font-semibold text-base text-[#1AA59D] z-50 absolute top-0 left-0">
+        {/* {dataContract.find((dt) => dt.contract_id === id)?.name_contract} */}
+      </p>
+      <ComponentGantt />
+    </div>
+
+        </>,
+      },
       ];
       useEffect(()=>{
         if(type === "kanban"){
           setTabsType(dataType.map(dt => {
             return {
-              label:<p className='text-xs font-medium'>{dt.name}</p>,
-              key:dt.type_work_id,
+              label:<p className='text-xs font-medium'>{dt.name_type}</p>,
+              key:dt.type_id,
               children: <>
-                <Kanban/>
+                <Kanban id={dt.type_id}/>
               </>
             }
           }))
@@ -225,40 +228,32 @@ export default function BodyWork() {
   return (
     <div>
         <div className='flex px-4'>
-        
         <Tabs
             className="w-full custom-tabs 1text-xs !font-medium"
             
             items={type ==='kanban'? tabsType:type === "gantt"?tabsGantt:tabs}
             onChange={(e)=>{
+              console.log(e,type)
               if(type === 'basic' ||type === 'gantt') {
+                console.log(e)
                 const typeParams = searchParams.get('type')
                   if(e === "all"){
                     if(typeParams){
-                      router.push(`/management/all_work?type=${typeParams}`)}
+                      router.push(`/management/all_project?type=${typeParams}`)}
 
                     else{
-                    router.push(`/management/all_work`)}
+                    router.push(`/management/all_project`)}
 
                     
                   }
                   else{
                     if(typeParams){
-                      router.push(`/management/all_work?type=${typeParams}&status=${e}`)}
+                      router.push(`/management/all_project?type=${typeParams}&status=${e}`)}
 
                     else{
-                      if(e === "all"){
-                        router.push(`/management/all_work`)
-                      }else{
-                          router.push(`/management/all_work?status=${e}`)}
-
-                      }
+                    router.push(`/management/all_project?status=${e}`)}
                   }
-                }else{
-                  router.push(`/management/all_work?id=${e}`)
                 }
-
-              
                 
 
               }
@@ -270,7 +265,6 @@ export default function BodyWork() {
             //   }}
           />
         </div>
-        <ModalAddWork refBtnWork={refBtnWork as Ref<HTMLButtonElement>}/>
     </div>
   )
 }

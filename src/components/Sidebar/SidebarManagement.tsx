@@ -90,7 +90,7 @@ const SidebarManagement = () => {
           key: "do_project",
           label: (
             <Link
-              href="/customer/project"
+              href="/management/all_project?type=perform"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -103,7 +103,7 @@ const SidebarManagement = () => {
           key: "management_work",
           label: (
             <Link
-              href="/customer/project"
+              href="/management/all_project?type=management"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -116,7 +116,7 @@ const SidebarManagement = () => {
           key: "follow_project",
           label: (
             <Link
-              href="/customer/project"
+              href="/management/all_project?type=follow"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -129,7 +129,7 @@ const SidebarManagement = () => {
           key: "department_project",
           label: (
             <Link
-              href="/customer/project"
+              href="/management/all_project?type=group"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -142,7 +142,7 @@ const SidebarManagement = () => {
           key: "all_project",
           label: (
             <Link
-              href="/customer/project"
+              href="/management/all_project"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}

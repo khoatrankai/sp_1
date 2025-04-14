@@ -194,6 +194,7 @@ export interface IGetWork {
   created_at: Date;
   updated_at: Date;
   urgent: boolean;
+  tasks?: IGetTask[];
   picture_urls?: IGetPictureWork[];
   user_create?:InfoUser
   list_user?: {

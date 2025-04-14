@@ -1,5 +1,7 @@
 import { UploadFile } from "antd";
 import { CustomerInfo } from "./customerInterface";
+import { InfoUser } from "./userInterface";
+import { IGetPictureWork } from "./activityInterface";
 
 export interface IGetProject {
     project_id: string;
@@ -9,6 +11,9 @@ export interface IGetProject {
     type?:ITypeProject
     time_job?: number;
     user_support?: string;
+    progress:{total:number,completed:number,pause:number,cancel:number,process:number,waiting:number}
+    attach:IGetPictureWork[]
+    user_participants?:InfoUser[]
     customer?: CustomerInfo;
     start_date?: Date;
     end_date?: Date;
