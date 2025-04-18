@@ -12,7 +12,7 @@ export default function page() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(()=>{
     dispatch(fetchUserInfo())
-    dispatch(fetchTypeWork ())
+    dispatch(fetchTypeWork())
   },[])
   return (
     <div>

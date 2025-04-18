@@ -1,27 +1,14 @@
 import {  IGetWork2 } from '@/models/activityInterface'
-import activityService from '@/services/activityService';
 import { Avatar, Progress, Tooltip } from 'antd'
-import { useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ModalComment from '../Comment/Comment';
 
 
+type Props = {
+  dataSource:IGetWork2
+}
 
-export default function Detail() {
-  const searchParams = useSearchParams();
-  const [dataSource,setDataSource] = useState<IGetWork2>()
-  const fetchData = async(id:string)=>{
-    const res = await activityService.getWorkById(id)
-    if(res.statusCode === 200){
-      setDataSource(res.data)
-    }
-  }
-  useEffect(()=>{
-    const id = searchParams.get('id')
-    if(id){
-      fetchData(id)
-    }
-  },[searchParams])
+export default function Detail({dataSource}:Props) {
   return (
     <>
       <div className='flex flex-col gap-8'>

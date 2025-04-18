@@ -222,6 +222,7 @@ export interface IGetWork2 {
   picture_urls?: IGetPictureWork[];
   user_create?:InfoUser
   list_user?: InfoUser[];
+  folders?:IGetFolder[]
   date?: string;
 }
 
@@ -390,4 +391,32 @@ export interface IUpdateTypeActivity {
   type_activity_id: string;
   name?: string;
   name_tag?: string;
+}
+
+
+export interface ICreateFile {
+  files?: {name?:string}[];
+  url?: File[];
+  folder?:string
+}
+export interface ICreateFolder {
+  name?: string;
+  description?: string;
+  work?: string;
+  files?:ICreateFile[]
+  url?:File[]
+}
+
+export interface IGetFolder {
+  folder_id:string
+  name: string;
+  description: string;
+  work: string;
+  files?:IGetFile[]
+}
+
+export interface IGetFile {
+  file_id:string
+  name: string;
+  url: string;
 }

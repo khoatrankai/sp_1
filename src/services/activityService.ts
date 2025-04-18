@@ -4,6 +4,8 @@ import api, { api_formdata } from "./api"; // Ensure `api` is your Axios instanc
 import {
   ICreateActivity,
   ICreateComment,
+  ICreateFile,
+  ICreateFolder,
   ICreateListCodeProduct,
   ICreateListUser,
   ICreateReview,
@@ -1025,6 +1027,17 @@ const activityService = {
       throw error;
     }
   },
+  checkReview: async (id:string) => {
+    try {
+
+    
+      const response = await api.get(`/activity/check-review/${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
 
   createComment: async (data:ICreateComment) => {
     try {
@@ -1063,6 +1076,42 @@ const activityService = {
   getWorksFollowActivityByProject: async (id: string) => {
     try {
       const response = await api.get(`/activity/get-works_follow_activities_by_project?id=${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  createFolder: async (data:FormData) => {
+    try {
+      const response = await api_formdata.post(`/activity/create-folder`,data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  updateFolder: async (id:string,data:ICreateFolder) => {
+    try {
+      const response = await api.put(`/activity/update-folder/${id}`,data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  createFile: async (data:FormData) => {
+    try {
+      const response = await api_formdata.post(`/activity/create-files`,data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  updateFile: async (id:string,data:ICreateFile) => {
+    try {
+      const response = await api.put(`/activity/update-file/${id}`,data);
       return response.data;
     } catch (error) {
       handleError(error);
