@@ -15,12 +15,13 @@ export default function TableWork() {
   const searchParams = useSearchParams();
   const [dataSources,setDataSources] = useState<IGetWork2[]>([])
   const [currentPage,setCurrentPage ] = useState<number>()
-  const [totalPage,setTotalPage ] = useState<number>(1)
+  // const [totalPage,setTotalPage ] = useState<number>(1)
   const fetchData = async (status?:string,type?:string)=>{
+    console.log(status,type)
     const res = await activityService.getWorksFilter({page:currentPage,status,type})
     if(res.statusCode === 200){
       setDataSources(res.data.datas)
-      setTotalPage(res.data.total_pages !== 0 ? res.data.total_pages:1)
+      // setTotalPage(res.data.total_pages !== 0 ? res.data.total_pages:1)
       setCurrentPage(res.data.current_page)
     }
   }
@@ -32,9 +33,10 @@ export default function TableWork() {
     // }else{
     //   fetchData()
     // }
-    if(!currentPage || currentPage<= totalPage){
+    // console.log(status,type)
+    // if(!currentPage || currentPage<= totalPage){
       fetchData(status ?? undefined,type ?? undefined)
-    }
+    // }
   },[searchParams,currentPage])
 
     const { datas: dataUsers } = useSelector(

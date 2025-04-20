@@ -232,27 +232,17 @@ export default function BodyWork() {
             items={type ==='kanban'? tabsType:type === "gantt"?tabsGantt:tabs}
             onChange={(e)=>{
               if(type === 'basic' ||type === 'gantt') {
-                const typeParams = searchParams.get('type')
                   if(e === "all"){
-                    if(typeParams){
-                      router.push(`/management/all_work?type=${typeParams}`)}
+                    const params = new URLSearchParams(searchParams.toString())
+                    params.delete('status')
+                    router.push(`/management/all_work?${params.toString()}`)
 
-                    else{
-                    router.push(`/management/all_work`)}
-
-                    
                   }
                   else{
-                    if(typeParams){
-                      router.push(`/management/all_work?type=${typeParams}&status=${e}`)}
-
-                    else{
-                      if(e === "all"){
-                        router.push(`/management/all_work`)
-                      }else{
-                          router.push(`/management/all_work?status=${e}`)}
-
-                      }
+                    const params = new URLSearchParams(searchParams.toString())
+                    params.set('status',e)
+                    router.push(`/management/all_work?${params.toString()}`)
+                    
                   }
                 }else{
                   router.push(`/management/all_work?id=${e}`)

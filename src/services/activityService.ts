@@ -1118,6 +1118,15 @@ const activityService = {
       throw error;
     }
   },
+  getDocumentsByProject: async (id: string) => {
+    try {
+      const response = await api.get(`/activity/get-documents-by-project/${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
 };
 
 export default activityService;

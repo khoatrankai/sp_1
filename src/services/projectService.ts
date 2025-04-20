@@ -11,7 +11,7 @@ const projectService = {
       throw error;
     }
   },
-  getProjects: async (filters?: { customer?: string,type?:string,status?:string,page?:number,limit?:number }) => {
+  getProjects: async (filters?: { customer?: string,type_project?:string,status?:string,page?:number,limit?:number }) => {
     try {
       const queryParams = new URLSearchParams();
 
@@ -56,6 +56,26 @@ const projectService = {
       throw error;
     }
   },
+  getProjectsFilter: async (filter?:{type?:string,page?:number,limit?:number,user?:string,status?:string}) => {
+  
+
+    try {
+      const queryParams = new URLSearchParams();
+
+      if (filter) {
+        Object.entries(filter).forEach(([key, value]) => {
+          if (value !== undefined && value !== null) {
+            queryParams.append(key, value.toString());
+          }
+        });
+      }
+      const response = await api.get(`/project/get-projects-filter?${queryParams.toString()}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   updateProject: async (id: string, data: FormData) => {
     try {
       const response = await api_formdata.put(`/project/update/${id}`, data);
@@ -83,9 +103,18 @@ const projectService = {
       throw error;
     }
   },
-  getTypeFulls: async () => {
+  getTypeFulls: async (filter?:{status?:string}) => {
     try {
-      const response = await api.get(`/project/type-full`);
+      const queryParams = new URLSearchParams();
+
+      if (filter) {
+        Object.entries(filter).forEach(([key, value]) => {
+          if (value !== undefined && value !== null) {
+            queryParams.append(key, value.toString());
+          }
+        });
+      }
+      const response = await api.get(`/project/type-full?${queryParams.toString()}`);
       return response.data;
     } catch (error) {
       handleError(error);
@@ -109,6 +138,24 @@ const projectService = {
   dashboardProject: async () => {
     try {
       const response = await api_formdata.get(`/project/dashboard-project`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  getDashboardProjectManagement: async (filters?: {type_project?:string}) => {
+    try {
+      const queryParams = new URLSearchParams();
+
+      if (filters) {
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value !== undefined && value !== null) {
+            queryParams.append(key, value.toString());
+          }
+        });
+      }
+      const response = await api.get(`/project/get-dashboard-management?${queryParams.toString()}`);
       return response.data;
     } catch (error) {
       handleError(error);

@@ -8,6 +8,7 @@ import Link from "next/link";
 import { FaChartGantt } from "react-icons/fa6";
 import { useParams } from "next/navigation";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { GiPieChart } from "react-icons/gi";
 
 export default function ToolProduct() {
   const { customerID } = useParams();
@@ -24,6 +25,9 @@ export default function ToolProduct() {
         </Link>
         <Link href={`/detail/project`}>
           <Button icon={<MdOutlineSpaceDashboard />} />
+        </Link>
+        <Link href={`/management/all_project`}>
+          <Button icon={<GiPieChart />} />
         </Link>
       </div>
       {!customerID && (

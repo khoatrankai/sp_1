@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { RootState } from "@/redux/store/store";
 import { Scheduler, SchedulerData } from "@bitnoi.se/react-scheduler";
 import "@bitnoi.se/react-scheduler/dist/style.css";
 import dayjs from "dayjs";
@@ -6,13 +7,26 @@ import isBetween from "dayjs/plugin/isBetween";
 import enDayjsTranslations from "dayjs/locale/en";
 import viDayjsTranslations from "dayjs/locale/vi";
 dayjs.extend(isBetween);
-import { useCallback, useEffect, useState } from "react";
-import activityService from "@/services/activityService";
-import { IGetWork2 } from "@/models/activityInterface";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import "./styles.scss";
+import useMedia from "use-media";
+import ModalUpdateProject from "@/components/Project/Tool/Modal/ModalUpdateProject";
 import { useSearchParams } from "next/navigation";
-
-export default function ComponentGantt() {
+import projectService from "@/services/projectService";
+import { ITypeProject } from "@/models/projectInterface";
+export default function GanttProject() {
+  const isMobile = useMedia({ maxWidth: 639 });
+  const refBtn = useRef<HTMLButtonElement>();
   const searchParams = useSearchParams();
+  const [IdProject, setIdProject] = useState<string>("");
+  const [dataTypeFull,setDataTypeFull] = useState<ITypeProject[]>([])
+  // const { datas: dataTypeFull } = useSelector(
+  //   (state: RootState) => state.type_full_projects
+  // );
+  const { datas: dataUsers } = useSelector(
+    (state: RootState) => state.get_users
+  );
   const [filterButtonState, setFilterButtonState] = useState(0);
   const [mockedSchedulerData, setMockedSchedulerData] = useState<SchedulerData>(
     []
@@ -63,54 +77,62 @@ export default function ComponentGantt() {
       dayjsTranslations: viDayjsTranslations,
     },
   ];
-
-  const fetchData = async(status?:string)=>{
-    const res = await activityService.getWorksFilter({status})
-    if(res.statusCode === 200){
+  useEffect(() => {
+    if (IdProject !== "") {
+      refBtn.current?.click();
+    }
+  }, [IdProject]);
+  useEffect(() => {
+    if (dataTypeFull && dataTypeFull.length) {
       setMockedSchedulerData(
-        res.data.datas.map((dt:IGetWork2) => {
+        dataTypeFull.map((dt) => {
           return {
-            id: dt.work_id,
+            id: dt.type_id,
             label: {
-              subtitle: dt.description || "",
-              title: dt.name || "",
+              subtitle: "",
+              title: dt.name_type || "",
               icon: "",
             },
-            data: dt?.tasks
-              ?.map((dtt) => {
-              
-                return {
-                  id: dtt.task_id,
-                  startDate: new Date(dtt.time_start),
-                  endDate: new Date(dtt.time_end),
-                  occupancy: 0,
-                  title: dtt.name || "Untitled",
-                  subtitle: dtt.status === "fail" ? 'Thất bại':dtt.status === "success" ? 'Thành công':'Đang chờ',
-                  description: dtt.description || "",
-                  bgColor:
-                    dtt.status === "fail"
-                      ? "rgb(255,193,7)"
-                      : dtt.status === "waitting"
-                      ? "rgb(0,123,255)"
-                      : dtt.status === "success"
-                      ? "rgb(40,167,69)"
-                      : "rgb(211,211,211)",
-                };
-              }),
+            data: dt.projects?.map((dtt) => {
+              return {
+                id: dtt.project_id,
+                startDate: dtt.start_date ? new Date(dtt.start_date) : 0,
+                endDate: dtt.end_date ? new Date(dtt.end_date) : 0,
+                occupancy: 0,
+                title: dtt.name || "Untitled",
+                subtitle: dtt.status,
+                description: dtt.description || "",
+                bgColor:
+                  dtt.status === "pause"
+                    ? "rgb(255,193,7)"
+                    : dtt.status === "start"
+                    ? "rgb(0,123,255)"
+                    : dtt.status === "waiting"
+                    ? "rgb(100,149,237)"
+                    : dtt.status === "completed"
+                    ? "rgb(40,167,69)"
+                    : "rgb(211,211,211)",
+              };
+            }),
           };
         }) as SchedulerData
       );
+    }
+  }, [dataTypeFull, dataUsers]);
+  const [range, setRange] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+  });
+  const fetchData = async(status?:string)=>{
+    const res = await projectService.getTypeFulls({status})
+    if(res.statusCode === 200){
+      setDataTypeFull(res.data)
     }
   }
   useEffect(() => {
     const status = searchParams.get('status')
     fetchData(status ?? undefined)
   }, [searchParams]);
-  const [range, setRange] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-  });
-
   const handleRangeChange = useCallback((range: any) => {
     setRange(range);
   }, []);
@@ -128,16 +150,21 @@ export default function ComponentGantt() {
   }));
 
   return (
-    <section className="min-h-screen">
+    <section className={`${isMobile ? "unactive" : ""}`}>
       <Scheduler
         data={filteredMockedSchedulerData}
         isLoading={false}
         onRangeChange={handleRangeChange}
-        onItemClick={(item) => {
-          if (item) {
-            window.location.href = `/admin/activity/scheduler/gantt/${item.id}`;
+        onTileClick={(clickedResource) => {
+          if (clickedResource) {
+            setIdProject(clickedResource.id);
           }
         }}
+        // onItemClick={(item) => {
+        //   if (item) {
+        //     window.location.href = `/admin/activity/scheduler/gantt/${item.id}`;
+        //   }
+        // }}
         onFilterData={() => {
           setFilterButtonState(1);
         }}
@@ -154,7 +181,12 @@ export default function ComponentGantt() {
           defaultTheme: "dark",
         }}
       />
-     
+      <ModalUpdateProject
+        ID={IdProject}
+        setID={setIdProject}
+        type="gantt"
+        refBtnProject={refBtn as React.Ref<HTMLButtonElement>}
+      />
     </section>
   );
 }

@@ -1,5 +1,4 @@
 import { Menu } from "antd";
-import Link from "next/link";
 import React from "react";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store/store";
@@ -8,12 +7,15 @@ import { toggleMenu } from "@/redux/store/slices/menu.slice";
 import useMedia from "use-media";
 import { HiClipboardDocumentCheck } from "react-icons/hi2";
 import { MdOutlineWorkHistory } from "react-icons/md";
+import { useRouter, useSearchParams } from "next/navigation";
 
 // type Props = {};
 
 // type MenuItem = Required<MenuProps>["items"][number];
 
 const SidebarManagement = () => {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const dispatch = useDispatch<AppDispatch>();
   const isMobile = useMedia({ maxWidth: 639 });
   // const { datas: dataRoleAccess } = useSelector(
@@ -30,53 +32,69 @@ const SidebarManagement = () => {
         {
           key: "process_work",
           label: (
-            <Link
-              href="/management/all_work?type=perform"
+            <div
+              // href="/management/all_work?type=perform"
+              className="w-full h-full"
               onClick={() => {
+                const params = new URLSearchParams(searchParams.toString())
+                    params.set('type','perform')
+                    router.push(`/management/all_work?${params.toString()}`)
                 if (isMobile) dispatch(toggleMenu());
               }}
             >
               <span>Bạn thực hiện</span>
-            </Link>
+            </div>
           ),
         },
         {
           key: "assigned_work",
           label: (
-            <Link
-              href="/management/all_work?type=assigned"
+            <div
+              // href="/management/all_work?type=assigned"
+              className="w-full h-full"
               onClick={() => {
+              const params = new URLSearchParams(searchParams.toString())
+                    params.set('type','assigned')
+                    router.push(`/management/all_work?${params.toString()}`)
                 if (isMobile) dispatch(toggleMenu());
               }}
             >
               <span>Bạn đã giao</span>
-            </Link>
+            </div>
           ),
         },
         {
           key: "department_work",
           label: (
-            <Link
-              href="/management/all_work?type=group"
+            <div
+              className="w-full h-full"
+              // href="/management/all_work?type=group"
               onClick={() => {
+              const params = new URLSearchParams(searchParams.toString())
+                    params.set('type','group')
+                    router.push(`/management/all_work?${params.toString()}`)
                 if (isMobile) dispatch(toggleMenu());
               }}
             >
               <span>Phong ban bạn</span>
-            </Link>
+            </div>
           ),
         },
         {
           key: "all_work",
           label: (
-            <Link
-              href="/management/all_work"
+            <div
+              className="w-full h-full"
+              // href="/management/all_work"
               onClick={() => {
+              const params = new URLSearchParams(searchParams.toString())
+                    params.delete('type')
+                    router.push(`/management/all_work?${params.toString()}`)
                 if (isMobile) dispatch(toggleMenu());
               }}
             >
               <span>Tất cả</span>
-            </Link>
+            </div>
           ),
         },
       ],
@@ -89,66 +107,74 @@ const SidebarManagement = () => {
         {
           key: "do_project",
           label: (
-            <Link
-              href="/management/all_project?type=perform"
+            <div
+              className="w-full h-full"
+              // href="/management/all_project?type_project=perform"
               onClick={() => {
+                const params = new URLSearchParams(searchParams.toString())
+                    params.set('type_project','perform')
+                    params.delete('type')
+                    router.push(`/management/all_project?${params.toString()}`)
                 if (isMobile) dispatch(toggleMenu());
               }}
             >
               <span>Bạn thực hiện</span>
-            </Link>
+            </div>
           ),
         },
         {
           key: "management_work",
           label: (
-            <Link
-              href="/management/all_project?type=management"
+            <div
+             className="w-full h-full"
+              // href="/management/all_project?type_project=management"
               onClick={() => {
+                const params = new URLSearchParams(searchParams.toString())
+                params.set('type_project','management')
+                params.delete('type')
+                router.push(`/management/all_project?${params.toString()}`)
                 if (isMobile) dispatch(toggleMenu());
               }}
             >
               <span>Bạn quản trị</span>
-            </Link>
+            </div>
           ),
         },
-        {
-          key: "follow_project",
-          label: (
-            <Link
-              href="/management/all_project?type=follow"
-              onClick={() => {
-                if (isMobile) dispatch(toggleMenu());
-              }}
-            >
-              <span>Bạn theo dõi</span>
-            </Link>
-          ),
-        },
+        
         {
           key: "department_project",
           label: (
-            <Link
-              href="/management/all_project?type=group"
+            <div
+              // href="/management/all_project?type_project=group"
+              className="w-full h-full"
               onClick={() => {
+                const params = new URLSearchParams(searchParams.toString())
+                params.set('type_project','group')
+                params.delete('type')
+                router.push(`/management/all_project?${params.toString()}`)
                 if (isMobile) dispatch(toggleMenu());
               }}
             >
               <span>Phòng ban bạn</span>
-            </Link>
+            </div>
           ),
         },
         {
           key: "all_project",
           label: (
-            <Link
-              href="/management/all_project"
+            <div
+              // href="/management/all_project"
+              className="w-full h-full"
               onClick={() => {
+                const params = new URLSearchParams(searchParams.toString())
+                params.delete('type_project')
+                params.delete('type')
+                router.push(`/management/all_project?${params.toString()}`)
                 if (isMobile) dispatch(toggleMenu());
               }}
             >
               <span>Tất cả</span>
-            </Link>
+            </div>
           ),
         },
       ],

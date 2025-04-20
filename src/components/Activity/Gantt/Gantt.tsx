@@ -166,7 +166,7 @@ const initializeGSTC = async (
     const link = document.getElementById(`href-${dt}`);
     // console.log(dt);
     if (link) {
-      console.log(link);
+      // console.log(link);
       link.addEventListener("dblclick", function () {
         setIdModal(dt);
       });

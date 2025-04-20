@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store/store'
 import Kanban from './Kanban/Kanban'
 import dynamic from 'next/dynamic'
-import activityService from '@/services/activityService'
+import projectService from '@/services/projectService'
 const ComponentGantt = dynamic(
   () => import("./Gantt/Gantt")
 );
@@ -56,30 +56,35 @@ export default function BodyProject() {
     }
     const tabs: TabsProps["items"] = [
         {
-          label: <p className='text-xs font-medium'>Chờ <span>({dashboardManagement?.waiting})</span></p>,
-          key: "waiting",
+          label: <p className='text-xs font-medium'>Tất cả <span>({dashboardManagement?.total_project})</span></p>,
+          key: "all",
           children: (
            <TableProject/>
           ),
         },
         {
-          label: <p className='text-xs font-medium'>Đang thực hiện <span>({dashboardManagement?.start})</span></p>,
+          label: <p className='text-xs font-medium'>Chờ <span>({dashboardManagement?.waiting_project})</span></p>,
+          key: "waiting",
+          children: <TableProject/>,
+        },
+        {
+          label: <p className='text-xs font-medium'>Đang thực hiện <span>({dashboardManagement?.process_project})</span></p>,
           key: "start",
           children: <TableProject/>,
         },
         {
-            label: <p className='text-xs font-medium'>Tạm dừng <span>({dashboardManagement?.pause})</span></p>,
+            label: <p className='text-xs font-medium'>Tạm dừng <span>({dashboardManagement?.pause_project})</span></p>,
             key: "pause",
           children: <TableProject/>,
         },
         
         { 
-            label: <p className='text-xs font-medium'>Hoàn thành <span>({dashboardManagement?.completed})</span></p>,
+            label: <p className='text-xs font-medium'>Hoàn thành <span>({dashboardManagement?.completed_project})</span></p>,
             key: "completed",
           children: <TableProject/>,
         },
         { 
-          label: <p className='text-xs font-medium'>Đã hủy<span>({dashboardManagement?.cancel})</span></p>,
+          label: <p className='text-xs font-medium'>Đã hủy<span>({dashboardManagement?.cancel_project})</span></p>,
           key: "cancel",
         children: <TableProject/>,
       },
@@ -114,7 +119,7 @@ export default function BodyProject() {
 
       const tabsGantt: TabsProps["items"] = [
         {
-          label: <p className='text-xs font-medium'>Tất cả <span>({dashboardManagement?.total})</span></p>,
+          label: <p className='text-xs font-medium'>Tất cả <span>({dashboardManagement?.total_project})</span></p>,
           key: "all",
           children: (
             <>
@@ -130,23 +135,7 @@ export default function BodyProject() {
             </>
           ),
         },
-        {
-          label: <p className='text-xs font-medium'>Chờ <span>({dashboardManagement?.waiting})</span></p>,
-          key: "waiting",
-          children: (
-            <>
-            <div className="h-full translate-y-0 relative">
-          <p className="px-4 pt-2 font-semibold text-base text-[#1AA59D] z-50 absolute top-0 left-0">
-            {/* {dataContract.find((dt) => dt.contract_id === id)?.name_contract} */}
-            Dự án
-          </p>
-          <ComponentGantt />
-        </div>
-           
-
-            </>
-          ),
-        },
+       
         {
           label: <p className='text-xs font-medium'>Đang thực hiện <span>({dashboardManagement?.start})</span></p>,
           key: "start",
@@ -162,8 +151,8 @@ export default function BodyProject() {
           </>,
         },
         {
-            label: <p className='text-xs font-medium'>Tạm dừng <span>({dashboardManagement?.pause})</span></p>,
-            key: "review",
+            label: <p className='text-xs font-medium'>Tạm dừng <span>({dashboardManagement?.pause_project})</span></p>,
+            key: "pause",
           children:  <>
           <div className="h-full translate-y-0 relative">
         <p className="px-4 pt-2 font-semibold text-base text-[#1AA59D] z-50 absolute top-0 left-0">
@@ -177,7 +166,7 @@ export default function BodyProject() {
         },
         
         {
-            label: <p className='text-xs font-medium'>Hoàn thành <span>({dashboardManagement?.completed})</span></p>,
+            label: <p className='text-xs font-medium'>Hoàn thành <span>({dashboardManagement?.completed_project})</span></p>,
             key: "completed",
           children:  <>
           <div className="h-full translate-y-0 relative">
@@ -190,7 +179,7 @@ export default function BodyProject() {
           </>,
         },
         {
-          label: <p className='text-xs font-medium'>Đã hủy <span>({dashboardManagement?.cancel})</span></p>,
+          label: <p className='text-xs font-medium'>Đã hủy <span>({dashboardManagement?.cancel_project})</span></p>,
           key: "cancel",
         children:  <>
         <div className="h-full translate-y-0 relative">
@@ -217,13 +206,13 @@ export default function BodyProject() {
         }
       },[type,dataType])
       const fetchData = async(typeDashboard?:string)=>{
-        const res = await activityService.getDashboardWorksManagement({type:typeDashboard})
+        const res = await projectService.getDashboardProjectManagement({type_project:typeDashboard})
         if(res.statusCode === 200){
           setDashboardManagement(res.data)
         }
       }
       useEffect(()=>{
-          fetchData(searchParams.get('type') ?? undefined)
+          fetchData(searchParams.get('type_project') ?? undefined)
       },[searchParams])
   return (
     <div>
@@ -235,24 +224,18 @@ export default function BodyProject() {
             onChange={(e)=>{
               console.log(e,type)
               if(type === 'basic' ||type === 'gantt') {
-                console.log(e)
-                const typeParams = searchParams.get('type')
-                  if(e === "all"){
-                    if(typeParams){
-                      router.push(`/management/all_project?type=${typeParams}`)}
+                if(e === "all"){
+                  const params = new URLSearchParams(searchParams.toString())
+                  params.delete('status')
+                  router.push(`/management/all_project?${params.toString()}`)
 
-                    else{
-                    router.push(`/management/all_project`)}
-
-                    
-                  }
-                  else{
-                    if(typeParams){
-                      router.push(`/management/all_project?type=${typeParams}&status=${e}`)}
-
-                    else{
-                    router.push(`/management/all_project?status=${e}`)}
-                  }
+                }
+                else{
+                  const params = new URLSearchParams(searchParams.toString())
+                  params.set('status',e)
+                  router.push(`/management/all_project?${params.toString()}`)
+                  
+                }
                 }
                 
 

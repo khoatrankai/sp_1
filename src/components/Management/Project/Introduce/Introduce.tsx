@@ -1,66 +1,70 @@
 "use client"
-import { Button, Tabs, TabsProps } from 'antd'
-import React, { Ref, useEffect, useRef, useState } from 'react'
+import { Button, Popover, Tabs, TabsProps } from 'antd'
+import React, { useEffect, useState } from 'react'
 import { TbStatusChange } from 'react-icons/tb'
 import Detail from './Detail/Detail'
 import Attach from './Attach/Attach'
-import { PiUserListBold } from 'react-icons/pi'
-import { FaClipboardList, FaHistory } from 'react-icons/fa'
-import { MdAssignmentAdd, MdOutlineReviews } from 'react-icons/md'
-import { HiOutlineDocumentReport } from 'react-icons/hi'
-import ListUser from './ListUser/ListUser'
-import ListTask from './ListTask/ListTask'
-import ModalAddWork from '@/components/Work/Tool/Modal/ModalWork'
-import ModalReview from './ModalReview/ModalReview'
-import { IGetReview } from '@/models/activityInterface'
-import activityService from '@/services/activityService'
-import { useSearchParams } from 'next/navigation'
-import ModalHistoryReview from './ModalHistoryReview/ModalHistoryReview'
-import TableProject from '../Body/Tables/TableProject'
+// import { PiUserListBold } from 'react-icons/pi'
+// import { MdAssignmentAdd } from 'react-icons/md'
+// import { HiOutlineDocumentReport } from 'react-icons/hi'
+import TableWork from './TableWork/TableWork'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { FaChartGantt } from 'react-icons/fa6'
+import projectService from '@/services/projectService'
+import { IGetProject } from '@/models/projectInterface'
+import ModalStatus from './ModalStatus/ModalStatus'
 
 
 
 export default function Introduce() {
-    const [dataReview,setDataReview] = useState<IGetReview[]>([])
+    // const [dataReview,setDataReview] = useState<IGetReview[]>([])
     const searchParams = useSearchParams()
-    const refBtn = useRef<HTMLButtonElement>()
-    const refBtnAddReview = useRef<HTMLButtonElement>()
-    const refBtnHistoryReview = useRef<HTMLButtonElement>()
-    const refBtnWork = useRef<HTMLButtonElement>()
-    const refBtnListTask = useRef<HTMLButtonElement>()
-    const fetchData = async()=>{
-      // const res = await activityService.getReviews(searchParams.get('id')??"")
-      // if(res.statusCode === 200){
-      //   setDataReview(res.data)
-      // }
+    const [dataSource,setDataSource] = useState<IGetProject>()
+    const router = useRouter()
+    const [activeKey, setActiveKey] = useState("detail");
+    // const refBtn = useRef<HTMLButtonElement>()
+    // const refBtnWork = useRef<HTMLButtonElement>()
+    const fetchData = async(id:string)=>{
+    const res = await projectService.getProject(id)
+    if(res.statusCode === 200){
+      setDataSource(res.data)
     }
-    useEffect(()=>{
-      fetchData()
-    },[])
-    const handleFetch = ()=>{
-      fetchData()
+  }
+  useEffect(()=>{
+    const id = searchParams.get('id')
+    if(id){
+      fetchData(id)
     }
+  },[searchParams])
+  
     const TabBarExtraContent= ()=>{
    
         return <div className='flex gap-1 items-center'>
+             <Popover content={<ModalStatus fetchData={fetchData} project={dataSource as IGetProject}/>}>
             <Button className='flex flex-col items-center justify-center h-16' type='text'>
             <TbStatusChange className='text-xl'/>
             <span className='text-xs font-medium'>Trạng thái</span>
             </Button>
-            <Button className='flex flex-col items-center justify-center h-16' type='text' onClick={()=>{refBtn.current?.click()}}>
+            </Popover>
+            {/* <Button className='flex flex-col items-center justify-center h-16' type='text' onClick={()=>{refBtn.current?.click()}}>
             <PiUserListBold className='text-xl'/>
             <span className='text-xs font-medium'>Tham gia</span>
+            </Button> */}
+            <Button className='flex flex-col items-center justify-center h-16' type='text' onClick={()=>{
+              router.push('/management/detail_project/gantt')
+            }}>
+            <FaChartGantt className='text-xl'/>
+            <span className='text-xs font-medium'>Gantt</span>
             </Button>
-
-            <Button className='flex flex-col items-center justify-center h-16' type='text' onClick={()=>{refBtnWork.current?.click()}}>
+            {/* <Button className='flex flex-col items-center justify-center h-16' type='text' onClick={()=>{refBtnWork.current?.click()}}>
             <MdAssignmentAdd className='text-xl'/>
             <span className='text-xs font-medium'>Thêm việc</span>
-            </Button>
+            </Button> */}
            
-            <Button className='flex flex-col items-center justify-center h-16' type='text'>
+            {/* <Button className='flex flex-col items-center justify-center h-16' type='text'>
             <HiOutlineDocumentReport className='text-xl'/>
             <span className='text-xs font-medium'>Báo cáo</span>
-            </Button>
+            </Button> */}
         </div>
     }
     const tabs: TabsProps["items"] = [
@@ -68,35 +72,21 @@ export default function Introduce() {
           label: <p className='text-xs font-medium'>Chi tiết</p>,
           key: "detail",
           children: (
-           <Detail/>
+           <Detail dataSource={dataSource as IGetProject}/>
           ),
         },
         {
           label: <p className='text-xs font-medium'>Công việc</p>,
-          key: "projects",
+          key: "works",
           children: (
-           <TableProject/>
-          ),
-        },
-        {
-          label: <p className='text-xs font-medium'>Gantt chart</p>,
-          key: "gantt",
-          children: (
-           <Detail/>
-          ),
-        },
-        {
-          label: <p className='text-xs font-medium'>Kanban</p>,
-          key: "kanban",
-          children: (
-           <Detail/>
+           <TableWork/>
           ),
         },
         {
           label: <p className='text-xs font-medium'>Báo cáo</p>,
           key: "report",
           children: (
-           <Detail/>
+           <></>
           ),
         },
         {
@@ -113,7 +103,10 @@ export default function Introduce() {
             
         <Tabs
             className="w-full custom-tabs 1text-xs !font-medium"
-            
+            activeKey={activeKey}
+            onChange={(key)=>{
+              setActiveKey(key)
+            }}
             items={tabs}
            
             tabBarExtraContent={TabBarExtraContent()}

@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import {  Tag } from 'antd'
-import { useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { BiListCheck } from 'react-icons/bi';
 import { GiProgression } from 'react-icons/gi';
 import { PiTarget } from 'react-icons/pi';
@@ -11,31 +10,32 @@ import { MdDateRange } from 'react-icons/md';
 import { IoDocumentAttachSharp } from 'react-icons/io5';
 import PieChart from './PieChart/PieChart';
 import StepActivity from './Steps/StepActivity';
-import projectService from '@/services/projectService';
 import { IGetProject } from '@/models/projectInterface';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store/store';
 
+type Props={
+  dataSource:IGetProject
+}
 
-
-export default function Detail() {
-  const searchParams = useSearchParams();
-  const [dataSource,setDataSource] = useState<IGetProject>()
+export default function Detail({dataSource}:Props) {
+  // const searchParams = useSearchParams();
+  // const [dataSource,setDataSource] = useState<IGetProject>()
   const { datas: dataUsers } = useSelector(
       (state: RootState) => state.get_users
     );
-  const fetchData = async(id:string)=>{
-    const res = await projectService.getProject(id)
-    if(res.statusCode === 200){
-      setDataSource(res.data)
-    }
-  }
-  useEffect(()=>{
-    const id = searchParams.get('id')
-    if(id){
-      fetchData(id)
-    }
-  },[searchParams])
+  // const fetchData = async(id:string)=>{
+  //   const res = await projectService.getProject(id)
+  //   if(res.statusCode === 200){
+  //     setDataSource(res.data)
+  //   }
+  // }
+  // useEffect(()=>{
+  //   const id = searchParams.get('id')
+  //   if(id){
+  //     fetchData(id)
+  //   }
+  // },[searchParams])
 
   const handleDay = (date1:any,date2:any)=>{
     const timestamp1 = date1 ? (new Date(date1).getTime()): Date.now();
