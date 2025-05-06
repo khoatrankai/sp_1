@@ -56,5 +56,20 @@ export interface IGetProject {
     description?: string; 
     picture_url?: UploadFile[];
   }
+
+  export interface ICreateNotify {
+    description: string;
+    url:string;
+    project:string;
+  }
+
+  export interface IGetNotify {
+    notify_id: string;
+    description: string;
+    user_create:InfoUser;
+    url:string;
+    created_at: Date;
+    updated_at: Date;
+  }
   
   

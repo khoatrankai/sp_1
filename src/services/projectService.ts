@@ -1,5 +1,6 @@
 import { handleError } from "@/utils/error";
 import api, { api_formdata } from "./api";
+import { ICreateNotify } from "@/models/projectInterface";
 
 const projectService = {
   createProject: async (data: FormData) => {
@@ -162,6 +163,34 @@ const projectService = {
       throw error;
     }
   },
+  getProjectsByType: async(id:string)=>{
+    try {
+      const response = await api.get(`/project/get-projects-by-type/${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+
+  getNotifies: async(id:string)=>{
+    try {
+      const response = await api.get(`/project/get-notifies/${id}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  createNotify: async(data:ICreateNotify)=>{
+    try {
+      const response = await api.post(`/project/create-notify`,data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  }
 };
 
 export default projectService;

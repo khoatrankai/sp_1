@@ -4,12 +4,8 @@ import { Button, Tabs, TabsProps } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { CiBoxList, CiExport, CiImport } from 'react-icons/ci'
 import { FaChartGantt } from 'react-icons/fa6'
-import { TbLayoutKanban } from 'react-icons/tb'
 import TableProject from './Tables/TableProject'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/redux/store/store'
-import Kanban from './Kanban/Kanban'
 import dynamic from 'next/dynamic'
 import projectService from '@/services/projectService'
 const ComponentGantt = dynamic(
@@ -24,18 +20,13 @@ export default function BodyProject() {
     const router = useRouter()
     const [dashboardManagement,setDashboardManagement] = useState<any>()
     const searchParams = useSearchParams()
-    const { datas: dataType } = useSelector(
-      (state: RootState) => state.type_projects
-    );
+    
 
     const [type,setType] = useState<'basic'|'kanban'|'gantt'>('basic')
     const TabBarExtraContent= ()=>{
    
         return <div className='flex gap-1 items-center'>
-            <Button className='flex flex-col items-center justify-center h-16' type='text' onClick={()=>{setType('kanban')}}>
-            <TbLayoutKanban className='text-xl'/>
-            <span className='text-xs font-medium'>Kanban</span>
-            </Button>
+           
             <Button className='flex flex-col items-center justify-center h-16' type='text' onClick={()=>{setType('basic')}}>
             <CiBoxList className='text-xl'/>
             <span className='text-xs font-medium'>Hiển thị</span>
@@ -115,7 +106,7 @@ export default function BodyProject() {
       //   },
       // ];
 
-      const [tabsType,setTabsType] = useState<TabsProps["items"]>()
+
 
       const tabsGantt: TabsProps["items"] = [
         {
@@ -192,19 +183,6 @@ export default function BodyProject() {
         </>,
       },
       ];
-      useEffect(()=>{
-        if(type === "kanban"){
-          setTabsType(dataType.map(dt => {
-            return {
-              label:<p className='text-xs font-medium'>{dt.name_type}</p>,
-              key:dt.type_id,
-              children: <>
-                <Kanban id={dt.type_id}/>
-              </>
-            }
-          }))
-        }
-      },[type,dataType])
       const fetchData = async(typeDashboard?:string)=>{
         const res = await projectService.getDashboardProjectManagement({type_project:typeDashboard})
         if(res.statusCode === 200){
@@ -220,7 +198,7 @@ export default function BodyProject() {
         <Tabs
             className="w-full custom-tabs 1text-xs !font-medium"
             
-            items={type ==='kanban'? tabsType:type === "gantt"?tabsGantt:tabs}
+            items={type === "gantt"?tabsGantt:tabs}
             onChange={(e)=>{
               console.log(e,type)
               if(type === 'basic' ||type === 'gantt') {

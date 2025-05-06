@@ -125,11 +125,11 @@ export default function TableWork() {
                     title: "Trạng thái",
                     dataIndex: ['work_id'],
                     className: "text-xs",
-                    render: (value:string) => 
+                    render: (value:string,record) => 
                       <>
-                        {value ?  <Tag
-                    color={value === "cancel" ? 'red':value === "completed" ? 'green':value === "pause" ? 'yellow':value === "start" ? 'blue':'gold'}
-                    >{value === "cancel" ? 'Đã hủy':value === "completed" ? 'Hoàn thành':value === "pause" ? 'Tạm dừng':value === "start" ? 'Bắt đầu':'Chờ'}</Tag>:""}
+                        {record.status?.name_tag ?  <Tag
+                    color={record.status?.name_tag === "cancel" ? 'red':record.status?.name_tag === "completed" ? 'green':record.status?.name_tag === "pause" ? 'yellow':record.status?.name_tag === "start" ? 'blue':'gold'}
+                    >{record.status?.name_tag === "cancel" ? 'Đã hủy':record.status?.name_tag === "completed" ? 'Hoàn thành':record.status?.name_tag === "pause" ? 'Tạm dừng':record.status?.name_tag === "start" ? 'Bắt đầu':'Chờ'}</Tag>:""}
                       </>
                       ,
                   },
@@ -140,7 +140,7 @@ export default function TableWork() {
             render: (value:string,record:IGetWork) => <div className='flex gap-1 w-full items-center font-medium justify-end'>
               <>
                 {
-                  value ? ((record.tasks?.filter(dt => dt.status === "success").length ?? 0) > 0) || (record.status?.name_tag === "completed") ?  <Progress percent={record.status.name_tag === "completed" ? 100 : ((record.tasks?.filter(dt => dt.status === "success").length ?? 0) / ((record.tasks?.length ?? 1) ?? 1))*100} /> : <Progress percent={0} /> :""
+                  value ? ((record.tasks?.filter(dt => dt.status === "success").length ?? 0) > 0) || (record.status?.name_tag === "completed") ?  <Progress percent={record.status?.name_tag === "completed" ? 100 : ((record.tasks?.filter(dt => dt.status === "success").length ?? 0) / ((record.tasks?.length ?? 1) ?? 1))*100} /> : <Progress percent={0} /> :""
                 }
               
               </>

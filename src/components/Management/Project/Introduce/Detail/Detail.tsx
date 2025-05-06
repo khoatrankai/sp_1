@@ -172,7 +172,7 @@ return diffInDays
             </div>
             <div className='flex gap-4 flex-wrap'>
             <div className='bg-slate-100 rounded-md flex-1 min-w-56'>
-              <p className='p-4'>Thông kê tiến độ</p>
+              <p className='p-4'>Thống kê tiến độ</p>
               <div className='max-w-full p-4 border-t-[1px]'>
                 <div className='min-w-56 h-56'>
                 <PieChart dataSource={[{type:'Hoàn thành',value:dataSource?.progress.completed ?? 0},{type:'Tạm ngưng',value:dataSource?.progress.pause ?? 0},{type:'Đã hủy',value:dataSource?.progress.cancel ?? 0},{type:'Đang tiến hành',value:dataSource?.progress.process ?? 0},{type:'Chờ',value:dataSource?.progress.waiting ?? 0}]} title={`${((dataSource?.progress.completed ?? 0) * 100/(dataSource?.progress.total ?? 1)).toString()}%`}/>
