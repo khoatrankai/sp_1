@@ -59,7 +59,7 @@ export default function InfoID() {
           defaultValue={customerID}
           onChange={(e) => {
             router.push(
-              `/customer/info/${e ? e : dataSources[0].info_id}`
+              `/customers/info/${e ? e : dataSources[0].info_id}`
             );
           }}
           showSearch

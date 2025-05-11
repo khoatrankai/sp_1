@@ -21,7 +21,7 @@ export default function ToolCustomer() {
         <ModalGroupCustomer />
         <ModalGroupCustomer />
   
-        <Link href={`/customer/dashboard`}>
+        <Link href={`/customers/dashboard`}>
           <Button icon={<FaChartPie />} />
         </Link>
       </div>
