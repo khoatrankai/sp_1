@@ -29,7 +29,7 @@ const Sidebar = () => {
       key: "customer",
       label: (
         <Link
-          href="/admin/customer"
+          href="/customer"
           className=""
           onClick={() => {
             if (isMobile) dispatch(toggleMenu());
@@ -49,7 +49,7 @@ const Sidebar = () => {
           key: "list_project",
           label: (
             <Link
-              href="/admin/project"
+              href="/project"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -69,7 +69,7 @@ const Sidebar = () => {
           key: "price_quote",
           label: (
             <Link
-              href="/admin/price_quote"
+              href="/price_quote"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -82,7 +82,7 @@ const Sidebar = () => {
           key: "contract",
           label: (
             <Link
-              href="/admin/contract"
+              href="/contract"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -95,7 +95,7 @@ const Sidebar = () => {
           key: "invoice",
           label: (
             <Link
-              href="/admin/payment"
+              href="/payment"
               className=""
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
@@ -116,7 +116,7 @@ const Sidebar = () => {
           key: "users",
           label: (
             <Link
-              href="/admin/user"
+              href="/user"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -129,7 +129,7 @@ const Sidebar = () => {
           key: "timekeeping",
           label: (
             <Link
-              href="/admin/timekeeping"
+              href="/timekeeping"
               className=""
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
@@ -150,7 +150,7 @@ const Sidebar = () => {
           key: "list_opportunity",
           label: (
             <Link
-              href="/admin/opportunity"
+              href="/opportunity"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -163,7 +163,7 @@ const Sidebar = () => {
           key: "dashboard_opportunity",
           label: (
             <Link
-              href="/admin/opportunity/dashboard"
+              href="/opportunity/dashboard"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -184,7 +184,7 @@ const Sidebar = () => {
           key: "list_activity",
           label: (
             <Link
-              href="/admin/activity"
+              href="/activity"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -196,7 +196,7 @@ const Sidebar = () => {
         // {
         //   key: "activity_require",
         //   label: (
-        //     <Link href="/admin/activity/require">
+        //     <Link href="/activity/require">
         //       <span>Yêu cầu khách hàng</span>
         //     </Link>
         //   ),
@@ -205,7 +205,7 @@ const Sidebar = () => {
           key: "activity_work",
           label: (
             <Link
-              href="/admin/work"
+              href="/work"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -217,7 +217,7 @@ const Sidebar = () => {
         // {
         //   key: "activity_schedule",
         //   label: (
-        //     <Link href="/admin/activity/schedule">
+        //     <Link href="/activity/schedule">
         //       <span>Lịch trình</span>
         //     </Link>
         //   ),
@@ -233,7 +233,7 @@ const Sidebar = () => {
           key: "list_product",
           label: (
             <Link
-              href="/admin/product"
+              href="/product"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -246,7 +246,7 @@ const Sidebar = () => {
           key: "list_supplier",
           label: (
             <Link
-              href="/admin/supplier"
+              href="/supplier"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -259,7 +259,7 @@ const Sidebar = () => {
           key: "list_product_input",
           label: (
             <Link
-              href="/admin/activity-import"
+              href="/activity-import"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -272,7 +272,7 @@ const Sidebar = () => {
           key: "list_product_output",
           label: (
             <Link
-              href="/admin/activity-export"
+              href="/activity-export"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -285,7 +285,7 @@ const Sidebar = () => {
           key: "list_product_status",
           label: (
             <Link
-              href="/admin/activity-status"
+              href="/activity-status"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -306,7 +306,7 @@ const Sidebar = () => {
           key: "vat",
           label: (
             <Link
-              href="/admin/system/vat"
+              href="/system/vat"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -319,7 +319,7 @@ const Sidebar = () => {
           key: "profit",
           label: (
             <Link
-              href="/admin/system/profit"
+              href="/system/profit"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -332,7 +332,7 @@ const Sidebar = () => {
           key: "link",
           label: (
             <Link
-              href="/admin/system/link"
+              href="/system/link"
               className=""
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
@@ -346,7 +346,7 @@ const Sidebar = () => {
           key: "target",
           label: (
             <Link
-              href="/admin/system/target"
+              href="/system/target"
               className=""
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
@@ -360,7 +360,7 @@ const Sidebar = () => {
           key: "report",
           label: (
             <Link
-              href="/admin/system/report"
+              href="/system/report"
               className=""
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());

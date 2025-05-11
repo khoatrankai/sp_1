@@ -68,7 +68,7 @@ export default function ToolPriceQuote() {
         <ModalPropose />
         <ModalTypePackage />
         <Link
-          href={`/admin/price_quote/kanban`}
+          href={`/price_quote/kanban`}
           hidden={customerID ? true : false}
         >
           <Button icon={<LuListChecks />} />

@@ -67,7 +67,7 @@ const ModalPieChartOpportunity = () => {
     },
     subtitle: {
       useHTML: true,
-      text: `<a style="font-size: 16px" href="/admin/opportunity">${dataSrc.reduce(
+      text: `<a style="font-size: 16px" href="/opportunity">${dataSrc.reduce(
         (preValue, currValue) => {
           return preValue + currValue.y;
         },
@@ -131,7 +131,7 @@ const ModalPieChartOpportunity = () => {
     },
   };
   const handleLink = async(status:string)=>{
-    router.push(`/admin/opportunity?status=${status}`)
+    router.push(`/opportunity?status=${status}`)
   }
   return (
     <>

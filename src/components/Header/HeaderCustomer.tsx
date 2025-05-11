@@ -34,7 +34,7 @@ const HeaderCustomer = () => {
             height={40}
             width={140}
             onClick={() => {
-              window.location.href = "/admin";
+              window.location.href = "/";
             }}
           />
         </div>

@@ -45,7 +45,7 @@ export default function ListContact() {
               ghost
               className="text-xs text-blue-600"
               onClick={() => {
-                window.location.href = `/admin/customer/info/${value}`;
+                window.location.href = `/customers/info/${value}`;
               }}
             >
               Xem

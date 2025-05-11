@@ -1,9 +1,15 @@
-import HomePage from "@/components/Home/Home";
+"use client";
 
-export default function Home() {
+import dynamic from "next/dynamic";
+
+// import SaleComponent from "@/components/SaleComponent/SaleComponent";
+const Dashboard = dynamic(() => import("@/components/Dashboard/Dashboard"));
+
+export default function page() {
   return (
     <>
-      <HomePage />
+      {/* <SaleComponent /> */}
+      <Dashboard />
     </>
   );
 }

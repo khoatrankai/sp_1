@@ -42,13 +42,13 @@ export default function Login() {
       );
       if (statusCode === 200) {
         dispatch(fetchCustomerProfile());
-        router.push("/customer");
+        router.push("/customers");
       }
     } else {
       const statusCode = await postdata(() => userService.loginUser(values));
       if (statusCode === 200) {
         dispatch(fetchUserProfile());
-        router.push("/admin");
+        router.push("/");
       }
     }
   };
@@ -103,14 +103,14 @@ export default function Login() {
           if (!dataProfileCustomer) {
             dispatch(fetchCustomerProfile());
           } else {
-            router.push("/customer");
+            router.push("/customers");
           }
         } else {
           setTabLogin(false);
           if (!dataProfile) {
             dispatch(fetchUserProfile());
           } else {
-            router.push("/admin");
+            router.push("/");
           }
         }
       }
@@ -119,7 +119,7 @@ export default function Login() {
       if (!dataProfile) {
         dispatch(fetchUserProfile());
       } else {
-        router.push("/admin");
+        router.push("/");
       }
     }
   };

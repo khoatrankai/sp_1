@@ -72,7 +72,7 @@ export default function ToolWork() {
           <ModalStatusWork />
         </div>
 
-        <Link href={"/admin/work/scheduler"} hidden={projectID ? true : false}>
+        <Link href={"/work/scheduler"} hidden={projectID ? true : false}>
           <Button icon={<FaTableCells />} />
         </Link>
         <Link href={`/management/all_work`}>

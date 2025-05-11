@@ -26,7 +26,7 @@ const SidebarCustomer = () => {
       key: "customer",
       label: (
         <Link
-          href="/customer/company"
+          href="/customers/company"
           className=""
           onClick={() => {
             if (isMobile) dispatch(toggleMenu());
@@ -46,7 +46,7 @@ const SidebarCustomer = () => {
           key: "list_project",
           label: (
             <Link
-              href="/customer/project"
+              href="/customers/project"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -66,7 +66,7 @@ const SidebarCustomer = () => {
           key: "price_quote",
           label: (
             <Link
-              href="/customer/price_quote"
+              href="/customers/price_quote"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -79,7 +79,7 @@ const SidebarCustomer = () => {
           key: "contract",
           label: (
             <Link
-              href="/customer/contract"
+              href="/customers/contract"
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());
               }}
@@ -92,7 +92,7 @@ const SidebarCustomer = () => {
           key: "invoice",
           label: (
             <Link
-              href="/customer/payment"
+              href="/customers/payment"
               className=""
               onClick={() => {
                 if (isMobile) dispatch(toggleMenu());

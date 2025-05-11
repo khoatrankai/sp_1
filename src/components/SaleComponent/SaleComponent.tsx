@@ -136,7 +136,7 @@ const SaleComponent = () => {
         <div className="flex-1 h-[322px] sm:min-w-[322px] rounded-sm bg-white p-[10px]">
           <GaugeChart
             title='<span class="slim-dashboard-title">Khách hàng của tôi</span>'
-            subtitle={`Thiết lập mục tiêu khách hàng mới <a style="color: blue" href="https://crm.slimsoft.vn/demo/admin/goals" target="_blank">(Tại đây)</a>`}
+            subtitle={`Thiết lập mục tiêu khách hàng mới <a style="color: blue" href="https://crm.slimsoft.vn/demo/goals" target="_blank">(Tại đây)</a>`}
             plotBands={[
               {
                 from: 0,
@@ -181,10 +181,10 @@ const SaleComponent = () => {
             }
             dataSrc={datas}
             subTitleSrc={`Nguồn doanh thu tương lai từ 
-        <u><a style="color: blue" href="https://crm.slimsoft.vn/demo/admin/invoices?sd_id=3" target="_blank" id="sd_invoices">hóa đơn</a></u>, 
-        <u><a style="color: blue" href="https://crm.slimsoft.vn/demo/admin/proposals?sd_id=3" target="_blank" id="sd_proposals">đề xuất</a></u>, 
-        <u><a style="color: blue" href="https://crm.slimsoft.vn/demo/admin/estimates?sd_id=3" target="_blank" id="sd_estimates">báo giá</a></u> và 
-        <u><a style="color: blue" href="https://crm.slimsoft.vn/demo/admin/leads?sd_id=3" target="_blank" id="sd_leads">cơ hội</a></u> trong khung thời gian lựa chọn<br>
+        <u><a style="color: blue" href="https://crm.slimsoft.vn/demo/invoices?sd_id=3" target="_blank" id="sd_invoices">hóa đơn</a></u>, 
+        <u><a style="color: blue" href="https://crm.slimsoft.vn/demo/proposals?sd_id=3" target="_blank" id="sd_proposals">đề xuất</a></u>, 
+        <u><a style="color: blue" href="https://crm.slimsoft.vn/demo/estimates?sd_id=3" target="_blank" id="sd_estimates">báo giá</a></u> và 
+        <u><a style="color: blue" href="https://crm.slimsoft.vn/demo/leads?sd_id=3" target="_blank" id="sd_leads">cơ hội</a></u> trong khung thời gian lựa chọn<br>
         <span class="small" style="font-size:8.4px">Tổng giá trị: 10,642,981,020</span>`}
           />
         </div>
@@ -193,7 +193,7 @@ const SaleComponent = () => {
             titleSrc={'<p class="slim-dashboard-title">Đường ống bán hàng</p>'}
             dataSrc={dataCustomer}
             subTitleSrc={`Thống kê <i>số lượng</i> và <i>giá trị dự kiến</i> các 
-                <u><a style="color: blue" href="https://crm.slimsoft.vn/demo/admin/leads?sd_id=" target="_blank" id="sd_leads_pipeline">cơ hội</a></u> 
+                <u><a style="color: blue" href="https://crm.slimsoft.vn/demo/leads?sd_id=" target="_blank" id="sd_leads_pipeline">cơ hội</a></u> 
                 của từng giai đoạn bán hàng<br>
                 <span class="small" style="font-size:8.4px">Tổng giá trị: 9,838,400,000</span>`}
           />
@@ -205,7 +205,7 @@ const SaleComponent = () => {
             titleSrc={'<p class="slim-dashboard-title">Hoạt động của tôi</p>'}
             dataSrc={dataActivate}
             subTitleSrc={`Bạn đã nổ lực như thế nào? 
-        <u><a style="color: blue" href="https://crm.slimsoft.vn/demo/admin/invoices?sd_id=3" target="_blank" id="sd_invoices">(Xem chi tiết)</a></u>`}
+        <u><a style="color: blue" href="https://crm.slimsoft.vn/demo/invoices?sd_id=3" target="_blank" id="sd_invoices">(Xem chi tiết)</a></u>`}
           />
         </div>
         <div className="bg-white min-h-[422px] flex-1 p-5">

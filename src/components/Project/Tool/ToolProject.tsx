@@ -20,7 +20,7 @@ export default function ToolProduct() {
       <div className="flex gap-1 flex-wrap">
         <ModalAddProject />
         <ModalTypeProject />
-        <Link href={`/admin/project/gantt`}>
+        <Link href={`/project/gantt`}>
           <Button icon={<FaChartGantt />} />
         </Link>
         <Link href={`/detail/project`}>

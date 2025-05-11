@@ -53,7 +53,7 @@ export default function InfoID() {
           defaultValue={projectID}
           onChange={(e) => {
             router.push(
-              `/admin/project/info/${e ? e : dataSources[0].project_id}`
+              `/project/info/${e ? e : dataSources[0].project_id}`
             );
           }}
           showSearch

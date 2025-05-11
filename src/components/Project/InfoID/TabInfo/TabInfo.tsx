@@ -78,7 +78,7 @@ export default function TabInfo() {
                 </p>
                 <a
                   className="flex-1 flex justify-start text-blue-500"
-                  href={`/admin/customer/info/${dataProject?.customer}`}
+                  href={`/customer/info/${dataProject?.customer}`}
                 >
                   {
                     dataCustomer?.find(

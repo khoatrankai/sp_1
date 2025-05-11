@@ -35,7 +35,7 @@ const GaugeChart2 = () => {
       },
     },
     subtitle: {
-      text: `Thiết lập mục tiêu doanh thu <a style="color: blue" href="https://crm.slimsoft.vn/demo/admin/goals" target="_blank">(Tại đây)</a>`,
+      text: `Thiết lập mục tiêu doanh thu <a style="color: blue" href="https://crm.slimsoft.vn/demo/goals" target="_blank">(Tại đây)</a>`,
       useHTML: true,
       align: "left",
       verticalAlign: "top",

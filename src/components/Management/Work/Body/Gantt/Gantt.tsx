@@ -135,7 +135,7 @@ export default function ComponentGantt() {
         onRangeChange={handleRangeChange}
         onItemClick={(item) => {
           if (item) {
-            window.location.href = `/admin/activity/scheduler/gantt/${item.id}`;
+            window.location.href = `/activity/scheduler/gantt/${item.id}`;
           }
         }}
         onFilterData={() => {

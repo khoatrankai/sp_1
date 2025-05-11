@@ -49,7 +49,7 @@ export default function ListProject() {
               ghost
               className=" text-blue-600"
               onClick={() => {
-                window.location.href = `/admin/project/info/${value}`;
+                window.location.href = `/project/info/${value}`;
               }}
             >
               Xem

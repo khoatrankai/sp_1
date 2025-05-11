@@ -8,6 +8,7 @@ import { DispatchProvider } from "./DispatchProvider";
 // import Head from "next/head";
 import CustomImage from "@/components/CustomImage/CustomImage";
 import { Suspense } from "react";
+import LayoutHeader from "./LayoutHeader";
 // import CookieConsent from "./CookieConsent";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -41,7 +42,13 @@ export default function RootLayout({
           <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}
           >
-            <Suspense fallback={<>Loading...</>}>{children}</Suspense>
+            <Suspense fallback={<>Loading...</>}>
+            <LayoutHeader>
+              {children}
+            </LayoutHeader>
+            
+            
+            </Suspense>
 
             <ToastContainer />
             <CustomImage />

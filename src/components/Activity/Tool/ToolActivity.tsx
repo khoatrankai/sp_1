@@ -94,12 +94,12 @@ export default function ToolActivity() {
         </div>
 
         {!projectID && (
-          <Link href={"/admin/activity/scheduler"}>
+          <Link href={"/activity/scheduler"}>
             <Button icon={<FaTableCells />} />
           </Link>
         )}
 
-        {/* <Link href={"/admin/activity/scheduler"}>
+        {/* <Link href={"/activity/scheduler"}>
           <Button icon={<FaChartPie />} />
         </Link> */}
       </div>
