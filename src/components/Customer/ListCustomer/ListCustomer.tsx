@@ -75,7 +75,7 @@ export default function ListCustomer() {
               ghost
               className="text-xs text-blue-600"
               onClick={() => {
-                window.location.href = `/customers/info/${value}`;
+                window.location.href = `/customer/info/${value}`;
               }}
             >
               Xem

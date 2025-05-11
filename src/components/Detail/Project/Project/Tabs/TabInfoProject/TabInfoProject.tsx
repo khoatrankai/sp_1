@@ -33,7 +33,7 @@ export default function TabInfoProject() {
                         </p>
                         <a
                           className="flex-1 flex justify-start text-blue-500"
-                          href={`/customers/info/${dataProject?.customer}`}
+                          href={`/customer/info/${dataProject?.customer}`}
                         >
                           {
                             dataProject?.customer?.name_company
