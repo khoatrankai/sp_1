@@ -1,7 +1,7 @@
 import { Menu } from "antd";
 import Link from "next/link";
 import React from "react";
-import { GrSystem } from "react-icons/gr";
+import { GrMoney, GrSystem, GrUserWorker } from "react-icons/gr";
 import { FaUser, FaUserTie } from "react-icons/fa";
 import { TbActivityHeartbeat, TbZoomMoney } from "react-icons/tb";
 import { PiProjectorScreenChartFill } from "react-icons/pi";
@@ -25,6 +25,36 @@ const Sidebar = () => {
   // );
   const isOpen = useSelector((state: RootState) => state.status_tab_menu);
   const itemsMenu = [
+    {
+      key: "asset",
+      label: (
+        <Link
+          href="/asset"
+          className=""
+          onClick={() => {
+            if (isMobile) dispatch(toggleMenu());
+          }}
+        >
+          <span>Quản lý tài sản</span>
+        </Link>
+      ),
+      icon: <GrMoney />,
+    },
+    {
+      key: "contractor",
+      label: (
+        <Link
+          href="/contractor"
+          className=""
+          onClick={() => {
+            if (isMobile) dispatch(toggleMenu());
+          }}
+        >
+          <span>Quản lý nhà thầu</span>
+        </Link>
+      ),
+      icon: <GrUserWorker />,
+    },
     {
       key: "customer",
       label: (

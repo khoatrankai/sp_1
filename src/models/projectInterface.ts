@@ -71,5 +71,41 @@ export interface IGetProject {
     created_at: Date;
     updated_at: Date;
   }
+
+  export interface ICreateContractor {
+  name: string;
+  customer?: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+  tax_code?: string;
+  rating?: number;
+  notes?: string;
+}
+
+export interface IUpdateContractor {
+  name?: string;
+  customer?: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+  tax_code?: string;
+  rating?: number;
+  notes?: string;
+}
+
+export interface IGetContractor {
+  id: string;
+  name: string;
+  customer?: CustomerInfo;
+  phone?: string;
+  email?: string;
+  address?: string;
+  tax_code?: string;
+  rating?: number;
+  notes?: string;
+  created_at: Date;
+  updated_at: Date;
+}
   
   

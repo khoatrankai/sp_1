@@ -1,6 +1,6 @@
 import { handleError } from "@/utils/error";
 import api, { api_formdata } from "./api";
-import { ICreateNotify } from "@/models/projectInterface";
+import { ICreateContractor, ICreateNotify } from "@/models/projectInterface";
 
 const projectService = {
   createProject: async (data: FormData) => {
@@ -190,7 +190,44 @@ const projectService = {
       handleError(error);
       throw error;
     }
-  }
+  },
+     createContractor: async (data: ICreateContractor) => {
+      const res = await api.post("/project/contractor", data);
+      if (!res) {
+        throw new Error("Failed to create product: No response");
+      }
+      return res.data;
+    },
+    updateContractor: async (id:string,data: ICreateContractor) => {
+      const res = await api.put(`/project/contractor/${id}`, data);
+      if (!res) {
+        throw new Error("Failed to create product: No response");
+      }
+      return res.data;
+    },
+  
+    getContractors: async () => {
+      const res = await api.get("/project/contractors");
+      if (!res) {
+        throw new Error("Failed to create product: No response");
+      }
+      return res.data;
+    },
+     getContractorsByProject: async (id:string) => {
+      const res = await api.get(`/project/contractors-by-project/${id}`);
+      if (!res) {
+        throw new Error("Failed to create product: No response");
+      }
+      return res.data;
+    },
+  
+    getContractorByID: async (id:string) => {
+      const res = await api.get(`/project/contractor/${id}`);
+      if (!res) {
+        throw new Error("Failed to create product: No response");
+      }
+      return res.data;
+    },
 };
 
 export default projectService;

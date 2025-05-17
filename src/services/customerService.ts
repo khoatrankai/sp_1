@@ -188,6 +188,7 @@ const customerService = {
     const res = await api_formdata.put("/customer/update-customer-info", data);
     return res.data;
   },
+
 };
 
 export default customerService;

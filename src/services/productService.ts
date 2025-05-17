@@ -1,6 +1,7 @@
 import { PostResponse } from "@/models/responseInterface";
 import api, { api_formdata } from "./api";
 import {
+  CreateAsset,
   ICreateActivityContainer,
   ICreateClassifyType,
   ICreateCommentReport,
@@ -170,6 +171,13 @@ const productService = {
   },
   createCodeProduct: async (id: string) => {
     const res = await api.post("/product/code", { product: id });
+    if (!res) {
+      throw new Error("Failed to create product: No response");
+    }
+    return res.data;
+  },
+  getCodeProduct: async () => {
+    const res = await api.get("/product/code");
     if (!res) {
       throw new Error("Failed to create product: No response");
     }
@@ -405,6 +413,43 @@ const productService = {
     );
     if (!res) {
       throw new Error(`Failed to fetch product`);
+    }
+    return res.data;
+  },
+  createAsset: async (data: CreateAsset) => {
+    const res = await api.post("/product/asset", data);
+    if (!res) {
+      throw new Error("Failed to create product: No response");
+    }
+    return res.data;
+  },
+  updateAsset: async (id:string,data: CreateAsset) => {
+    const res = await api.put(`/product/asset/${id}`, data);
+    if (!res) {
+      throw new Error("Failed to create product: No response");
+    }
+    return res.data;
+  },
+
+  getAssets: async () => {
+    const res = await api.get("/product/assets");
+    if (!res) {
+      throw new Error("Failed to create product: No response");
+    }
+    return res.data;
+  },
+   getAssetsByProject: async (id:string) => {
+    const res = await api.get(`/product/assets-by-project/${id}`);
+    if (!res) {
+      throw new Error("Failed to create product: No response");
+    }
+    return res.data;
+  },
+
+  getAssetByID: async (id:string) => {
+    const res = await api.get(`/product/asset/${id}`);
+    if (!res) {
+      throw new Error("Failed to create product: No response");
     }
     return res.data;
   },

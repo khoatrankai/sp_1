@@ -134,6 +134,9 @@ interface ICustomerStatistics {
   contactInactive: number;
   contactActiveToday: number;
 }
+
+
+
 export type {
   CustomerInfo,
   GroupInfo,

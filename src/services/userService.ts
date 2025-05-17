@@ -25,7 +25,7 @@ const userService = {
   },
   getUserIDAdmin: async (id: string) => {
     try {
-      const response = await api.get(`/user/id/${id}`);
+      const response = await api.get(`/user/admin/id/${id}`);
       return response.data;
     } catch (error) {
       handleError(error);

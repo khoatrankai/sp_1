@@ -59,6 +59,8 @@ import checkTimekeepingSlice from "./slices/userSlices/check_timekeeping.slice";
 import dashboardAllOpportunitySlice from "./slices/opportunitySlices/get_dashboard_opportunity.slice";
 import opportunityByPriceQuoteSlice from "./slices/opportunitySlices/get_opportunity_price_quote.slice";
 import opportunityHaveContractSlice from "./slices/opportunitySlices/get_opportunity_contract.slice";
+import assetsProductSlice from "./slices/productSlices/get_asset.slice";
+import contractorsProjectSlice from "./slices/projectSlices/get_contractor.slice";
 
 export const store = configureStore({
   reducer: {
@@ -66,6 +68,8 @@ export const store = configureStore({
     unit_product: unitProductSlice,
     brand_product: brandProductSlice,
     original_product: originalProductSlice,
+    asset_product: assetsProductSlice,
+    get_contractors: contractorsProjectSlice,
     vat_system: vatSystemSlice,
     info_products: infoProductSlice,
     about_product: aboutProductSlice,

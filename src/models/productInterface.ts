@@ -1,5 +1,6 @@
 import { CustomerInfo } from "./customerInterface";
 import { ICreateListDetailProduct } from "./priceQuoteInterface";
+import { IGetProject } from "./projectInterface";
 import { InfoUser } from "./userInterface";
 
 interface ProductInfo {
@@ -357,4 +358,46 @@ export interface ICreateLikeReport {
   customer?: string;
   user_support?: string;
   history_report?: string;
+}
+
+
+export type AssetStatus =
+  | 'new'
+  | 'in_use'
+  | 'under_repair'
+  | 'retired'
+  | 'damaged'
+  | 'lost'
+  | 'disposed';
+
+export interface CreateAsset {
+  asset_code: string;
+  name: string;
+  description?: string;
+  code_product: string;
+  project?: string;
+  status: AssetStatus;
+  customer: string;
+  purchase_date?: Date;
+  warranty_expiry?: Date;
+  price?: number;
+  serial_number?: string;
+}
+
+
+export interface GetAsset {
+  id:string,
+  asset_code: string;
+  name: string;
+  description?: string;
+  code_product: IGetCodeProduct;
+  project?: IGetProject;
+  status: AssetStatus;
+  customer: CustomerInfo;
+  purchase_date?: Date;
+  warranty_expiry?: Date;
+  price?: number;
+  serial_number?: string;
+  created_at: Date;
+  updated_at: Date;
 }
