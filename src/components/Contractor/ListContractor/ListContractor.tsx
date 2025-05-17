@@ -16,9 +16,9 @@ import { MdDeleteForever } from "react-icons/md";
 import { useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store/store";
-import { IGetContractor } from "@/models/customerInterface";
 import ModalUpdateContractor from "../ToolContractor/ModalContractor/ModalUpdateContractor";
 import { fetchContractors } from "@/redux/store/slices/projectSlices/get_contractor.slice";
+import { IGetContractor } from "@/models/projectInterface";
 
 export default function ListContractor() {
   const [pageLimit, setPageLimit] = useState<number>(25);
