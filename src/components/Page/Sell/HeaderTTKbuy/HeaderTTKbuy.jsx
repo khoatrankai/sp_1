@@ -219,7 +219,7 @@ function HeaderTTKbuy() {
           <Image
             height={50}
             className="h-full"
-            src="/logo.png"
+            src="/logo1.png"
             alt=""
             preview={false}
           />

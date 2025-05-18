@@ -16,7 +16,7 @@ export default function HomePageCustomer() {
           <Image
             preview={false}
             alt=""
-            src="/logo.png"
+            src="/logo1.png"
             height={isMobile ? 70 : 100}
           />
 

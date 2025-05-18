@@ -34,7 +34,7 @@ const Header = () => {
           <Image
             className="cursor-pointer"
             alt=""
-            src={"/logo.png"}
+            src={"/logo1.png"}
             height={40}
             width={140}
             onClick={() => {
