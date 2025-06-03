@@ -453,6 +453,15 @@ const productService = {
     }
     return res.data;
   },
+  findAllHistoryAssetByID: async (id: string) => {
+    const res = await api.get(`/product/history-asset/${id}`);
+    if (!res) {
+      throw new Error(
+        `Failed to fetch activity container with ID ${id}: No response`
+      );
+    }
+    return res.data;
+  },
 };
 
 export default productService;

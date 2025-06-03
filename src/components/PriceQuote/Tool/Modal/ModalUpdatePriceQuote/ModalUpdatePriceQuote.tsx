@@ -1217,7 +1217,7 @@ export default function ModalUpdatePriceQuote({ ID }: Props) {
           <div className="flex items-center">
             <p className="w-80 flex justify-end">Tổng:</p>
             <span className="min-w-32 flex justify-end">
-              {priceTotal.toLocaleString("vi-VN")}đ
+              {Math.round(priceTotal).toLocaleString("vi-VN")}đ
             </span>
           </div>
           <div>
@@ -1240,14 +1240,14 @@ export default function ModalUpdatePriceQuote({ ID }: Props) {
               </span>
             </div>
           </div>
-          <div className="flex items-center">
+           <div className="flex items-center">
             <p className="w-80 flex justify-end">Thuế:</p>
-            <span className="min-w-32 flex justify-end">{priceVat}đ</span>
+            <span className="min-w-32 flex justify-end">{Math.round(priceVat).toLocaleString('vi-VN')}đ</span>
           </div>
           <div className="flex items-center text-xl text-red-500">
             <p className="w-80 flex justify-end">Thành tiền:</p>
             <span className="min-w-32 flex justify-end">
-              {(priceTotal - priceDiscount + priceVat).toLocaleString("vi-VN")}đ
+              {Math.round(priceTotal - priceDiscount + priceVat).toLocaleString("vi-VN")}đ
             </span>
           </div>
         </div>

@@ -401,3 +401,12 @@ export interface GetAsset {
   created_at: Date;
   updated_at: Date;
 }
+
+
+export interface GetHistoryAsset {
+  id: string;
+  description: string;
+  created_at: string; // ISO timestamp
+  updated_at: string; // ISO timestamp
+  date_expired?: string;
+}

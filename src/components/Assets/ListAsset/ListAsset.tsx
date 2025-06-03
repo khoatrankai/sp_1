@@ -20,9 +20,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store/store";
 import { fetchAssets } from "@/redux/store/slices/productSlices/get_asset.slice";
 import ModalUpdateAsset from "../ToolAsset/ModalAsset/ModalUpdateAsset";
+import HistoryAsset from "../HistoryAsset/HistoryAsset";
 
 export default function ListAsset() {
   const [pageLimit, setPageLimit] = useState<number>(25);
+  const [idModal,setIdModal] = useState<string>()
+  const handleCancel = ()=>{
+    setIdModal(undefined)
+  }
   // const isAuthorized = useCheckRole(["admin-top", "product"]);
   // const [filterData, setFilterData] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
@@ -46,14 +51,14 @@ export default function ListAsset() {
                         <ModalUpdateAsset asset_id={record.id} />
                       </>
                     {/* )} */}
-                    {/* <Button
+                    <Button
           type="link"
           onClick={() => {
-            window.location.href = `/assets/detail/${value}`;
+            setIdModal(record.id)
           }}
         >
-          Xem
-        </Button> */}
+          Lịch sử
+        </Button>
                   </div>
         
       </div>
@@ -259,6 +264,7 @@ export default function ListAsset() {
       >
         Bạn có chắc chắn muốn xóa không ?
       </Modal>
+      <HistoryAsset id={idModal as string} handleCancel={handleCancel}/>
     </div>
   );
 }
