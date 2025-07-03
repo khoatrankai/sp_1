@@ -113,6 +113,15 @@ const activityService = {
       throw error;
     }
   },
+  getActivitiesByCode: async (code: string) => {
+    try {
+      const response = await api.get(`/activity/activities-code/${code}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   getAllWorkByProject: async (project: string) => {
     try {
       const response = await api.get(`/activity/work-by-project/${project}`);
@@ -798,7 +807,7 @@ const activityService = {
       throw error;
     }
   },
-  updateTasks: async (tasks:IUpdateTask[]) => {
+  updateTasks: async (tasks: IUpdateTask[]) => {
     try {
       const response = await api.put(`/activity/update-tasks`, tasks);
       return response.data;
@@ -957,7 +966,12 @@ const activityService = {
       throw error;
     }
   },
-  getWorksFilter: async (filters?: {page?:number,limit?:number,status?:string,type?:string}) => {
+  getWorksFilter: async (filters?: {
+    page?: number;
+    limit?: number;
+    status?: string;
+    type?: string;
+  }) => {
     try {
       const queryParams = new URLSearchParams();
 
@@ -968,14 +982,16 @@ const activityService = {
           }
         });
       }
-      const response = await api.get(`/activity/works-filter?${queryParams.toString()}`);
+      const response = await api.get(
+        `/activity/works-filter?${queryParams.toString()}`
+      );
       return response.data;
     } catch (error) {
       handleError(error);
       throw error;
     }
   },
-  getDashboardWorksManagement: async (filters?: {type?:string}) => {
+  getDashboardWorksManagement: async (filters?: { type?: string }) => {
     try {
       const queryParams = new URLSearchParams();
 
@@ -986,7 +1002,9 @@ const activityService = {
           }
         });
       }
-      const response = await api.get(`/activity/dashboard-management?${queryParams.toString()}`);
+      const response = await api.get(
+        `/activity/dashboard-management?${queryParams.toString()}`
+      );
       return response.data;
     } catch (error) {
       handleError(error);
@@ -994,32 +1012,26 @@ const activityService = {
     }
   },
 
-  createReview: async (data:ICreateReview) => {
+  createReview: async (data: ICreateReview) => {
     try {
-
-    
-      const response = await api.post(`/activity/create-review`,data);
+      const response = await api.post(`/activity/create-review`, data);
       return response.data;
     } catch (error) {
       handleError(error);
       throw error;
     }
   },
-  updateReview: async (id:string,data:IUpdateReview) => {
+  updateReview: async (id: string, data: IUpdateReview) => {
     try {
-
-    
-      const response = await api.put(`/activity/update-review/${id}`,data);
+      const response = await api.put(`/activity/update-review/${id}`, data);
       return response.data;
     } catch (error) {
       handleError(error);
       throw error;
     }
   },
-  getReviews: async (id:string) => {
+  getReviews: async (id: string) => {
     try {
-
-    
       const response = await api.get(`/activity/get-reviews/${id}`);
       return response.data;
     } catch (error) {
@@ -1027,10 +1039,8 @@ const activityService = {
       throw error;
     }
   },
-  checkReview: async (id:string) => {
+  checkReview: async (id: string) => {
     try {
-
-    
       const response = await api.get(`/activity/check-review/${id}`);
       return response.data;
     } catch (error) {
@@ -1039,32 +1049,26 @@ const activityService = {
     }
   },
 
-  createComment: async (data:ICreateComment) => {
+  createComment: async (data: ICreateComment) => {
     try {
-
-    
-      const response = await api.post(`/activity/create-comment`,data);
+      const response = await api.post(`/activity/create-comment`, data);
       return response.data;
     } catch (error) {
       handleError(error);
       throw error;
     }
   },
-  updateComment: async (id:string,data:IUpdateComment) => {
+  updateComment: async (id: string, data: IUpdateComment) => {
     try {
-
-    
-      const response = await api.put(`/activity/update-comment/${id}`,data);
+      const response = await api.put(`/activity/update-comment/${id}`, data);
       return response.data;
     } catch (error) {
       handleError(error);
       throw error;
     }
   },
-  getComments: async (id:string) => {
+  getComments: async (id: string) => {
     try {
-
-    
       const response = await api.get(`/activity/get-comments/${id}`);
       return response.data;
     } catch (error) {
@@ -1075,43 +1079,45 @@ const activityService = {
 
   getWorksFollowActivityByProject: async (id: string) => {
     try {
-      const response = await api.get(`/activity/get-works_follow_activities_by_project?id=${id}`);
+      const response = await api.get(
+        `/activity/get-works_follow_activities_by_project?id=${id}`
+      );
       return response.data;
     } catch (error) {
       handleError(error);
       throw error;
     }
   },
-  createFolder: async (data:FormData) => {
+  createFolder: async (data: FormData) => {
     try {
-      const response = await api_formdata.post(`/activity/create-folder`,data);
+      const response = await api_formdata.post(`/activity/create-folder`, data);
       return response.data;
     } catch (error) {
       handleError(error);
       throw error;
     }
   },
-  updateFolder: async (id:string,data:ICreateFolder) => {
+  updateFolder: async (id: string, data: ICreateFolder) => {
     try {
-      const response = await api.put(`/activity/update-folder/${id}`,data);
+      const response = await api.put(`/activity/update-folder/${id}`, data);
       return response.data;
     } catch (error) {
       handleError(error);
       throw error;
     }
   },
-  createFile: async (data:FormData) => {
+  createFile: async (data: FormData) => {
     try {
-      const response = await api_formdata.post(`/activity/create-files`,data);
+      const response = await api_formdata.post(`/activity/create-files`, data);
       return response.data;
     } catch (error) {
       handleError(error);
       throw error;
     }
   },
-  updateFile: async (id:string,data:ICreateFile) => {
+  updateFile: async (id: string, data: ICreateFile) => {
     try {
-      const response = await api.put(`/activity/update-file/${id}`,data);
+      const response = await api.put(`/activity/update-file/${id}`, data);
       return response.data;
     } catch (error) {
       handleError(error);
@@ -1120,7 +1126,9 @@ const activityService = {
   },
   getDocumentsByProject: async (id: string) => {
     try {
-      const response = await api.get(`/activity/get-documents-by-project/${id}`);
+      const response = await api.get(
+        `/activity/get-documents-by-project/${id}`
+      );
       return response.data;
     } catch (error) {
       handleError(error);

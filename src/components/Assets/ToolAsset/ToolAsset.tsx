@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { FaChartPie } from "react-icons/fa";
 import ModalAddAsset from "./ModalAsset/ModalAddAsset";
+// import ModalAddScan from "./ModalAddScan/ModalAddScan";
 
 // type Props = {};
 
@@ -11,10 +12,11 @@ export default function ToolAsset() {
     <div className="flex flex-col gap-4">
       <div className="flex gap-2 items-center flex-wrap">
         <ModalAddAsset />
-  
+
         <Link href={`/Asset/dashboard`}>
           <Button icon={<FaChartPie />} />
         </Link>
+        {/* <ModalAddScan /> */}
       </div>
       <div>
         {/* <h2 className="font-semibold text-[#1BA399]">Tổng quan khách hàng</h2> */}

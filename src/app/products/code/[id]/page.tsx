@@ -4,7 +4,7 @@ import { Carousel, Image, Tabs, TabsProps } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import "./styles.scss";
 import { useParams } from "next/navigation";
-import { IGetCodeProduct } from "@/models/productInterface";
+import { GetAsset, IGetCodeProduct } from "@/models/productInterface";
 import productService from "@/services/productService";
 import { CarouselRef } from "antd/es/carousel";
 import TabDetail from "@/components/TabProductCode/TabDetail/TabDetail";
@@ -13,9 +13,11 @@ import TabHistory from "@/components/TabProductCode/TabHistory/TabHistory";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store/store";
 import { fetchUserProfile } from "@/redux/store/slices/userSlices/get_profile.slice";
+import TabActivity from "@/components/TabProductCode/TabActivity/TabActivity";
 export default function page() {
   const dispatch = useDispatch<AppDispatch>();
   const [dataProductCode, setDataProductCode] = useState<IGetCodeProduct>();
+  const [dataAssetCurrent, setDataAssetCurrent] = useState<GetAsset>();
   const { id } = useParams();
   const tabs: TabsProps["items"] = [
     {
@@ -35,6 +37,11 @@ export default function page() {
       key: "history",
       children: <TabHistory />,
     },
+    {
+      label: "Bảo trì, bảo dưỡng",
+      key: "warranty",
+      children: <TabActivity />,
+    },
   ];
   const carouselRef = useRef<CarouselRef | null>(null);
   const handleSetIndex = (index: number) => {
@@ -46,8 +53,12 @@ export default function page() {
   const [indexPic, setIndexPic] = useState<number>(0);
   const fetchData = async () => {
     const res = await productService.findCodeByID(id as string);
+    const res2 = await productService.findAssetByCode(id as string);
     if (res.statusCode === 200) {
       setDataProductCode(res.data);
+    }
+    if (res2.statusCode === 200) {
+      setDataAssetCurrent(res2.data);
     }
   };
   useEffect(() => {
@@ -126,18 +137,23 @@ export default function page() {
               <p className="text-gray-500 break-words">
                 <span className="font-bold">Ngày bắt đầu: </span>
                 {new Date(
-                  dataProductCode?.warranty_start ?? ""
+                  dataAssetCurrent?.purchase_date ?? ""
                 ).toLocaleDateString()}
               </p>
               <p className="text-gray-500 break-words">
                 <span className="font-bold">Ngày kết thúc: </span>
                 {new Date(
-                  dataProductCode?.warranty_end ?? ""
+                  dataAssetCurrent?.warranty_expiry ?? ""
                 ).toLocaleDateString("vi-VN")}
               </p>
               <p className="text-gray-500">
                 <span className="font-bold">Bảo hành còn lại: </span>
-                {dataProductCode?.time_warranty} tháng
+                {Math.ceil(
+                  (new Date(dataAssetCurrent?.warranty_expiry ?? "").getTime() -
+                    new Date().getTime()) /
+                    (1000 * 3600 * 24)
+                )}{" "}
+                ngày
               </p>
             </div>
           </div>

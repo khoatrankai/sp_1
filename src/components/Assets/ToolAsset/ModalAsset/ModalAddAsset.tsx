@@ -18,7 +18,7 @@ import React, { Ref, useEffect, useRef, useState } from "react";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { IoAddOutline } from "react-icons/io5";
 import { useForm } from "antd/es/form/Form";
-import { MdOutlineDocumentScanner } from "react-icons/md";
+// import { MdOutlineDocumentScanner } from "react-icons/md";
 import { CreateAsset, IGetCodeProduct } from "@/models/productInterface";
 import productService from "@/services/productService";
 import { useSelector } from "react-redux";
@@ -33,14 +33,14 @@ type Props = {
 };
 
 export default function ModalAddAsset({ refBtnAsset }: Props) {
-  const dispatch = useDispatch<AppDispatch>()
-  const refBtn = useRef<HTMLButtonElement>()
-  const refBtnProject = useRef<HTMLButtonElement>()
-  const refBtnCustomer = useRef<HTMLButtonElement>()
+  const dispatch = useDispatch<AppDispatch>();
+  // const refBtn = useRef<HTMLButtonElement>();
+  const refBtnProject = useRef<HTMLButtonElement>();
+  const refBtnCustomer = useRef<HTMLButtonElement>();
   const { postdata } = usePostData();
 
   const [form] = useForm();
-  const [dataCode,setDataCode] = useState<IGetCodeProduct[]>([])
+  const [dataCode, setDataCode] = useState<IGetCodeProduct[]>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const { datas: dataCustomer } = useSelector(
     (state: RootState) => state.infos_customer
@@ -57,28 +57,24 @@ export default function ModalAddAsset({ refBtnAsset }: Props) {
     setIsModalVisible(false);
   };
 
-  const fetchData = async()=>{
-    const res = await productService.getCodeProduct()
-    if(res.statusCode === 200){
-      setDataCode(res.data)
-    }
-  }
-
-  useEffect(()=>{
-    fetchData()
-  },[])
-  const handleSubmit = async (values: CreateAsset) => {
-   
-    const res = await postdata(() =>
-      productService.createAsset(values)
-    );
-    if (res === 200 || res === 201) {
-      form.resetFields();
-      setIsModalVisible(false);
-      dispatch(fetchAssets())
+  const fetchData = async () => {
+    const res = await productService.getCodeProduct();
+    if (res.statusCode === 200) {
+      setDataCode(res.data);
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const handleSubmit = async (values: CreateAsset) => {
+    const res = await postdata(() => productService.createAsset(values));
+    if (res === 200 || res === 201) {
+      form.resetFields();
+      setIsModalVisible(false);
+      dispatch(fetchAssets());
+    }
+  };
 
   return (
     <>
@@ -99,12 +95,12 @@ export default function ModalAddAsset({ refBtnAsset }: Props) {
         width={"100%"}
         style={{ maxWidth: "800px" }}
       >
-        <Button
+        {/* <Button
         onClick={()=>{refBtn.current?.click()}}
         icon={<MdOutlineDocumentScanner />}
       >
         Quét cccd
-      </Button>
+      </Button> */}
         <Form
           layout="vertical"
           onFinish={handleSubmit}
@@ -122,9 +118,7 @@ export default function ModalAddAsset({ refBtnAsset }: Props) {
               name="asset_code"
               className="!m-0"
               label="Mã tài sản"
-              rules={[
-                { required: true, message: "Vui lòng nhập mã tài sản!" },
-              ]}
+              rules={[{ required: true, message: "Vui lòng nhập mã tài sản!" }]}
               style={{ minWidth: "320px", flex: "1 1 0%" }}
             >
               <Input />
@@ -133,9 +127,7 @@ export default function ModalAddAsset({ refBtnAsset }: Props) {
               name="serial_number"
               className="!m-0"
               label="Serial"
-              rules={[
-                { required: true, message: "Vui lòng nhập mã serial!" },
-              ]}
+              rules={[{ required: true, message: "Vui lòng nhập mã serial!" }]}
               style={{ minWidth: "320px", flex: "1 1 0%" }}
             >
               <Input />
@@ -144,9 +136,7 @@ export default function ModalAddAsset({ refBtnAsset }: Props) {
               name="name"
               className="!m-0"
               label="Tên tài sản"
-              rules={[
-                { required: true, message: "Vui lòng nhập tên!" },
-              ]}
+              rules={[{ required: true, message: "Vui lòng nhập tên!" }]}
               style={{ minWidth: "320px", flex: "1 1 0%" }}
             >
               <Input />
@@ -162,44 +152,40 @@ export default function ModalAddAsset({ refBtnAsset }: Props) {
               ]}
               style={{ minWidth: "320px", flex: "1 1 0%" }}
             >
- <Select
-                             placeholder="Chọn mã sản phầm"
-                             showSearch
-                             filterOption={(input, option) => {
-                               const text = Array.isArray(option?.children)
-                                 ? option.children.join("")
-                                 : option?.children ?? "";
-                               return text.toLowerCase().includes(input.toLowerCase());
-                             }}
-                           >
-                             {dataCode?.map((dt) => (
-                               <Option
-                                 key={dt.code_product_id}
-                                 value={dt.code_product_id}
-                               >
-                                 {dt.code_product_id}
-                               </Option>
-                             ))}
-                           </Select>
+              <Select
+                placeholder="Chọn mã sản phầm"
+                showSearch
+                filterOption={(input, option) => {
+                  const text = Array.isArray(option?.children)
+                    ? option.children.join("")
+                    : option?.children ?? "";
+                  return text.toLowerCase().includes(input.toLowerCase());
+                }}
+              >
+                {dataCode?.map((dt) => (
+                  <Option key={dt.code_product_id} value={dt.code_product_id}>
+                    {dt.code_product_id}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
-            
-          
-                           <Form.Item
-  name="status"
-  label="Trạng thái"
-  initialValue="new"
-  style={{ minWidth: "320px", flex: "1 1 0%" }}
->
-  <Select>
-    <Option value="new">Mới</Option>
-    <Option value="in_use">Đang sử dụng</Option>
-    <Option value="under_repair">Đang sửa chữa</Option>
-    <Option value="retired">Ngừng sử dụng</Option>
-    <Option value="damaged">Hỏng</Option>
-    <Option value="lost">Mất</Option>
-    <Option value="disposed">Đã loại bỏ</Option>
-  </Select>
-</Form.Item>
+
+            <Form.Item
+              name="status"
+              label="Trạng thái"
+              initialValue="new"
+              style={{ minWidth: "320px", flex: "1 1 0%" }}
+            >
+              <Select>
+                <Option value="new">Mới</Option>
+                <Option value="in_use">Đang sử dụng</Option>
+                <Option value="under_repair">Đang sửa chữa</Option>
+                <Option value="retired">Ngừng sử dụng</Option>
+                <Option value="damaged">Hỏng</Option>
+                <Option value="lost">Mất</Option>
+                <Option value="disposed">Đã loại bỏ</Option>
+              </Select>
+            </Form.Item>
             <Form.Item
               name="customer"
               label="Khách hàng"
@@ -285,48 +271,48 @@ export default function ModalAddAsset({ refBtnAsset }: Props) {
                 ))}
               </Select>
             </Form.Item>
-            
+
             <Form.Item
-                name="warranty_expiry"
-                label="Ngày hết hạn"
-                rules={[{ required: true }]}
-                style={{ minWidth: "320px", flex: "1 1 0%" }}
-                getValueProps={(value) => ({
-                  value: value ? moment(value) : null,
-                })}
-              >
-                <DatePicker
-                  placeholder="Chọn ngày mua"
-                  style={{ width: "100%" }}
-                />
-              </Form.Item>
-               <Form.Item
-                name="price"
-                label="Giá trị tài sản"
-                // rules={[{ required: true }]}
-                style={{ minWidth: "240px", flex: "1 1 0%" }}
-              >
-                <InputNumber
-                  placeholder="Price"
-                  className="w-full"
-                  formatter={(value) =>
-                    `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                  }
-                  parser={(value) =>
-                    value?.replace(/\$\s?|(,*)/g, "") as unknown as number
-                  }
-                />
-              </Form.Item>
-             <Form.Item
-                            name="description"
-                            label="Mô tả"
-                            style={{ width: "100%" }}
-                          >
-                            <Input.TextArea
-                              placeholder="Description"
-                              autoSize={{ minRows: 3 }}
-                            />
-                          </Form.Item>
+              name="warranty_expiry"
+              label="Ngày hết hạn"
+              rules={[{ required: true }]}
+              style={{ minWidth: "320px", flex: "1 1 0%" }}
+              getValueProps={(value) => ({
+                value: value ? moment(value) : null,
+              })}
+            >
+              <DatePicker
+                placeholder="Chọn ngày mua"
+                style={{ width: "100%" }}
+              />
+            </Form.Item>
+            <Form.Item
+              name="price"
+              label="Giá trị tài sản"
+              // rules={[{ required: true }]}
+              style={{ minWidth: "240px", flex: "1 1 0%" }}
+            >
+              <InputNumber
+                placeholder="Price"
+                className="w-full"
+                formatter={(value) =>
+                  `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                parser={(value) =>
+                  value?.replace(/\$\s?|(,*)/g, "") as unknown as number
+                }
+              />
+            </Form.Item>
+            <Form.Item
+              name="description"
+              label="Mô tả"
+              style={{ width: "100%" }}
+            >
+              <Input.TextArea
+                placeholder="Description"
+                autoSize={{ minRows: 3 }}
+              />
+            </Form.Item>
           </div>
           {/* </SubMenu> */}
           {/* <SubMenu title="Thông tin giao hàng" key="info_address">
@@ -410,8 +396,12 @@ export default function ModalAddAsset({ refBtnAsset }: Props) {
           </Form.Item>
         </Form>
       </Modal>
-      <ModalAddProject refBtnProject={refBtnProject as Ref<HTMLButtonElement>}/>
-      <ModalAddCustomer refBtnCustomer={refBtnCustomer as Ref<HTMLButtonElement>}/>
+      <ModalAddProject
+        refBtnProject={refBtnProject as Ref<HTMLButtonElement>}
+      />
+      <ModalAddCustomer
+        refBtnCustomer={refBtnCustomer as Ref<HTMLButtonElement>}
+      />
     </>
   );
 }

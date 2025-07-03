@@ -295,6 +295,15 @@ const productService = {
     }
     return res.data;
   },
+  findAssetByCode: async (id: string) => {
+    const res = await api.get(`/product/asset-code/${id}`);
+    if (!res) {
+      throw new Error(
+        `Failed to fetch activity container with ID ${id}: No response`
+      );
+    }
+    return res.data;
+  },
   createReport: async (description: string, code_product: string) => {
     const res = await api.post(`/product/report`, {
       description,
@@ -423,7 +432,7 @@ const productService = {
     }
     return res.data;
   },
-  updateAsset: async (id:string,data: CreateAsset) => {
+  updateAsset: async (id: string, data: CreateAsset) => {
     const res = await api.put(`/product/asset/${id}`, data);
     if (!res) {
       throw new Error("Failed to create product: No response");
@@ -438,7 +447,7 @@ const productService = {
     }
     return res.data;
   },
-   getAssetsByProject: async (id:string) => {
+  getAssetsByProject: async (id: string) => {
     const res = await api.get(`/product/assets-by-project/${id}`);
     if (!res) {
       throw new Error("Failed to create product: No response");
@@ -446,7 +455,7 @@ const productService = {
     return res.data;
   },
 
-  getAssetByID: async (id:string) => {
+  getAssetByID: async (id: string) => {
     const res = await api.get(`/product/asset/${id}`);
     if (!res) {
       throw new Error("Failed to create product: No response");
