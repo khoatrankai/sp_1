@@ -43,7 +43,7 @@ export default function LayoutHeader({
     }
   }, [dataProfile, loading, dispatch, router, isAuthorized]);
   const pathname = usePathname();
-  const noHeaderPaths = ["/login", "/products/code"]; // Danh sách các đường dẫn không hiển thị Header
+  const noHeaderPaths = ["/login"]; // Danh sách các đường dẫn không hiển thị Header
   useEffect(() => {
     dispatch(fetchUserProfile())
       .unwrap()
@@ -56,10 +56,14 @@ export default function LayoutHeader({
         if (!pathname.includes("/products/code")) router.push("/login");
       });
   }, [dispatch, router]);
+  useEffect(() => {
+    console.log(noHeaderPaths, pathname, noHeaderPaths.includes(pathname));
+  }, [noHeaderPaths, pathname]);
   return (
     <>
       {/* max-w-[calc(100%-13rem)] */}
-      {!noHeaderPaths.includes(pathname) ? (
+      {!noHeaderPaths.includes(pathname) &&
+      !pathname.includes("/products/code") ? (
         <>
           <div className="flex flex-col h-full">
             <Header />
