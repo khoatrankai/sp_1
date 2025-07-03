@@ -16,7 +16,11 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-export default function LayoutHeader({ children }: { children: React.ReactNode }) {
+export default function LayoutHeader({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const isAuthorized = useCheckRole(["admin-top"]);
   const isOpen = useSelector((state: RootState) => state.status_tab_menu);
   const router = useRouter();
@@ -38,51 +42,52 @@ export default function LayoutHeader({ children }: { children: React.ReactNode }
       }
     }
   }, [dataProfile, loading, dispatch, router, isAuthorized]);
-    const pathname = usePathname();
-  const noHeaderPaths = ['/login']; // Danh sách các đường dẫn không hiển thị Header
+  const pathname = usePathname();
+  const noHeaderPaths = ["/login", "/products/code"]; // Danh sách các đường dẫn không hiển thị Header
   useEffect(() => {
     dispatch(fetchUserProfile())
       .unwrap()
       .then((dt) => {
         if (dt.statusCode === 400) {
-          router.push("/login");
+          if (!pathname.includes("/products/code")) router.push("/login");
         }
       })
       .catch(() => {
-        router.push("/login");
+        if (!pathname.includes("/products/code")) router.push("/login");
       });
   }, [dispatch, router]);
   return (
     <>
       {/* max-w-[calc(100%-13rem)] */}
-      {!noHeaderPaths.includes(pathname) ?<>
-        <div className="flex flex-col h-full">
-        <Header />
-        {dataProfile && (
-          <>
-            <div className=" flex flex-1 overflow-y-hidden overflow-x-auto min-h-fit">
-              <div
-                className={`h-full sm:relative inset-x-0 absolute z-40 transition-all   ${
-                  isOpen.isOpen ? "sm:min-w-52" : "w-0 "
-                }`}
-              >
-                <Sidebar />
-              </div>
-              <div
-                className={` transition-all flex-1 overflow-y-scroll sm:w-auto w-screen  ${
-                  isOpen.isOpen ? "" : ""
-                }`}
-              >
-                {children}
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-      </>:<>
-        {children}
-      </>}
-      
+      {!noHeaderPaths.includes(pathname) ? (
+        <>
+          <div className="flex flex-col h-full">
+            <Header />
+            {dataProfile && (
+              <>
+                <div className=" flex flex-1 overflow-y-hidden overflow-x-auto min-h-fit">
+                  <div
+                    className={`h-full sm:relative inset-x-0 absolute z-40 transition-all   ${
+                      isOpen.isOpen ? "sm:min-w-52" : "w-0 "
+                    }`}
+                  >
+                    <Sidebar />
+                  </div>
+                  <div
+                    className={` transition-all flex-1 overflow-y-scroll sm:w-auto w-screen  ${
+                      isOpen.isOpen ? "" : ""
+                    }`}
+                  >
+                    {children}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </>
+      ) : (
+        <>{children}</>
+      )}
     </>
   );
 }
