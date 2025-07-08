@@ -11,6 +11,7 @@ interface InfoUser {
   link_in?: string;
   link_skype?: string;
   link_facebook?: string;
+  link_zalo?: string;
   group_user?: IGetGroupUser;
 }
 
@@ -50,6 +51,7 @@ interface CreateUser {
   picture_url?: UploadFile[];
   phone_number?: string;
   link_facebook?: string;
+  link_zalo?: string;
   link_in?: string;
   link_skype?: string;
   sign_name?: string;

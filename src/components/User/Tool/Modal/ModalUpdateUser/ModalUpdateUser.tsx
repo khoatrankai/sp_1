@@ -378,6 +378,14 @@ export default function ModalUpdateUser({ ID, refBtnUser }: Props) {
               </Form.Item>
 
               <Form.Item
+                name="link_zalo"
+                label="Zalo"
+                style={{ minWidth: "320px", flex: "1 1 0%" }}
+              >
+                <Input placeholder="Nhập URL Zalo" defaultValue={""} />
+              </Form.Item>
+
+              <Form.Item
                 name="link_in"
                 label="LinkedIn"
                 style={{ minWidth: "320px", flex: "1 1 0%" }}

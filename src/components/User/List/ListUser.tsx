@@ -59,7 +59,7 @@ export default function ListUser() {
             <span>
               <Avatar alt={red.last_name} src={red.picture_url} />
             </span>
-            #{index + 1}.{`${value.slice(0, 10)}...`}
+            #{index + 1}.
           </strong>
           <div className="flex gap-2">
             {isAuthorized && <ModalUpdatePriceQuote ID={value} />}

@@ -34,7 +34,7 @@ export default function ListPropose() {
       render: (value: string, red, index) => (
         <div className="flex flex-col gap-1 ">
           <strong>
-            #{index + 1}.{`${value.slice(0, 10)}...`}
+            #{index + 1}.
           </strong>
         </div>
       ),

@@ -103,6 +103,79 @@ export default function ModalAddUser() {
               style={{ display: "flex", flexWrap: "wrap", columnGap: "12px" }}
             >
               <Form.Item
+                name="first_name"
+                label="Họ"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập họ!",
+                  },
+                  {
+                    min: 1,
+                    max: 20,
+                    message: "Họ phải từ 1 đến 20 ký tự!",
+                  },
+                ]}
+                style={{ minWidth: "320px", flex: "1 1 0%" }}
+              >
+                <Input placeholder="Nhập họ" />
+              </Form.Item>
+
+              <Form.Item
+                name="last_name"
+                label="Tên"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập tên!",
+                  },
+                  {
+                    min: 1,
+                    max: 20,
+                    message: "Tên phải từ 1 đến 20 ký tự!",
+                  },
+                ]}
+                style={{ minWidth: "320px", flex: "1 1 0%" }}
+              >
+                <Input placeholder="Nhập tên" />
+              </Form.Item>
+              <Form.Item
+                name="email"
+                label="Email"
+                rules={[
+                  {
+                    required: true,
+                    type: "email",
+                    message: "Vui lòng nhập email hợp lệ!",
+                  },
+                  {
+                    max: 50,
+                    message: "Email không được vượt quá 50 ký tự!",
+                  },
+                ]}
+                style={{ minWidth: "320px", flex: "1 1 0%" }}
+              >
+                <Input placeholder="Nhập email" />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                label="Mật khẩu"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập mật khẩu!",
+                  },
+                  {
+                    min: 1,
+                    max: 50,
+                    message: "Mật khẩu phải từ 1 đến 50 ký tự!",
+                  },
+                ]}
+                style={{ minWidth: "320px", flex: "1 1 0%" }}
+              >
+                <Input.Password placeholder="Nhập mật khẩu" />
+              </Form.Item>
+              <Form.Item
                 name="group_user"
                 label="Phòng ban"
                 rules={[
@@ -145,81 +218,6 @@ export default function ModalAddUser() {
                 </Select>
               </Form.Item>
               <Form.Item
-                name="email"
-                label="Email"
-                rules={[
-                  {
-                    required: true,
-                    type: "email",
-                    message: "Vui lòng nhập email hợp lệ!",
-                  },
-                  {
-                    max: 50,
-                    message: "Email không được vượt quá 50 ký tự!",
-                  },
-                ]}
-                style={{ minWidth: "320px", flex: "1 1 0%" }}
-              >
-                <Input placeholder="Nhập email" />
-              </Form.Item>
-              <Form.Item
-                name="password"
-                label="Mật khẩu"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng nhập mật khẩu!",
-                  },
-                  {
-                    min: 1,
-                    max: 50,
-                    message: "Mật khẩu phải từ 1 đến 50 ký tự!",
-                  },
-                ]}
-                style={{ minWidth: "320px", flex: "1 1 0%" }}
-              >
-                <Input.Password placeholder="Nhập mật khẩu" />
-              </Form.Item>
-
-              <Form.Item
-                name="first_name"
-                label="Họ"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng nhập họ!",
-                  },
-                  {
-                    min: 1,
-                    max: 20,
-                    message: "Họ phải từ 1 đến 20 ký tự!",
-                  },
-                ]}
-                style={{ minWidth: "320px", flex: "1 1 0%" }}
-              >
-                <Input placeholder="Nhập họ" />
-              </Form.Item>
-
-              <Form.Item
-                name="last_name"
-                label="Tên"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng nhập tên!",
-                  },
-                  {
-                    min: 1,
-                    max: 20,
-                    message: "Tên phải từ 1 đến 20 ký tự!",
-                  },
-                ]}
-                style={{ minWidth: "320px", flex: "1 1 0%" }}
-              >
-                <Input placeholder="Nhập tên" />
-              </Form.Item>
-
-              <Form.Item
                 name="phone_number"
                 label="Số điện thoại"
                 rules={[
@@ -247,7 +245,20 @@ export default function ModalAddUser() {
               >
                 <Input placeholder="Nhập URL Facebook" defaultValue={""} />
               </Form.Item>
-
+                   <Form.Item
+                name="link_zalo"
+                label="Zalo"
+                rules={[
+                  {
+                    type: "url",
+                    message: "URL Zalo không hợp lệ!",
+                    required: false,
+                  },
+                ]}
+                style={{ minWidth: "320px", flex: "1 1 0%" }}
+              >
+                <Input placeholder="Nhập URL Zalo" defaultValue={""} />
+              </Form.Item>
               <Form.Item
                 name="link_in"
                 label="LinkedIn"

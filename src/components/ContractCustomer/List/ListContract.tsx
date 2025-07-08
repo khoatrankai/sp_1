@@ -27,7 +27,7 @@ export default function ListContract() {
       dataIndex: "code_contract",
       render: (value: string) => (
         <div className="flex flex-col gap-1 ">
-          <strong>{`${value.slice(0, 10)}...`}</strong>
+          <strong></strong>
         </div>
       ),
       sorter: (a: IGetContract, b: IGetContract) =>

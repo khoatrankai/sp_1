@@ -38,7 +38,7 @@ export default function ListContract() {
       dataIndex: "code_contract",
       render: (value: string, record) => (
         <div className="flex flex-col gap-1 ">
-          <strong>{`${value.slice(0, 10)}...`}</strong>
+          <strong></strong>
           <div className="flex gap-2">
             <Button type="text" ghost className="text-xs text-blue-600">
               Xem
