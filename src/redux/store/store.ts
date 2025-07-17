@@ -61,6 +61,7 @@ import opportunityByPriceQuoteSlice from "./slices/opportunitySlices/get_opportu
 import opportunityHaveContractSlice from "./slices/opportunitySlices/get_opportunity_contract.slice";
 import assetsProductSlice from "./slices/productSlices/get_asset.slice";
 import contractorsProjectSlice from "./slices/projectSlices/get_contractor.slice";
+import warrantiesSlice from "./slices/productSlices/get_all_warranty.slice";
 
 export const store = configureStore({
   reducer: {
@@ -88,6 +89,7 @@ export const store = configureStore({
     get_price_quotes: priceQuoteSlice,
     get_type_method: typeMethodSlice,
     get_type_contract: typeContractSlice,
+    get_warranties_by_asset: warrantiesSlice,
     get_contracts: contractSlice,
     get_contract_about: aboutContractSlice,
     get_payments: paymentSlice,

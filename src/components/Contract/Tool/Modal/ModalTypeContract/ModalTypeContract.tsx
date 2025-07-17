@@ -42,6 +42,16 @@ const ModalTypeContract = ({ refBtnType }: Props) => {
   // useEffect(() => {
   //   console.log(dataSource);
   // }, [dataSource]);
+  const [idGroupDelete, setIdGroupDelete] = useState<string>("");
+    const handleDelete = async () => {
+            const statusCode = await postdata(() =>
+              contractService.deleteTypeContract([idGroupDelete??""])
+            );
+            if (statusCode === 200) {
+              dispatch(fetchTypeContracts());
+              setIdGroupDelete("");
+            }
+          };
   const columns: ColumnsType<IGetTypeContract> = [
     {
       title: "Mã loại",
@@ -71,6 +81,14 @@ const ModalTypeContract = ({ refBtnType }: Props) => {
                 }}
                 icon={<CiEdit />}
               />
+              <Button
+                                                className="  text-xs text-red-500 font-semibold"
+                                                type="text"
+                              
+                                                onClick={()=>setIdGroupDelete(record?.type_id ?? "")}
+                                              >
+                                                Xóa
+                                              </Button>
             </strong>
           </>
         );
@@ -264,6 +282,16 @@ const ModalTypeContract = ({ refBtnType }: Props) => {
           </div>
         </div>
       </Modal>
+      <Modal
+                                open={!(idGroupDelete === "")}
+                                title={"Xóa dữ liệu"}
+                                onOk={handleDelete}
+                                onCancel={() => {
+                                  setIdGroupDelete("");
+                                }}
+                              >
+                                Bạn có chắc chắn muốn xóa không ?
+                              </Modal>
     </>
   );
 };

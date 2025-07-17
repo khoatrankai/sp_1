@@ -47,6 +47,16 @@ const ModalTypeOpportunity = ({ refBtnType }: Props) => {
   // useEffect(() => {
   //   console.log(dataSource);
   // }, [dataSource]);
+  const [idGroupDelete, setIdGroupDelete] = useState<string>("");
+      const handleDelete = async () => {
+              const statusCode = await postdata(() =>
+                opportunityService.deleteTypeOpportunity([idGroupDelete??""])
+              );
+              if (statusCode === 200) {
+                dispatch(fetchOpportunityTypes());
+                setIdGroupDelete("");
+              }
+            };
   const columns: ColumnsType<IGetTypeOpportunitiesDto> = [
     {
       title: "Mã loại",
@@ -88,6 +98,14 @@ const ModalTypeOpportunity = ({ refBtnType }: Props) => {
                 }}
                 icon={<CiEdit />}
               />
+              <Button
+                                                className="  text-xs text-red-500 font-semibold"
+                                                type="text"
+                              
+                                                onClick={()=>setIdGroupDelete(record?.type_opportunity_id)}
+                                              >
+                                                Xóa
+                                              </Button>
             </strong>
           </>
         );
@@ -303,6 +321,16 @@ const ModalTypeOpportunity = ({ refBtnType }: Props) => {
           </div>
         </div>
       </Modal>
+      <Modal
+                                open={!(idGroupDelete === "")}
+                                title={"Xóa dữ liệu"}
+                                onOk={handleDelete}
+                                onCancel={() => {
+                                  setIdGroupDelete("");
+                                }}
+                              >
+                                Bạn có chắc chắn muốn xóa không ?
+                              </Modal>
     </>
   );
 };

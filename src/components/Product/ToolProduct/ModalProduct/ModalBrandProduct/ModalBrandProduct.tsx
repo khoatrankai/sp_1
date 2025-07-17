@@ -57,6 +57,16 @@ const ModalBrandProduct = ({ refBtnBrand }: Props) => {
   // useEffect(() => {
   //   console.log(dataSource);
   // }, [dataSource]);
+  const [idGroupDelete, setIdGroupDelete] = useState<string>("");
+      const handleDelete = async () => {
+              const statusCode = await postdata(() =>
+                productService.deleteBrands([idGroupDelete??""])
+              );
+              if (statusCode === 200) {
+                dispatch(fetchProductBrands());
+                setIdGroupDelete("");
+              }
+            };
   const columns: ColumnsType<IBrand> = [
     {
       title: "Mã thương hiệu",
@@ -136,6 +146,14 @@ const ModalBrandProduct = ({ refBtnBrand }: Props) => {
                   }}
                   icon={<CiEdit />}
                 />
+                <Button
+                                                  className="  text-xs text-red-500 font-semibold"
+                                                  type="text"
+                                
+                                                  onClick={()=>setIdGroupDelete(record?.brand_id)}
+                                                >
+                                                  Xóa
+                                                </Button>
               </strong>
             )}
           </>
@@ -255,6 +273,16 @@ const ModalBrandProduct = ({ refBtnBrand }: Props) => {
           </div>
         </div>
       </Modal>
+      <Modal
+                                open={!(idGroupDelete === "")}
+                                title={"Xóa dữ liệu"}
+                                onOk={handleDelete}
+                                onCancel={() => {
+                                  setIdGroupDelete("");
+                                }}
+                              >
+                                Bạn có chắc chắn muốn xóa không ?
+                              </Modal>
     </>
   );
 };

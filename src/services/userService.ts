@@ -244,6 +244,18 @@ const userService = {
       throw error;
     }
   },
+  deleteGroupUser: async (group_ids: string[]) => {
+    try {
+      const response = await api.delete(
+        `/user/group-user`,
+        {data:group_ids}
+      );
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
 
   getFilterUser: async (filters?: { group?: string }) => {
     try {

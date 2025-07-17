@@ -34,7 +34,7 @@ const ModalGroupUser = ({ refBtnGroup }: Props) => {
     setIndexEdit(index);
     formTypeEdit.setFieldsValue(dataGroupUser?.[index]);
   };
-
+  const [idGroupDelete, setIdGroupDelete] = useState<string>("");
   // const [dataSource, setDataSource] = useState<ITypeProduct[] | []>([]);
   const [tabFormType, setTabFormType] = useState<boolean>(false);
   const { postdata } = usePostData();
@@ -77,6 +77,15 @@ const ModalGroupUser = ({ refBtnGroup }: Props) => {
         return (
           <>
             <ModalGroupRole ID={value} name={record.name_group} />
+            <Button
+                    className="  text-xs text-red-500 font-semibold"
+                    type="text"
+  
+                    onClick={()=>setIdGroupDelete(value)}
+                  >
+                    Xóa
+                  </Button>
+
           </>
         );
       },
@@ -105,6 +114,17 @@ const ModalGroupUser = ({ refBtnGroup }: Props) => {
       console.error("Error creating product:", error);
     }
   };
+
+  const handleDelete = async () => {
+      const statusCode = await postdata(() =>
+        userService.deleteGroupUser([idGroupDelete??""])
+      );
+      if (statusCode === 200) {
+        dispatch(fetchGroupUser());
+        setIdGroupDelete("");
+      }
+    };
+
   const handleSubmitEdit = async (values: IUpdateGroupUser) => {
     try {
       const statusCode = await postdata(() =>
@@ -269,6 +289,16 @@ const ModalGroupUser = ({ refBtnGroup }: Props) => {
           </div>
         </div>
       </Modal>
+      <Modal
+              open={!(idGroupDelete === "")}
+              title={"Xóa dữ liệu"}
+              onOk={handleDelete}
+              onCancel={() => {
+                setIdGroupDelete("");
+              }}
+            >
+              Bạn có chắc chắn muốn xóa không ?
+            </Modal>
     </>
   );
 };

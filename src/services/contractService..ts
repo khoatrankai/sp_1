@@ -80,6 +80,15 @@ const contractService = {
       throw error;
     }
   },
+  deleteTypeContract: async (datas: string[]) => {
+    try {
+      const response = await api.delete(`/contract/type-contract`, { data: datas });
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   // Update an existing contract
   updateContract: async (id: string, data: IUpdateContract) => {
     try {

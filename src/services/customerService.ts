@@ -27,6 +27,18 @@ const customerService = {
       throw error;
     }
   },
+  deleteGroupCustomer: async (group_ids: string[]) => {
+    try {
+      const response = await api.delete(
+        `/customer/group-customer`,
+        {data:group_ids}
+      );
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   getChartCustomer: async () => {
     try {
       const response = await api.get(`/customer/get-customer-dashboard`);

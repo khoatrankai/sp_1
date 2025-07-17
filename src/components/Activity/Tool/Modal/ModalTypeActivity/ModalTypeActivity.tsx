@@ -42,6 +42,16 @@ const ModalTypeActivity = ({ refBtnType }: Props) => {
   // useEffect(() => {
   //   console.log(dataSource);
   // }, [dataSource]);
+  const [idGroupDelete, setIdGroupDelete] = useState<string>("");
+    const handleDelete = async () => {
+            const statusCode = await postdata(() =>
+              activityService.deleteTypeActivity([idGroupDelete??""])
+            );
+            if (statusCode === 200) {
+              dispatch(fetchTypeActivities());
+              setIdGroupDelete("");
+            }
+          };
   const columns: ColumnsType<IGetTypeActivity> = [
     {
       title: "Mã loại",
@@ -84,6 +94,14 @@ const ModalTypeActivity = ({ refBtnType }: Props) => {
                 }}
                 icon={<CiEdit />}
               />
+              <Button
+                                                className="  text-xs text-red-500 font-semibold"
+                                                type="text"
+                              
+                                                onClick={()=>setIdGroupDelete(record?.type_activity_id)}
+                                              >
+                                                Xóa
+                                              </Button>
             </strong>
           </>
         );
@@ -302,6 +320,16 @@ const ModalTypeActivity = ({ refBtnType }: Props) => {
           </div>
         </div>
       </Modal>
+      <Modal
+                                open={!(idGroupDelete === "")}
+                                title={"Xóa dữ liệu"}
+                                onOk={handleDelete}
+                                onCancel={() => {
+                                  setIdGroupDelete("");
+                                }}
+                              >
+                                Bạn có chắc chắn muốn xóa không ?
+                              </Modal>
     </>
   );
 };

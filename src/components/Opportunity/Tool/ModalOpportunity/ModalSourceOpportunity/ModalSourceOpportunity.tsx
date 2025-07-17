@@ -42,6 +42,16 @@ const ModalSourceOpportunity = ({ refBtnSource }: Props) => {
   };
 
   const [formType] = useForm();
+  const [idGroupDelete, setIdGroupDelete] = useState<string>("");
+    const handleDelete = async () => {
+            const statusCode = await postdata(() =>
+              opportunityService.deleteSourceOpportunity([idGroupDelete??""])
+            );
+            if (statusCode === 200) {
+              dispatch(fetchSourcesOpportunity());
+              setIdGroupDelete("");
+            }
+          };
   const columns: ColumnsType<IGetSourcesOpportunityDto> = [
     {
       title: "Mã nguồn",
@@ -118,6 +128,14 @@ const ModalSourceOpportunity = ({ refBtnSource }: Props) => {
                   }}
                   icon={<CiEdit />}
                 />
+                <Button
+                                                  className="  text-xs text-red-500 font-semibold"
+                                                  type="text"
+                                
+                                                  onClick={()=>setIdGroupDelete(record?.type_source_id)}
+                                                >
+                                                  Xóa
+                                                </Button>
               </strong>
             )}
           </>
@@ -257,6 +275,16 @@ const ModalSourceOpportunity = ({ refBtnSource }: Props) => {
           </div>
         </div>
       </Modal>
+      <Modal
+                                open={!(idGroupDelete === "")}
+                                title={"Xóa dữ liệu"}
+                                onOk={handleDelete}
+                                onCancel={() => {
+                                  setIdGroupDelete("");
+                                }}
+                              >
+                                Bạn có chắc chắn muốn xóa không ?
+                              </Modal>
     </>
   );
 };

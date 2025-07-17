@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store/store";
 import { fetchUserProfile } from "@/redux/store/slices/userSlices/get_profile.slice";
 import TabActivity from "@/components/TabProductCode/TabActivity/TabActivity";
+import TabWarranty from "@/components/TabProductCode/TabWarranty/TabWarranty";
 export default function page() {
   const dispatch = useDispatch<AppDispatch>();
   const [dataProductCode, setDataProductCode] = useState<IGetCodeProduct>();
@@ -39,8 +40,13 @@ export default function page() {
     },
     {
       label: "Bảo trì, bảo dưỡng",
-      key: "warranty",
+      key: "activity",
       children: <TabActivity />,
+    },
+    {
+      label: "Bảo hành",
+      key: "warranty",
+      children: <TabWarranty/>,
     },
   ];
   const carouselRef = useRef<CarouselRef | null>(null);

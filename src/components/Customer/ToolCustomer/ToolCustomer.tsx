@@ -1,11 +1,11 @@
-import { Button, Tag } from "antd";
+import {  Tag } from "antd";
 import React from "react";
 import ModalAddCustomer from "./ModalCustomer/ModalAddCustomer";
 import { RootState } from "@/redux/store/store";
 import { useSelector } from "react-redux";
 import ModalGroupCustomer from "./ModalCustomer/ModalGroupCustomer/ModalGroupCustomer";
-import Link from "next/link";
-import { FaChartPie } from "react-icons/fa";
+// import Link from "next/link";
+// import { FaChartPie } from "react-icons/fa";
 
 // type Props = {};
 
@@ -19,11 +19,11 @@ export default function ToolCustomer() {
       <div className="flex gap-2 items-center flex-wrap">
         <ModalAddCustomer />
         <ModalGroupCustomer />
-        <ModalGroupCustomer />
+        {/* <ModalGroupCustomer /> */}
   
-        <Link href={`/customers/dashboard`}>
+        {/* <Link href={`/customers/dashboard`}>
           <Button icon={<FaChartPie />} />
-        </Link>
+        </Link> */}
       </div>
       <div>
         <h2 className="font-semibold text-[#1BA399]">Tổng quan khách hàng</h2>

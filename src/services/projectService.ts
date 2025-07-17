@@ -104,6 +104,15 @@ const projectService = {
       throw error;
     }
   },
+  deleteType: async (datas: string[]) => {
+    try {
+      const response = await api.delete(`/project/type`, { data: datas });
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   getTypeFulls: async (filter?:{status?:string}) => {
     try {
       const queryParams = new URLSearchParams();

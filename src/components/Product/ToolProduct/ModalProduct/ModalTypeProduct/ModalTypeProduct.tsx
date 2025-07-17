@@ -43,6 +43,16 @@ const ModalTypeProduct = ({ refBtnType }: Props) => {
   // useEffect(() => {
   //   console.log(dataSource);
   // }, [dataSource]);
+  const [idGroupDelete, setIdGroupDelete] = useState<string>("");
+        const handleDelete = async () => {
+                const statusCode = await postdata(() =>
+                  productService.deleteTypes([idGroupDelete??""])
+                );
+                if (statusCode === 200) {
+                  dispatch(fetchProductTypes());
+                  setIdGroupDelete("");
+                }
+              };
   const columns: ColumnsType<ITypeProduct> = [
     {
       title: "Tag loại",
@@ -103,6 +113,14 @@ const ModalTypeProduct = ({ refBtnType }: Props) => {
                 }}
                 icon={<CiEdit />}
               />
+              <Button
+                                                className="  text-xs text-red-500 font-semibold"
+                                                type="text"
+                              
+                                                onClick={()=>setIdGroupDelete(record?.type_product_id)}
+                                              >
+                                                Xóa
+                                              </Button>
             </strong>
           </>
         );
@@ -398,6 +416,16 @@ const ModalTypeProduct = ({ refBtnType }: Props) => {
           </div>
         </div>
       </Modal>
+      <Modal
+                                      open={!(idGroupDelete === "")}
+                                      title={"Xóa dữ liệu"}
+                                      onOk={handleDelete}
+                                      onCancel={() => {
+                                        setIdGroupDelete("");
+                                      }}
+                                    >
+                                      Bạn có chắc chắn muốn xóa không ?
+                                    </Modal>
     </>
   );
 };

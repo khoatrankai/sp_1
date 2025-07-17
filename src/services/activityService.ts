@@ -663,9 +663,9 @@ const activityService = {
       throw error;
     }
   },
-  deleteTypeWork: async (id: string) => {
+  deleteTypeWork: async (ids: string[]) => {
     try {
-      const response = await api.delete(`/activity/type-work/${id}`);
+      const response = await api.delete(`/activity/type-work`,{data:ids});
       return response.data;
     } catch (error) {
       handleError(error);
@@ -713,9 +713,9 @@ const activityService = {
       throw error;
     }
   },
-  deleteStatusWork: async (id: string) => {
+  deleteStatusWork: async (ids: string[]) => {
     try {
-      const response = await api.delete(`/activity/status-work/${id}`);
+      const response = await api.delete(`/activity/status-work`,{data:ids});
       return response.data;
     } catch (error) {
       handleError(error);
@@ -890,9 +890,9 @@ const activityService = {
       throw error;
     }
   },
-  deleteTypeActivity: async (id: string) => {
+  deleteTypeActivity: async (ids: string[]) => {
     try {
-      const response = await api.delete(`/activity/type/${id}`);
+      const response = await api.delete(`/activity/type`,{data:ids});
       return response.data;
     } catch (error) {
       handleError(error);
@@ -937,9 +937,9 @@ const activityService = {
       throw error;
     }
   },
-  deleteStatusActivity: async (id: string) => {
+  deleteStatusActivity: async (ids: string[]) => {
     try {
-      const response = await api.delete(`/activity/status/${id}`);
+      const response = await api.delete(`/activity/status`,{data:ids});
       return response.data;
     } catch (error) {
       handleError(error);

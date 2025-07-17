@@ -53,6 +53,16 @@ const ModalTypePackage = ({ refBtnTypePackage }: Props) => {
   // useEffect(() => {
   //   console.log(dataSource);
   // }, [dataSource]);
+  const [idGroupDelete, setIdGroupDelete] = useState<string>("");
+      const handleDelete = async () => {
+              const statusCode = await postdata(() =>
+                priceQuoteService.deleteTypePackage([idGroupDelete??""])
+              );
+              if (statusCode === 200) {
+                dispatch(fetchTypePackage());
+                setIdGroupDelete("");
+              }
+            };
   const columns: ColumnsType<ITypePackage> = [
     {
       title: "Mã gói",
@@ -129,6 +139,14 @@ const ModalTypePackage = ({ refBtnTypePackage }: Props) => {
                   }}
                   icon={<CiEdit />}
                 />
+                <Button
+                                                  className="  text-xs text-red-500 font-semibold"
+                                                  type="text"
+                                
+                                                  onClick={()=>setIdGroupDelete(record?.package_id)}
+                                                >
+                                                  Xóa
+                                                </Button>
               </strong>
             )}
           </>
@@ -248,6 +266,16 @@ const ModalTypePackage = ({ refBtnTypePackage }: Props) => {
           </div>
         </div>
       </Modal>
+      <Modal
+                                open={!(idGroupDelete === "")}
+                                title={"Xóa dữ liệu"}
+                                onOk={handleDelete}
+                                onCancel={() => {
+                                  setIdGroupDelete("");
+                                }}
+                              >
+                                Bạn có chắc chắn muốn xóa không ?
+                              </Modal>
     </>
   );
 };

@@ -410,3 +410,30 @@ export interface GetHistoryAsset {
   updated_at: string; // ISO timestamp
   date_expired?: string;
 }
+
+export interface CreateWarranty {
+  date_start: Date;
+  reason?: string;
+  review?: string;
+  solve?: string;
+  date_end?: Date;
+  status: string;
+  note?: string;
+  activity?: string;
+  asset: string; // Asset ID (uuid)
+}
+
+export interface GetWarranty {
+  id: string;
+  date_start: Date;
+  reason?: string;
+  review?: string;
+  solve?: string;
+  date_end?: Date;
+  status: string;
+  note?: string;
+  created_at: Date;
+  updated_at: Date;
+  activity?: string;
+  asset: GetAsset
+}

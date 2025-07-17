@@ -41,6 +41,16 @@ const ModalClassifyType = ({ refBtnClassify }: Props) => {
   // useEffect(() => {
   //   console.log(dataSource);
   // }, [dataSource]);
+  const [idGroupDelete, setIdGroupDelete] = useState<string>("");
+        const handleDelete = async () => {
+                const statusCode = await postdata(() =>
+                  productService.deleteClassifyType([idGroupDelete??""])
+                );
+                if (statusCode === 200) {
+                  dispatch(fetchClassifyType());
+                  setIdGroupDelete("");
+                }
+              };
   const columns: ColumnsType<IGetClassifyType> = [
     {
       title: "Tên phân loại",
@@ -73,6 +83,14 @@ const ModalClassifyType = ({ refBtnClassify }: Props) => {
                 }}
                 icon={<CiEdit />}
               />
+              <Button
+                                                className="  text-xs text-red-500 font-semibold"
+                                                type="text"
+                              
+                                                onClick={()=>setIdGroupDelete(record?.classify_id ?? "")}
+                                              >
+                                                Xóa
+                                              </Button>
             </strong>
           </>
         );
@@ -296,6 +314,16 @@ const ModalClassifyType = ({ refBtnClassify }: Props) => {
           </div>
         </div>
       </Modal>
+      <Modal
+                                      open={!(idGroupDelete === "")}
+                                      title={"Xóa dữ liệu"}
+                                      onOk={handleDelete}
+                                      onCancel={() => {
+                                        setIdGroupDelete("");
+                                      }}
+                                    >
+                                      Bạn có chắc chắn muốn xóa không ?
+                                    </Modal>
     </>
   );
 };

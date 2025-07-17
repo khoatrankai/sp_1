@@ -24,6 +24,7 @@ type Props = {
 
 const ModalGroupCustomer = ({ refBtnGroup }: Props) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [idGroupDelete, setIdGroupDelete] = useState<string>("");
   const [indexEdit, setIndexEdit] = useState<number>(-1);
   const dispatch = useDispatch<AppDispatch>();
   const { datas: dataGroupCustomer } = useSelector(
@@ -73,6 +74,14 @@ const ModalGroupCustomer = ({ refBtnGroup }: Props) => {
                 }}
                 icon={<CiEdit />}
               />
+              <Button
+                                  className="  text-xs text-red-500 font-semibold"
+                                  type="text"
+                
+                                  onClick={()=>setIdGroupDelete(record?.group_id)}
+                                >
+                                  Xóa
+                                </Button>
             </strong>
           </>
         );
@@ -86,6 +95,16 @@ const ModalGroupCustomer = ({ refBtnGroup }: Props) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
+  const handleDelete = async () => {
+        const statusCode = await postdata(() =>
+          customerService.deleteGroupCustomer([idGroupDelete??""])
+        );
+        if (statusCode === 200) {
+          dispatch(fetchGroupCustomer());
+          setIdGroupDelete("");
+        }
+      };
 
   const handleSubmit = async (values: CreateGroupCustomer) => {
     try {
@@ -266,6 +285,16 @@ const ModalGroupCustomer = ({ refBtnGroup }: Props) => {
           </div>
         </div>
       </Modal>
+      <Modal
+                    open={!(idGroupDelete === "")}
+                    title={"Xóa dữ liệu"}
+                    onOk={handleDelete}
+                    onCancel={() => {
+                      setIdGroupDelete("");
+                    }}
+                  >
+                    Bạn có chắc chắn muốn xóa không ?
+                  </Modal>
     </>
   );
 };

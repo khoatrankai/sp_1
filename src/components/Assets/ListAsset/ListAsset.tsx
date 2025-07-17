@@ -21,6 +21,7 @@ import { RootState } from "@/redux/store/store";
 import { fetchAssets } from "@/redux/store/slices/productSlices/get_asset.slice";
 import ModalUpdateAsset from "../ToolAsset/ModalAsset/ModalUpdateAsset";
 import HistoryAsset from "../HistoryAsset/HistoryAsset";
+import Warranty from "../Warranty/Warranty";
 
 export default function ListAsset() {
   const [pageLimit, setPageLimit] = useState<number>(25);
@@ -49,6 +50,7 @@ export default function ListAsset() {
                     {/* {isAuthorized && ( */}
                       <>
                         <ModalUpdateAsset asset_id={record.id} />
+                        <Warranty idAsset={record.id} />
                       </>
                     {/* )} */}
                     <Button

@@ -2,6 +2,7 @@ import { PostResponse } from "@/models/responseInterface";
 import api, { api_formdata } from "./api";
 import {
   CreateAsset,
+  CreateWarranty,
   ICreateActivityContainer,
   ICreateClassifyType,
   ICreateCommentReport,
@@ -21,6 +22,31 @@ const productService = {
     const response = await api.delete(`/product`, { data: datas });
     return response.data;
   },
+  getWarrantys: async () => {
+    const response = await api.get(`/product/warranty`);
+    return response.data;
+  },
+
+  getWarrantiesByAsset: async (id:string) => {
+    const response = await api.get(`/product/warranty-by-asset/${id}`);
+    return response.data;
+  },
+  getWarrantiesByCode: async (id:string) => {
+    const response = await api.get(`/product/warranty-by-code/${id}`);
+    return response.data;
+  },
+  createWarranty: async (data:CreateWarranty) => {
+    const response = await api.post(`/product/warranty`,data);
+    return response.data;
+  },
+  updateWarranty: async (id:string,data:CreateWarranty) => {
+    const response = await api.put(`/product/warranty/${id}`,data);
+    return response.data;
+  },
+  deleteWarranty: async (datas: string) => {
+    const response = await api.delete(`/product/warranty/${datas}`);
+    return response.data;
+  },
   getAboutProduct: async () => {
     const response = await api.get(`/product/about`);
     return response.data;
@@ -33,12 +59,37 @@ const productService = {
     const response = await api.get(`/product/code/all/${product_id}`);
     return response.data;
   },
+  getWarrantyID: async (warranty: string) => {
+    const response = await api.get(`/product/warranty/${warranty}`);
+    return response.data;
+  },
+  
   deletePictureProduct: async (data: string[]) => {
     const response = await api.delete(`/product/picture`, { data });
     return response.data;
   },
   getUnits: async () => {
     const response = await api.get(`/product/unit`);
+    return response.data;
+  },
+  deleteUnits: async (ids:string[]) => {
+    const response = await api.delete(`/product/unit`,{data:ids});
+    return response.data;
+  },
+  deleteBrands: async (ids:string[]) => {
+    const response = await api.delete(`/product/brand`,{data:ids});
+    return response.data;
+  },
+  deleteTypes: async (ids:string[]) => {
+    const response = await api.delete(`/product/type`,{data:ids});
+    return response.data;
+  },
+  deleteClassifyType: async (ids:string[]) => {
+    const response = await api.delete(`/product/classify_type`,{data:ids});
+    return response.data;
+  },
+  deleteOriginal: async (ids:string[]) => {
+    const response = await api.delete(`/product/original`,{data:ids});
     return response.data;
   },
   getTypes: async () => {

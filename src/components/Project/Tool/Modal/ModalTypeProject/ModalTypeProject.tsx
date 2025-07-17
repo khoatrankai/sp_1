@@ -46,6 +46,18 @@ const ModalTypeProject = ({ refBtnGroup }: Props) => {
       console.error("Error creating unit product:", error);
     }
   };
+
+  const [idGroupDelete, setIdGroupDelete] = useState<string>("");
+  const handleDelete = async () => {
+          const statusCode = await postdata(() =>
+            projectService.deleteType([idGroupDelete??""])
+          );
+          if (statusCode === 200) {
+            dispatch(fetchProjectTypes());
+            setIdGroupDelete("");
+          }
+        };
+  
   const handlePushIndex = (index: number) => {
     setIndexEdit([...indexEdit, index]);
   };
@@ -137,6 +149,14 @@ const ModalTypeProject = ({ refBtnGroup }: Props) => {
                   }}
                   icon={<CiEdit />}
                 />
+                <Button
+                                                  className="  text-xs text-red-500 font-semibold"
+                                                  type="text"
+                                
+                                                  onClick={()=>setIdGroupDelete(record?.type_id)}
+                                                >
+                                                  Xóa
+                                                </Button>
               </strong>
             )}
           </>
@@ -257,6 +277,16 @@ const ModalTypeProject = ({ refBtnGroup }: Props) => {
           </div>
         </div>
       </Modal>
+      <Modal
+                          open={!(idGroupDelete === "")}
+                          title={"Xóa dữ liệu"}
+                          onOk={handleDelete}
+                          onCancel={() => {
+                            setIdGroupDelete("");
+                          }}
+                        >
+                          Bạn có chắc chắn muốn xóa không ?
+                        </Modal>
     </>
   );
 };

@@ -18,6 +18,15 @@ const opportunityService = {
       throw error;
     }
   },
+  deleteTypeOpportunity: async (ids :string[]) => {
+    try {
+      const response = await api.delete(`/opportunity/type`,{data:ids});
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
   getTypeFullOpportunity: async () => {
     try {
       const response = await api.get(`/opportunity/type-full`);
@@ -113,6 +122,15 @@ const opportunityService = {
   getSourcesOpportunity: async () => {
     try {
       const response = await api.get(`/opportunity/source`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  deleteSourceOpportunity: async (ids :string[]) => {
+    try {
+      const response = await api.delete(`/opportunity/source`,{data:ids});
       return response.data;
     } catch (error) {
       handleError(error);

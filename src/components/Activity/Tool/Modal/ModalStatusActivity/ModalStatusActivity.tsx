@@ -58,6 +58,16 @@ const ModalStatusActivity = ({ refBtnStatus }: Props) => {
   // useEffect(() => {
   //   console.log(dataSource);
   // }, [dataSource]);
+  const [idGroupDelete, setIdGroupDelete] = useState<string>("");
+  const handleDelete = async () => {
+          const statusCode = await postdata(() =>
+            activityService.deleteStatusActivity([idGroupDelete??""])
+          );
+          if (statusCode === 200) {
+            dispatch(fetchStatusActivities());
+            setIdGroupDelete("");
+          }
+        };
   const columns: ColumnsType<IGetStatusActivity> = [
     {
       title: "Mã trạng thái",
@@ -114,6 +124,14 @@ const ModalStatusActivity = ({ refBtnStatus }: Props) => {
                 }}
                 icon={<CiEdit />}
               />
+              <Button
+                                                className="  text-xs text-red-500 font-semibold"
+                                                type="text"
+                              
+                                                onClick={()=>setIdGroupDelete(record?.status_activity_id)}
+                                              >
+                                                Xóa
+                                              </Button>
             </strong>
           </>
         );
@@ -401,6 +419,16 @@ const ModalStatusActivity = ({ refBtnStatus }: Props) => {
         </div>
       </Modal>
       <ModalTypeActivity refBtnType={refBtnType as Ref<HTMLButtonElement>} />
+        <Modal
+                                  open={!(idGroupDelete === "")}
+                                  title={"Xóa dữ liệu"}
+                                  onOk={handleDelete}
+                                  onCancel={() => {
+                                    setIdGroupDelete("");
+                                  }}
+                                >
+                                  Bạn có chắc chắn muốn xóa không ?
+                                </Modal>
     </>
   );
 };
