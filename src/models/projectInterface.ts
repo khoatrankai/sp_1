@@ -107,5 +107,35 @@ export interface IGetContractor {
   created_at: Date;
   updated_at: Date;
 }
+
+export interface CreateChat {
+  name_one?: string
+  name_two?: string
+  user_one?: string
+  user_two?: string
+  project?:string
+}
+
+export interface CreateChatGroup {
+  name: string
+  description: string
+  head?: string
+  project?: string
+  members?: string[]
+}
+export interface CreateMessage {
+  content?: string
+  user?: string
+  user_seen?: string[]
+  link?: string
+}
+
+export interface IRoleProject {
+  role_id?: string;
+  name: string;
+  name_tag: string;
+  created_at?: Date;
+  updated_at?: Date;
+}
   
   

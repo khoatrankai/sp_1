@@ -9,6 +9,7 @@ import TabActivity from "./TabActivity/TabActivity";
 import TabWork from "./TabWork/TabWork";
 import TabInvoice from "./TabInvoice/TabInvoice";
 import TabPriceQuote from "./TabPriceQuote/TabPriceQuote";
+import TabChat from "./TabChat/TabChat";
 
 export default function InfoID() {
   const router = useRouter();
@@ -42,6 +43,11 @@ export default function InfoID() {
       label: "Báo giá",
       key: "price_quote",
       children: <TabPriceQuote />,
+    },
+    {
+      label: "Nhắn tin",
+      key: "chat",
+      children: <TabChat />,
     },
   ];
   return (

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { Ref, useEffect, useRef, useState } from "react";
+import React, { Ref,  useEffect, useRef, useState } from "react";
 import {
   Button,
   Form,
@@ -27,12 +27,25 @@ import ModalTypeProject from "./ModalTypeProject/ModalTypeProject";
 import ModalAddCustomer from "@/components/Customer/ToolCustomer/ModalCustomer/ModalAddCustomer";
 import CustomFormData from "@/utils/CustomFormData";
 import { useParams } from "next/navigation";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {  Plus, UserCheck, Users, X } from "lucide-react";
+import { Label } from "@/components/ui/label";
+// import { SelectContent, SelectItem, SelectTrigger, SelectValue,SelectOK } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { ButtonOK } from "@/components/ui/button";
 type Props = {
   refBtnProject?: Ref<HTMLButtonElement>;
 };
+interface UserRole {
+  user: string
+  role: string
+}
 const ModalAddProject = ({ refBtnProject }: Props) => {
   const { customerID } = useParams();
   const [filePicture, setFilePicture] = useState<UploadFile>();
+  const [selectedUserId, setSelectedUserId] = useState("")
+  const [selectedRoleId, setSelectedRoleId] = useState("")
+  const [userRoles, setUserRoles] = useState<UserRole[]>([])
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const refBtnGroup = useRef<HTMLButtonElement>();
   const refBtnCustomer = useRef<HTMLButtonElement>();
@@ -40,7 +53,10 @@ const ModalAddProject = ({ refBtnProject }: Props) => {
   const { datas: dataUsers } = useSelector(
     (state: RootState) => state.get_users
   );
-
+   const { datas: dataRoles } = useSelector(
+    (state: RootState) => state.role_projects
+  );
+  const availableUsers = (dataUsers??[])?.filter((dt)=> !userRoles.some((ur) => ur.user === dt.user_id))
   const { datas: dataOpportunity } = useSelector(
     (state: RootState) => state.get_opportunities
   );
@@ -65,13 +81,32 @@ const ModalAddProject = ({ refBtnProject }: Props) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+const addUserRole = () => {
+    if (!selectedUserId || !selectedRoleId) {
+      alert("Vui lòng chọn người dùng và vai trò")
+      return
+    }
 
+
+    if (selectedUserId && selectedRoleId) {
+      const newUserRole: UserRole = {
+        user:selectedUserId,
+        role:selectedRoleId,
+      }
+      setUserRoles((prev) => [...prev, newUserRole])
+      setSelectedUserId("")
+      setSelectedRoleId("")
+    }
+  }
+  const removeUserRole = (id: string) => {
+    setUserRoles((prev) => prev.filter((ur) => ur.user !== id))
+  }
   const handleSubmit = async (values: ICreateProject) => {
     try {
       const formdata = CustomFormData(
         Object.entries({
           ...values,
-          picture_url: [filePicture?.originFileObj as File],
+          picture_url: [filePicture?.originFileObj as File],users:JSON.stringify(userRoles)
         }).reduce((acc: any, [key, value]) => {
           if (value !== null && value !== undefined) {
             acc[key] = value;
@@ -180,7 +215,7 @@ const ModalAddProject = ({ refBtnProject }: Props) => {
             name="opportunity"
             label="Cơ hội"
             style={{ minWidth: "320px", flex: "1 1 0%" }}
-            rules={[{ required: true, message: "Vui lòng chọn cơ hội" }]}
+            rules={[]}
           >
             <Select
               placeholder="Chọn cơ hội"
@@ -281,7 +316,7 @@ const ModalAddProject = ({ refBtnProject }: Props) => {
 
           <Form.Item
             name="user_support"
-            label="Nhân viên hỗ trợ"
+            label="Nhân viên hỗ trợ chính"
             style={{ minWidth: "220px", flex: "1 1 0%" }}
           >
             <Select placeholder="Chọn nhân viên">
@@ -341,6 +376,160 @@ const ModalAddProject = ({ refBtnProject }: Props) => {
               {uploadButton}
             </Upload>
           </Form.Item>
+          <Form.Item
+            // valuePropName="fileList"
+            // getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
+            className="!m-0"
+            // rules={[{ required: false, message: "Vui lòng chọn loại thuế!" }]}
+            style={{ minWidth: "100%", flex: "1 1 0%" }}
+          >
+            <Card className="w-full">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+              <span className="text-green-600 font-semibold text-sm">2</span>
+            </div>
+            Phân công dự án
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Add User Role Section */}
+          <Card className="border-dashed border-2 border-gray-200">
+            <CardContent className="p-4">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <Plus className="w-4 h-4" />
+                  Thêm thành viên
+                </div>
+
+                {availableUsers.length === 0 ? (
+                  <div className="text-center py-6 text-gray-500">
+                    <Users className="w-8 h-8 mx-auto mb-2 text-gray-400" />
+                    <p>Tất cả người dùng đã được phân công</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <Label>Chọn nhân viên</Label>
+                      {/* <SelectOK value={selectedUserId} onValueChange={setSelectedUserId}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Chọn người dùng" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {availableUsers.map((user) => (
+                            <SelectItem key={user.user_id} value={user.user_id}>
+                              <div className="flex flex-col">
+                                <span className="font-medium">{user.first_name+" "+user.last_name}</span>
+                                <span className="text-xs text-gray-500">{user.email}</span>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </SelectOK> */}
+                      <Select placeholder="Chọn nhân viên" className="h-14" value={selectedUserId} onChange={setSelectedUserId}>
+              {availableUsers?.map((item) => (
+                <Select.Option key={item.user_id} value={item.user_id}>
+                  <div className="flex flex-col">
+                                <span className="font-medium">{item.first_name+" "+item.last_name}</span>
+                                <span className="text-xs text-gray-500">{item.email}</span>
+                    </div>
+                </Select.Option>
+              ))}
+            </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>Chọn vai trò</Label>
+                      {/* <SelectOK value={selectedRoleId} onValueChange={setSelectedRoleId}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Chọn vai trò" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {dataRoles.map((role) => (
+                            <SelectItem key={role.role_id} value={role.role_id ?? ""}>
+                              <div className="flex items-center gap-2">
+                                <Badge variant="outline" className="text-xs">
+                                  {role.name_tag}
+                                </Badge>
+                                <span>{role.name}</span>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </SelectOK> */}
+                      <Select placeholder="Chọn vai trò" className="h-14" value={selectedRoleId} onChange={setSelectedRoleId}>
+              {dataRoles?.map((item) => (
+                <Select.Option key={item.role_id} value={item.role_id ?? ""}>
+                  <div className="flex items-center gap-2">
+                                <Badge variant="outline" className="text-xs">
+                                  {item.name_tag}
+                                </Badge>
+                                <span>{item.name}</span>
+                              </div>
+                </Select.Option>
+              ))}
+            </Select>
+                    </div>
+
+                    <div className="flex items-end">
+                      <ButtonOK
+                        onClick={addUserRole}
+                        disabled={!selectedUserId || !selectedRoleId}
+                        className="w-full"
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Thêm
+                      </ButtonOK>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Assigned Users List */}
+          {userRoles.length > 0 && (
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                <UserCheck className="w-4 h-4" />
+                Thành viên đã phân công ({userRoles.length})
+              </div>
+              <div className="space-y-2">
+                {userRoles.map((userRole) => (
+                  <div key={userRole.user} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                        <Users className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <div>
+                        <div className="font-medium text-gray-900">{dataUsers?.find(dt => dt.user_id === userRole.user)?.first_name +" "+dataUsers?.find(dt => dt.user_id === userRole.user)?.last_name}</div>
+                        <div className="text-sm text-gray-500">{dataUsers?.find(dt => dt.user_id === userRole.user)?.email}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                        {dataRoles?.find(dt => dt.role_id === userRole.role)?.name_tag}
+                      </Badge>
+                      <span className="text-sm text-gray-600">{dataRoles?.find(dt => dt.role_id === userRole.role)?.name}</span>
+                      <ButtonOK
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeUserRole(userRole.user)}
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      >
+                        <X className="w-4 h-4" />
+                      </ButtonOK>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+          </Form.Item>
+          
           <Form.Item
             style={{ width: "100%", display: "flex", justifyContent: "end" }}
           >

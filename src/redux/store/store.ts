@@ -62,6 +62,7 @@ import opportunityHaveContractSlice from "./slices/opportunitySlices/get_opportu
 import assetsProductSlice from "./slices/productSlices/get_asset.slice";
 import contractorsProjectSlice from "./slices/projectSlices/get_contractor.slice";
 import warrantiesSlice from "./slices/productSlices/get_all_warranty.slice";
+import roleProjectSlice from "./slices/projectSlices/get_role.slice";
 
 export const store = configureStore({
   reducer: {
@@ -85,6 +86,7 @@ export const store = configureStore({
     get_projects: projectsSlice,
     get_project_about: aboutProjectSlice,
     type_projects: typeProjectSlice,
+    role_projects: roleProjectSlice,
     type_full_projects: typeFullProjectSlice,
     get_price_quotes: priceQuoteSlice,
     get_type_method: typeMethodSlice,

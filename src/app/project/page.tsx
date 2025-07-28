@@ -6,6 +6,7 @@ import { fetchCustomerInfos } from "@/redux/store/slices/customerSlices/get_all_
 import { fetchOpportunities } from "@/redux/store/slices/opportunitySlices/get_opportunities.slice";
 import { fetchProjectAbout } from "@/redux/store/slices/projectSlices/get_about.slice";
 import { fetchProjects } from "@/redux/store/slices/projectSlices/get_all_project.slice";
+import { fetchProjectRoles } from "@/redux/store/slices/projectSlices/get_role.slice";
 import { fetchProjectTypes } from "@/redux/store/slices/projectSlices/get_type.slice";
 import { fetchUserInfo } from "@/redux/store/slices/userSlices/get_users.slice";
 import { AppDispatch } from "@/redux/store/store";
@@ -25,6 +26,7 @@ export default function page() {
       dispatch(fetchUserInfo());
       dispatch(fetchOpportunities({}));
       dispatch(fetchProjectTypes());
+      dispatch(fetchProjectRoles());
       dispatch(fetchProjectAbout());
     }
   }, [dispatch, isAuthorized]);

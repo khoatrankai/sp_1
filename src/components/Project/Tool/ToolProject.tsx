@@ -9,6 +9,7 @@ import { FaChartGantt } from "react-icons/fa6";
 import { useParams } from "next/navigation";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { GiPieChart } from "react-icons/gi";
+import ModalRoleProject from "./Modal/ModalRoleProject/ModalRoleProject";
 
 export default function ToolProduct() {
   const { customerID } = useParams();
@@ -20,6 +21,7 @@ export default function ToolProduct() {
       <div className="flex gap-1 flex-wrap">
         <ModalAddProject />
         <ModalTypeProject />
+        <ModalRoleProject />
         <Link href={`/project/gantt`}>
           <Button icon={<FaChartGantt />} />
         </Link>
