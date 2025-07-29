@@ -284,7 +284,7 @@ export function ChatWindow({ chat, currentUser, users, onChatUpdate,  }: ChatWin
                         Manage Members
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={handleLeaveOrDeleteGroup} className="text-red-600">
+                      <DropdownMenuItem onClick={()=> setChatGroupDelete(chat.id)} className="text-red-600">
                         <Trash2 className="w-4 h-4 mr-2" />
                         Delete Group
                       </DropdownMenuItem>
@@ -297,7 +297,7 @@ export function ChatWindow({ chat, currentUser, users, onChatUpdate,  }: ChatWin
                         View Members
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={handleLeaveOrDeleteGroup} className="text-red-600">
+                      <DropdownMenuItem onClick={()=> setChatGroupDelete(chat.id)} className="text-red-600">
                         <LogOut className="w-4 h-4 mr-2" />
                         Leave Group
                       </DropdownMenuItem>
