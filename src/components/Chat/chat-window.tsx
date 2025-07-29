@@ -168,6 +168,7 @@ export function ChatWindow({ chat, currentUser, users, onChatUpdate,  }: ChatWin
       if (response?.statusCode === 200) {
         isHead ? socket.emit('notify_delete_chat_group',{chat_group:chat.id,head:chat.head,members:chat.members?.map(dt => dt.user)}): socket.emit('notify_leave_chat_group',{chat_group:chat.id})
       }
+      setChatGroupDelete("")
     } catch (error) {
       console.error("Failed to leave/delete group:", error)
     }
