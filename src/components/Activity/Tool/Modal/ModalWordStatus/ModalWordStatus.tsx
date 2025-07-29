@@ -265,7 +265,7 @@ export default function ModalWordStatus({
         style={{ maxWidth: "800px" }}
       >
         <Tabs defaultActiveKey="1" style={{ width: "100%" }} type="line">
-          <TabPane tab="Trạng thái hoạt động" key={1}>
+          <TabPane tab="Trạng thái công việc" key={1}>
             <div hidden={type ? true : false}>
               <Stepper alternativeLabel activeStep={statusChoose}>
                 {statusActivity.map((label, index) => (
@@ -630,7 +630,7 @@ export default function ModalWordStatus({
             </div>
             <div className="mb-2  pb-2">
               <div className="flex items-center text-xs font-medium text-[#EB8823] hover:opacity-85 cursor-pointer mb-2">
-                <p className="pointer-events-none">Ảnh đầu hoạt động</p>
+                <p className="pointer-events-none">Ảnh đầu công việc</p>
               </div>
               <Form.Item
                 // valuePropName="fileList"
@@ -669,7 +669,7 @@ export default function ModalWordStatus({
             </div>
             <div>
               <div className="flex items-center text-xs font-medium text-[#EB8823] hover:opacity-85 cursor-pointer mb-2">
-                <p className="pointer-events-none">Ảnh sau hoạt động</p>
+                <p className="pointer-events-none">Ảnh sau công việc</p>
               </div>
               <Form.Item
                 // valuePropName="fileList"

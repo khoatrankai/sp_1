@@ -139,7 +139,7 @@ export function ChatWindow({ chat, currentUser, users, onChatUpdate,  }: ChatWin
       const socket = getSocket();
       const response = chat.type === "direct"
           ? await projectService.deleteContent([messageDelete])
-          : await projectService.deleteChatGroup([messageDelete])
+          : await projectService.deleteContentGroup([messageDelete])
 
       if (response.statusCode === 200) {
         if(chat.type === "direct"){

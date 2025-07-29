@@ -68,6 +68,7 @@ export default function ChatApp() {
      const socket = initSocket();
      socket.emit("join_me");
      socket.on('load_list_chat', () => {
+      console.log("keui n")
         fetchChats()
         });
          socket.on('load_delete_chat_group', (msg) => {

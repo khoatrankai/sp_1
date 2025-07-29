@@ -185,12 +185,12 @@ const ModalStatusWork = ({ refBtnStatus }: Props) => {
         onClick={showModal}
         ref={refBtnStatus}
       >
-        Trạng thái hoạt động
+        Trạng thái công việc
       </Button>
       <Modal
         title={
           <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
-            <span>Trạng thái hoạt động</span>
+            <span>Trạng thái công việc</span>
             <Button
               className="text-white font-semibold bg-orange-500"
               icon={<IoIosAdd />}
