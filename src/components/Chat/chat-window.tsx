@@ -36,6 +36,7 @@ import { getSocket, initSocket } from "@/utils/socket"
 import { Socket } from "socket.io-client"
 import { InfoUser } from "@/models/userInterface"
 import { Modal } from "antd"
+import { MessageAttachment } from "./message-attachment"
 
 interface ChatWindowProps {
   chat: ChatItem
@@ -232,6 +233,50 @@ export function ChatWindow({ chat, currentUser, users, onChatUpdate,  }: ChatWin
 
   const isGroupHead = chat.type === "group" && chat.head === currentUser
 
+   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      try {
+      const socket = getSocket();
+      const data = {
+        link: file,
+        content:file.name,
+        user:currentUser,
+        chat:chat.id,
+      }
+      const dataGroup = {
+        link: file,
+        user:currentUser,
+        content:file.name,
+        chat_group:chat.id,
+      }
+      const response = chat.type === "direct" ? await projectService.createContentChats(CustomFormData(data)) : await projectService.createContentGroupChats(CustomFormData(dataGroup))
+      if (response.statusCode === 201) {
+        // const newMsg = response?.data
+        // setMessages((prev) => [...prev, newMsg])
+        if(chat.type === "direct"){
+         socket.emit('notify_new_message',{chat:chat.id,user:chat.user_two,data:response.data})
+        }
+        if(chat.type === "group"){
+         socket.emit('notify_new_message_group',{chat_group:chat.id,head:chat.head,members:chat.members?.map(dt => dt.user),data:response.data})
+        }
+        setNewMessage("")
+      }
+    } catch (error) {
+      console.error("Failed to send message:", error)
+    } finally {
+      setIsLoading(false)
+    }
+    }
+  };
+
+
   return (
     <div className="flex flex-col h-full">
       {/* Chat Header */}
@@ -362,14 +407,15 @@ export function ChatWindow({ chat, currentUser, users, onChatUpdate,  }: ChatWin
                     {chat.type !== "group" && message.user !== currentUser && (
                       <div className="text-xs font-medium mb-1 opacity-70">{message.user === chat.user_one ? chat.name_one:chat.name_two}</div>
                     )}
-                    <div className="break-words">{message.content}</div>
-                    {message.link && (
+                    {!message.link && <div className="break-words">{message.content}</div>} 
+                    {/* {message.link && (
                       <div className="mt-2 p-2 bg-black bg-opacity-10 rounded text-xs">
                         <a href={message.link} target="_blank" rel="noopener noreferrer" className="underline">
                           View attachment
                         </a>
                       </div>
-                    )}
+                    )} */}
+                     {message.link && <MessageAttachment content={message.content} link={message.link} />}
                     <div className={`text-xs mt-1 ${message.user === currentUser ? "text-blue-100" : "text-gray-500"}`}>
                       {formatTime(message.created_at)}
                     </div>
@@ -385,9 +431,15 @@ export function ChatWindow({ chat, currentUser, users, onChatUpdate,  }: ChatWin
       {/* Message Input */}
       <div className="p-4 bg-white border-t">
         <form onSubmit={sendMessage} className="flex items-center space-x-2">
-          <Button type="button" variant="ghost" size="sm">
+          <Button type="button" variant="ghost" size="sm" onClick={handleFileClick}>
             <Paperclip className="w-4 h-4" />
           </Button>
+          <input
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+            onChange={handleFileChange}
+          />
           <Input
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
