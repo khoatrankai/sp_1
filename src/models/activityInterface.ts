@@ -420,3 +420,26 @@ export interface IGetFile {
   name: string;
   url: string;
 }
+
+
+export interface IReminds {
+  remind_id?: string;
+  description?: string;
+  work?: string | IGetWork;         // nếu muốn lấy cả object Work
+  user_create?: string;
+  user_remind?: string;
+  seen?: boolean;
+  created_at?: Date;
+  updated_at?: Date;
+}
+
+
+export interface IReviewUsers {
+  review_id?: string;
+  progress?: number;
+  description?: string;
+  user_work?: string | IGetListUser;   // chứa object ListUser đầy đủ
+  user_create?: string;
+  created_at?: Date;
+  updated_at?: Date;
+}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IGetWork } from "@/models/activityInterface";
 import { AppDispatch, RootState } from "@/redux/store/store";
 import { Button, Modal, Select, Switch, Table, TableColumnsType } from "antd";
@@ -13,8 +14,11 @@ import { fetchWorks } from "@/redux/store/slices/activitySlices/work.slide";
 import { MdDeleteForever } from "react-icons/md";
 import useCheckRole from "@/utils/CheckRole";
 import { useSearchParams } from "next/navigation";
+import { Users } from "lucide-react";
+import { UserListModal } from "../ListUser/user-list-modal";
 
 export default function ListActivity() {
+  const [workID,setWorkID] = useState<string>()
   const [pageLimit, setPageLimit] = useState<number>(25);
   const isAuthorized = useCheckRole([
     "admin-top",
@@ -39,6 +43,12 @@ export default function ListActivity() {
             {/* <Button type="text" ghost className="text-xs text-blue-600">
               Xem
             </Button> */}
+            <Button onClick={() => {
+              setWorkID(value)
+            }} className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              Xem nhân viên ({red.list_user?.length || 0})
+            </Button>
             {isAuthorized && <ModalUpdateWork ID={value} />}
           </div>
         </div>
@@ -253,6 +263,7 @@ export default function ListActivity() {
           />
         </div>
       </div>
+      <UserListModal isOpen={workID ? true:false} onClose={() => setWorkID(undefined)} work={workID as any} />
     </div>
   );
 }

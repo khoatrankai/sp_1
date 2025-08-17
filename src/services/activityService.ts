@@ -15,6 +15,8 @@ import {
   ICreateTypeActivity,
   ICreateTypeWork,
   ICreateWork,
+  IReminds,
+  IReviewUsers,
   IUpdateActivity,
   IUpdateComment,
   IUpdateListCodeProduct,
@@ -1129,6 +1131,82 @@ const activityService = {
       const response = await api.get(
         `/activity/get-documents-by-project/${id}`
       );
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+   createReviewUser: async (data: IReviewUsers) => {
+    try {
+      const response = await api.post("/activity/review-user", data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  updateReviewUser: async (id: string, data: IReviewUsers) => {
+    try {
+      const response = await api.put(`/activity/review-user/${id}`, data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  deleteReviewUser: async (ids: string[]) => {
+    try {
+      const response = await api.delete(`/activity/review-user`,{data:ids});
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+
+  // StatusActivity Methods
+  getReviewUserByWork: async (user:string,work:string) => {
+    try {
+      const response = await api.get(`/activity/review-user-by-work?user=${user}&work=${work}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  createRemind: async (data: IReminds) => {
+    try {
+      const response = await api.post("/activity/remind", data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  updateRemind: async (id: string, data: IReminds) => {
+    try {
+      const response = await api.put(`/activity/remind/${id}`, data);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  deleteRemind: async (ids: string[]) => {
+    try {
+      const response = await api.delete(`/activity/remind`,{data:ids});
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+
+  // StatusActivity Methods
+  getAllRemindByUser: async (user_remind:string) => {
+    try {
+      const response = await api.get(`/activity/remind-by-user?user_remind=${user_remind}`);
       return response.data;
     } catch (error) {
       handleError(error);
