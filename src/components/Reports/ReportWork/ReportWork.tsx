@@ -174,7 +174,7 @@ export default function ReportWork() {
         name: dt.name,
         activity: dt.activity?.name,
         contract: dt.activity?.contract?.name_contract,
-        status: dt.status.name,
+        status: dt?.status?.name,
         time_start: new Date(dt.time_start).toLocaleDateString("vi-VN"),
         time_end: new Date(dt.time_end).toLocaleDateString("vi-VN"),
         list_user: dt.list_user?.reduce((preValue, currValue, index) => {
@@ -207,7 +207,7 @@ export default function ReportWork() {
   //       name: dt.name,
   //       activity: dt.activity?.name,
   //       contract: dt.activity?.contract?.name_contract,
-  //       status: dt.status.name,
+  //       status: dt?.status?.name,
   //       time_start: new Date(dt.time_start).toLocaleDateString("vi-VN"),
   //       time_end: new Date(dt.time_end).toLocaleDateString("vi-VN"),
   //       list_user: dt.list_user?.reduce((preValue, currValue, index) => {

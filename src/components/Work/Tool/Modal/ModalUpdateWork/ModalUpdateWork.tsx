@@ -99,9 +99,9 @@ export default function ModalUpdateWork({
       const dataRes = res.data as IGetWork2;
       form.setFieldsValue({
         ...dataRes,
-        type: dataRes.type.type_work_id,
-        status: dataRes.status.status_work_id,
-        activity: dataRes.activity?.activity_id,
+        type: dataRes?.type?.type_work_id,
+        status: dataRes?.status?.status_work_id,
+        activity: dataRes?.activity?.activity_id,
       });
       setListImg(
         (dataRes.picture_urls?.map((dt) => {
@@ -113,8 +113,8 @@ export default function ModalUpdateWork({
           };
         }) as UploadFile[]) ?? []
       );
-      setTypeWork(dataRes.type.type_work_id);
-      setListUsers(dataRes.list_user?.map((dt) => dt.user_id) ?? []);
+      setTypeWork(dataRes?.type?.type_work_id);
+      setListUsers(dataRes?.list_user?.map((dt) => dt.user_id) ?? []);
     }
   };
 
@@ -225,14 +225,14 @@ export default function ModalUpdateWork({
                   return (
                     <Tooltip
                       title={
-                        dataFil?.first_name ?? "" + dataFil?.last_name ?? ""
+                        dataFil?.first_name ?? dataFil?.last_name ?? ""
                       }
                       placement="top"
                     >
                       <Avatar
                         src={dataFil?.picture_url}
                         alt={
-                          dataFil?.first_name ?? "" + dataFil?.last_name ?? ""
+                          dataFil?.first_name ?? dataFil?.last_name ?? ""
                         }
                         style={{ backgroundColor: "#87d068" }}
                       />

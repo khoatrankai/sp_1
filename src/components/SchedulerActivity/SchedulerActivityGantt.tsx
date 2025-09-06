@@ -174,25 +174,25 @@ export default function SchedulerActivity() {
     const listData = getMonthData(value);
     // const dataStart = listData.filter(
     //   (dt) =>
-    //     dt.status.name_tag === "not_started" || dt.status.name_tag === "pending"
+    //     dt?.status?.name_tag === "not_started" || dt?.status?.name_tag === "pending"
     // );
     const dataProcess = listData.filter(
       (dt) =>
-        dt.status.name_tag === "in_progress" || dt.status.name_tag === "on_hold"
+        dt?.status?.name_tag === "in_progress" || dt?.status?.name_tag === "on_hold"
     );
     const dataCheck = listData.filter(
       (dt) =>
-        dt.status.name_tag === "awaiting_review" ||
-        dt.status.name_tag === "requires_revision"
+        dt?.status?.name_tag === "awaiting_review" ||
+        dt?.status?.name_tag === "requires_revision"
     );
     const dataComplete = listData.filter(
       (dt) =>
-        dt.status.name_tag === "completed" || dt.status.name_tag === "delivered"
+        dt?.status?.name_tag === "completed" || dt?.status?.name_tag === "delivered"
     );
     const dataCancel = listData.filter(
       (dt) =>
-        dt.status.name_tag === "canceled" ||
-        dt.status.name_tag === "not_feasible"
+        dt?.status?.name_tag === "canceled" ||
+        dt?.status?.name_tag === "not_feasible"
     );
     // console.log(listData);
     return (

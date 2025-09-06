@@ -145,18 +145,18 @@ export default function ModalAddContractor({ refBtnContractors }: Props) {
               />
             </Form.Item>
             <Form.Item
-              name="customer"
-              label="Khách hàng"
+              name="project"
+              label="Dự án"
               rules={[
                 {
-                  required: true,
-                  message: "Vui lòng nhập nhóm khách hàng!",
+                  required: false,
+                  message: "Vui lòng nhập nhóm dự án!",
                 },
               ]}
               style={{ minWidth: "320px", flex: "1 1 0%" }}
             >
               <Select
-                placeholder="Chọn khách hàng"
+                placeholder="Chọn dự án"
                 showSearch
                 filterOption={(input, option) => {
                   const text = Array.isArray(option?.children)

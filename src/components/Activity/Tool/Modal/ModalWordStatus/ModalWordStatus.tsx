@@ -582,7 +582,7 @@ export default function ModalWordStatus({
                           </div>
                         </div>
                         <div className="flex flex-col justify-between items-end">
-                          <Tag color="green">{dt.status.name}</Tag>
+                          <Tag color="green">{dt?.status?.name}</Tag>
                           <div className="max-h-6">
                             <Avatar.Group
                               max={{

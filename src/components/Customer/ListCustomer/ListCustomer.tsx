@@ -92,7 +92,7 @@ export default function ListCustomer() {
       className: "text-xs",
       dataIndex: "name_company",
       render: (value: string) => (
-        <>{value.length > 15 ? `${value.slice(0, 15)}...` : value}</>
+        <>{value}</>
       ),
       sorter: (a: CustomerInfo, b: CustomerInfo) =>
         a.name_company.localeCompare(b.name_company),

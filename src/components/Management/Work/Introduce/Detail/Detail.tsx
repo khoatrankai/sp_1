@@ -21,7 +21,7 @@ export default function Detail({dataSource}:Props) {
             </div>
             <div className='flex max-w-md flex-1 min-w-96 justify-between'>
               <p className='font-base text-gray-400'>Trạng thái</p>
-              <p className='font-medium'>{dataSource?.status.name}</p>
+              <p className='font-medium'>{dataSource?.status?.name}</p>
             </div>
             <div className='flex max-w-md flex-1 min-w-96 justify-between'>
               <p className='font-base text-gray-400'>Tiến độ</p>
@@ -82,7 +82,7 @@ export default function Detail({dataSource}:Props) {
             </div>
             <div className='flex max-w-md flex-1 min-w-96 justify-between'>
               <p className='font-base text-gray-400'>Loại công việc</p>
-              <p className='font-medium'>{dataSource?.type.name}</p>
+              <p className='font-medium'>{dataSource?.type?.name}</p>
             </div>
             <div className='flex max-w-md flex-1 min-w-96 justify-between flex-col'>
               <p className='font-base text-gray-400'>Mô tả</p>

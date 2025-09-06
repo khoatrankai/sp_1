@@ -148,7 +148,7 @@ export default function ListActivity() {
             " " +
             dt.time_end +
             " " +
-            dt.status.name +
+            dt?.status?.name +
             " " +
             dt.work_id
         )
