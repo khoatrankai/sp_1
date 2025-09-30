@@ -79,11 +79,11 @@ export default function SchedulerWorkGantt() {
                             className="text-xs"
                             color={
                               (StatusTag({
-                                name_tag: item.status.name_tag,
+                                name_tag: item?.status?.name_tag,
                               }) as string) ?? "default"
                             }
                           >
-                            {item.status.name}
+                            {item?.status?.name}
                           </Tag>
                         </div>
                       </div>
@@ -91,7 +91,7 @@ export default function SchedulerWorkGantt() {
                         <div className="flex items-center">
                           <IoMdInformationCircleOutline className="text-[#00A9AE]" />
                           <p className="font-medium capitalize   ">
-                            {item.type.name}
+                            {item?.type?.name}
                           </p>
                         </div>
 
@@ -120,7 +120,7 @@ export default function SchedulerWorkGantt() {
                   <p className="font-semibold capitalize">{item.name}</p>
 
                   <p className="font-light lowercase text-slate-500 text-sm">
-                    {item.type.name}
+                    {item?.type?.name}
                   </p>
                 </div>
                 <div className="flex-1 flex justify-end">
@@ -129,11 +129,11 @@ export default function SchedulerWorkGantt() {
                       className="text-xs"
                       color={
                         (StatusTag({
-                          name_tag: item.status.name_tag,
+                          name_tag: item?.status?.name_tag,
                         }) as string) ?? "default"
                       }
                     >
-                      {item.status.name}
+                      {item?.status?.name}
                     </Tag>
                   </div>
                 </div>

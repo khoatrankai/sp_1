@@ -48,6 +48,7 @@ export default function ModalAddCustomer({ refBtnCustomer }: Props) {
   const { datas: dataUsers } = useSelector(
     (state: RootState) => state.get_users
   );
+  
   const { datas: dataGroup } = useSelector(
     (state: RootState) => state.get_group_customer
   );
