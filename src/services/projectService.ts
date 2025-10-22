@@ -269,6 +269,20 @@ const projectService = {
     
     
   },
+  getChatsByUser: async () => {
+    try {
+      const res = await api.get(`/project/chat-all`);
+      if (!res) {
+        throw new Error("Failed to get chat: No response");
+      }
+      return res.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+    
+    
+  },
   getChatGroups: async (id:string) => {
     try {
       const res = await api.get(`/project/chat-group/${id}`);

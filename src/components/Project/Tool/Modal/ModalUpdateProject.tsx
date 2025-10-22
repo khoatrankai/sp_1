@@ -131,6 +131,8 @@ const ModalUpdateProject = ({ ID, refBtnProject, type, setID }: Props) => {
       const formdata = CustomFormData(
         Object.entries({
           ...values,
+          start_date:values.start_date ? values.start_date.toISOString():undefined,
+          end_date:values.end_date ? values.end_date.toISOString():undefined,
           picture_url:
             filePicture.length > 0
               ? [filePicture?.[0]?.originFileObj as File]
