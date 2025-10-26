@@ -6,6 +6,7 @@ import { fetchActivities } from "@/redux/store/slices/activitySlices/activity.sl
 import { fetchStatusWork } from "@/redux/store/slices/activitySlices/status_work.slice";
 import { fetchTypeWork } from "@/redux/store/slices/activitySlices/type_work.slice";
 import { fetchWorks } from "@/redux/store/slices/activitySlices/work.slide";
+import { fetchProjects } from "@/redux/store/slices/projectSlices/get_all_project.slice";
 import { fetchUserInfo } from "@/redux/store/slices/userSlices/get_users.slice";
 import { AppDispatch } from "@/redux/store/store";
 import React, { useEffect } from "react";
@@ -29,6 +30,7 @@ export default function page() {
       dispatch(fetchWorks());
       dispatch(fetchUserInfo());
       dispatch(fetchTypeWork());
+      dispatch(fetchProjects());
       dispatch(fetchStatusWork());
     }
   }, [dispatch, isAuthorized]);
