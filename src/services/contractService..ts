@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ICreateContract,
   ICreatePayment,
@@ -381,6 +382,33 @@ const contractService = {
       const response = await api.get(
         `/contract/get-contract-filter-by-project?${queryParams.toString()}`
       );
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  getContractsFilterFull: async (filters?:{time_start?:string,time_end?:string}) => {
+    try {
+       const queryParams = new URLSearchParams();
+
+      if (filters) {
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value !== undefined && value !== null) {
+            queryParams.append(key, value.toString());
+          }
+        });
+      }
+      const response = await api.get(`/contract/get-contracts-filter-full?${queryParams.toString()}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+  importContracts: async (data: any) => {
+    try {
+      const response = await api.post(`/contract/import`,data);
       return response.data;
     } catch (error) {
       handleError(error);

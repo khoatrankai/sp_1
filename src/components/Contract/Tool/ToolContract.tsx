@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Tag } from "antd";
-import React from "react";
+import React, { useRef } from "react";
 import { FaChartPie } from "react-icons/fa";
 // import { useSelector } from "react-redux";
 // import { RootState } from "@/redux/store/store";
@@ -8,6 +10,8 @@ import ModalTypeContract from "./Modal/ModalTypeContract/ModalTypeContract";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store/store";
 import { useParams } from "next/navigation";
+import { CiImport } from "react-icons/ci";
+import ModalImport from "./Modal/ModalImport";
 
 // type MenuItem = {
 //   value: string;
@@ -26,8 +30,6 @@ export default function ToolContract() {
   //     dispatch(fetchPriceQuotes(filterData));
   //   }
   // }, [filterData]);
-  // const { data: dataUsers } = useFetchData<InfoUser[]>(userService.getUsers);
-
   const { datas: dataAbout } = useSelector(
     (state: RootState) => state.get_contract_about
   );
@@ -54,6 +56,7 @@ export default function ToolContract() {
         </Button> */}
         <ModalAddContract />
         <ModalTypeContract />
+        <ModalImport/>
 
         <Button icon={<FaChartPie />} hidden={customerID ? true : false} />
       </div>
